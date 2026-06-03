@@ -1,12 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <defs>
-    <linearGradient id="g" x1="6" y1="6" x2="58" y2="58" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#6d5dfc"/>
-      <stop offset=".5" stop-color="#4f9dff"/>
-      <stop offset="1" stop-color="#18d9c4"/>
+    <linearGradient id="nr" x1="14" y1="12" x2="50" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7c5cff"/>
+      <stop offset="1" stop-color="#4f9dff"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="16" fill="#07080d"/>
-  <rect x="3.5" y="3.5" width="57" height="57" rx="13" fill="none" stroke="url(#g)" stroke-width="2" opacity=".55"/>
-  <text x="32" y="34" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="27" font-weight="800" letter-spacing="-1.5" fill="url(#g)" text-anchor="middle" dominant-baseline="central">NR</text>
+
+  <!-- dark background -->
+  <rect width="64" height="64" rx="15" fill="#0a0a0a"/>
+
+  <!-- NR monogram -->
+  <text x="32" y="33.5"
+        font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+        font-size="29" font-weight="700" letter-spacing="-2"
+        fill="url(#nr)" text-anchor="middle" dominant-baseline="central">NR</text>
 </svg>
