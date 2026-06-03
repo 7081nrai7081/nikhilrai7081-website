@@ -5,6 +5,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Consent Mode defaults (must run before GTM) -->
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});
+try{if(localStorage.getItem('cookie_consent')==='granted'){gtag('consent','update',{analytics_storage:'granted'});}}catch(e){}
+</script>
+
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -38,7 +45,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="apple-touch-icon" href="/favicon.svg">
 <link rel="preload" href="assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/images/profile.webp" as="image" type="image/webp" fetchpriority="high">
-<link rel="stylesheet" href="assets/css/style.css?v=4">
+<link rel="stylesheet" href="assets/css/style.css?v=5">
 
 <script type="application/ld+json">
 {
@@ -52,6 +59,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     "https://www.linkedin.com/in/nikhilrai7081",
     "https://www.instagram.com/nikhilrai7081"
   ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebSite",
+  "name":"Nikhil Rai",
+  "url":"https://nikhilrai7081.com",
+  "inLanguage":"en"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Service",
+  "name":"Growth, Partnerships & Execution",
+  "serviceType":"Strategic partnerships, business development, lead generation, automation, growth marketing and operations",
+  "provider":{"@type":"Person","name":"Nikhil Rai","url":"https://nikhilrai7081.com"},
+  "areaServed":"Worldwide"
 }
 </script>
 </head>
@@ -437,6 +465,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <a href="#journey">Journey</a>
         <a href="#projects">Projects</a>
         <a href="#contact">Contact</a>
+        <a href="/privacy">Privacy</a>
       </nav>
     </div>
     <div class="footer-bottom">
@@ -446,7 +475,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=4"></script>
+<script src="assets/js/main.js?v=5"></script>
 
 </body>
 </html>
