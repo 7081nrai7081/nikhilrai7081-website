@@ -1037,6 +1037,53 @@ a.card:hover .card-more svg { transform: translateX(4px); }
 .faq-item[open] summary::after { transform: rotate(45deg); }
 .faq-item p { color: var(--muted); padding: 0 24px 20px; margin: 0; line-height: 1.7; }
 
+/* ---------- Newsletter ---------- */
+.newsletter-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  flex-wrap: wrap;
+  padding: clamp(28px, 5vw, 48px);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  position: relative;
+  overflow: hidden;
+}
+.newsletter-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(28rem 16rem at 100% 0%, rgba(109, 93, 252, .16), transparent 70%);
+  pointer-events: none;
+}
+.newsletter-card > * { position: relative; }
+.newsletter-text { flex: 1 1 280px; }
+.newsletter-text h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 8px; }
+.newsletter-text p { color: var(--muted); margin: 0; }
+.newsletter-form { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; flex: 1 1 320px; max-width: 460px; }
+.newsletter-form input[type=email] {
+  flex: 1 1 200px;
+  padding: 13px 16px;
+  border-radius: 13px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: inherit;
+  font-size: .95rem;
+  transition: border-color .25s, box-shadow .25s;
+}
+.newsletter-form input[type=email]:focus {
+  outline: none;
+  border-color: var(--brand-2);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 22%, transparent);
+}
+.newsletter-form .btn { border: none; }
+.newsletter-form .form-status { flex-basis: 100%; margin: 0; font-size: .85rem; min-height: 1em; }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 980px) {
   .contact-layout { grid-template-columns: 1fr; }

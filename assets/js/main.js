@@ -190,6 +190,40 @@
     });
   }
 
+  /* ---------- Newsletter signup (Web3Forms) ---------- */
+  doc.querySelectorAll('.newsletter-form').forEach(function (nf) {
+    const status = nf.querySelector('.form-status');
+    const keyField = nf.querySelector('input[name="access_key"]');
+    function set(kind, msg) {
+      if (!status) return;
+      status.className = 'form-status' + (kind ? ' ' + kind : '');
+      status.textContent = msg;
+    }
+    nf.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const key = keyField ? keyField.value.trim() : '';
+      if (!key || key === 'YOUR_ACCESS_KEY_HERE') { set('err', 'Newsletter isn’t configured yet.'); return; }
+      const btn = nf.querySelector('button[type="submit"]');
+      const lbl = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Subscribing…'; }
+      set('', 'Subscribing…');
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(nf)))
+        });
+        const data = await res.json();
+        if (data.success) { nf.reset(); set('ok', 'You’re on the list — thank you!'); track('newsletter_signup', {}); }
+        else set('err', data.message || 'Something went wrong. Please try again.');
+      } catch (err) {
+        set('err', 'Network error. Please try again.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = lbl; }
+      }
+    });
+  });
+
   /* ---------- Cookie consent (Google Consent Mode v2) ---------- */
   (function () {
     let choice = null;
