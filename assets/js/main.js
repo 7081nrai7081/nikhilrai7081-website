@@ -1,216 +1,140 @@
-// ========================
-// NIKHIL RAI PORTFOLIO V3
-// ========================
+/* =====================================================
+   NIKHIL RAI — PORTFOLIO
+   Interactions: theme, menu, scroll progress,
+   reveal-on-scroll, active nav, header state
+   ===================================================== */
 
-// Theme Toggle
+(function () {
+  'use strict';
 
-const themeToggle = document.getElementById('theme-toggle');
+  const doc = document;
+  const body = doc.body;
 
-if (themeToggle) {
+  /* ---------- Theme toggle ---------- */
+  const themeToggle = doc.getElementById('theme-toggle');
+  const iconMoon = doc.querySelector('.icon-moon');
+  const iconSun = doc.querySelector('.icon-sun');
 
+  function applyTheme(theme) {
+    const light = theme === 'light';
+    body.classList.toggle('light', light);
+    if (iconMoon && iconSun) {
+      iconMoon.style.display = light ? 'none' : 'block';
+      iconSun.style.display = light ? 'block' : 'none';
+    }
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-label', light ? 'Switch to dark theme' : 'Switch to light theme');
+    }
+  }
+
+  // Initial theme: saved preference, else system, else dark.
+  let stored = null;
+  try { stored = localStorage.getItem('theme'); } catch (e) {}
+  if (!stored) {
+    stored = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches
+      ? 'light' : 'dark';
+  }
+  applyTheme(stored);
+
+  if (themeToggle) {
     themeToggle.addEventListener('click', () => {
-
-        document.body.classList.toggle('light-mode');
-
-        if (document.body.classList.contains('light-mode')) {
-            themeToggle.innerHTML = '☀️';
-            localStorage.setItem('theme', 'light');
-        } else {
-            themeToggle.innerHTML = '🌙';
-            localStorage.setItem('theme', 'dark');
-        }
-
+      const next = body.classList.contains('light') ? 'dark' : 'light';
+      applyTheme(next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
     });
+  }
 
-}
+  /* ---------- Mobile menu ---------- */
+  const menuToggle = doc.getElementById('menu-toggle');
+  const nav = doc.getElementById('nav');
 
-// Load Saved Theme
+  function closeMenu() {
+    if (!nav || !menuToggle) return;
+    nav.classList.remove('open');
+    menuToggle.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
 
-window.addEventListener('DOMContentLoaded', () => {
-
-    const savedTheme = localStorage.getItem('theme');
-
-    if (savedTheme === 'light') {
-        document.body.classList.add('light-mode');
-
-        if (themeToggle) {
-            themeToggle.innerHTML = '☀️';
-        }
-    }
-
-});
-
-// ========================
-// MOBILE MENU
-// ========================
-
-const menuToggle = document.getElementById('menu-toggle');
-const nav = document.getElementById('nav');
-
-if (menuToggle && nav) {
-
+  if (menuToggle && nav) {
     menuToggle.addEventListener('click', () => {
-        nav.classList.toggle('active');
+      const open = nav.classList.toggle('open');
+      menuToggle.classList.toggle('open', open);
+      menuToggle.setAttribute('aria-expanded', String(open));
     });
-
-}
-
-// Close Menu After Click
-
-document.querySelectorAll('.nav a').forEach(link => {
-
-    link.addEventListener('click', () => {
-
-        if (window.innerWidth < 900) {
-            nav.classList.remove('active');
-        }
-
+    nav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', closeMenu);
     });
+    doc.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
+  }
 
-});
+  /* ---------- Header shadow + scroll progress ---------- */
+  const header = doc.getElementById('header');
+  const progress = doc.getElementById('progress');
+  let ticking = false;
 
-// ========================
-// SCROLL PROGRESS BAR
-// ========================
+  function onScroll() {
+    const scrollTop = window.scrollY || doc.documentElement.scrollTop;
 
-window.addEventListener('scroll', () => {
+    if (header) header.classList.toggle('scrolled', scrollTop > 8);
 
-    const scrollTop =
-        document.documentElement.scrollTop;
-
-    const scrollHeight =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
-
-    const progress =
-        (scrollTop / scrollHeight) * 100;
-
-    const progressBar =
-        document.querySelector('.progress-bar');
-
-    if (progressBar) {
-        progressBar.style.width = progress + '%';
+    if (progress) {
+      const docEl = doc.documentElement;
+      const height = docEl.scrollHeight - docEl.clientHeight;
+      const pct = height > 0 ? (scrollTop / height) * 100 : 0;
+      progress.style.width = pct + '%';
     }
+    ticking = false;
+  }
 
-});
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(onScroll);
+      ticking = true;
+    }
+  }, { passive: true });
+  onScroll();
 
-// ========================
-// FADE IN ANIMATION
-// ========================
+  /* ---------- Reveal on scroll ---------- */
+  const revealEls = doc.querySelectorAll('.reveal');
 
-const observer = new IntersectionObserver(
-
-(entries) => {
-
-    entries.forEach(entry => {
-
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('show');
+          // Slight stagger for grouped elements.
+          const delay = Math.min(i * 60, 240);
+          entry.target.style.transitionDelay = delay + 'ms';
+          entry.target.classList.add('show');
+          obs.unobserve(entry.target);
         }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-    });
+    revealEls.forEach((el) => io.observe(el));
+  } else {
+    revealEls.forEach((el) => el.classList.add('show'));
+  }
 
-},
+  /* ---------- Active nav link (scroll spy) ---------- */
+  const sections = Array.from(doc.querySelectorAll('section[id]'));
+  const navLinks = Array.from(doc.querySelectorAll('.nav a[href^="#"]'));
 
-{
-    threshold: 0.15
-}
-
-);
-
-document.querySelectorAll(
-'.section, .card, .timeline-item, .contact-card, .stat'
-)
-
-.forEach(el => {
-
-    el.classList.add('fade-up');
-
-    observer.observe(el);
-
-});
-
-// ========================
-// HERO PARALLAX EFFECT
-// ========================
-
-window.addEventListener('scroll', () => {
-
-    const heroImage =
-        document.querySelector('.hero-image');
-
-    if (!heroImage) return;
-
-    const scrolled = window.pageYOffset;
-
-    heroImage.style.transform =
-        `translateY(${scrolled * 0.08}px)`;
-
-});
-
-// ========================
-// ACTIVE NAVIGATION LINK
-// ========================
-
-const sections =
-document.querySelectorAll('section[id]');
-
-window.addEventListener('scroll', () => {
-
-    let current = '';
-
-    sections.forEach(section => {
-
-        const sectionTop =
-            section.offsetTop - 150;
-
-        if (window.scrollY >= sectionTop) {
-            current = section.getAttribute('id');
+  if (sections.length && navLinks.length && 'IntersectionObserver' in window) {
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach((link) => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+          });
         }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
 
-    });
+    sections.forEach((s) => spy.observe(s));
+  }
 
-    document.querySelectorAll('.nav a')
-        .forEach(link => {
-
-            link.classList.remove('active-link');
-
-            if (
-                link.getAttribute('href') ===
-                `#${current}`
-            ) {
-                link.classList.add('active-link');
-            }
-
-        });
-
-});
-
-// ========================
-// SMOOTH BUTTON HOVER
-// ========================
-
-document.querySelectorAll(
-'.btn-primary, .btn-secondary'
-)
-
-.forEach(btn => {
-
-    btn.addEventListener('mouseenter', () => {
-        btn.style.transform = 'translateY(-3px)';
-    });
-
-    btn.addEventListener('mouseleave', () => {
-        btn.style.transform = 'translateY(0)';
-    });
-
-});
-
-// ========================
-// CONSOLE SIGNATURE
-// ========================
-
-console.log(
-'%cNikhil Rai Portfolio V3 Loaded 🚀',
-'font-size:14px;color:#06b6d4;font-weight:bold;'
-);
+  console.log('%cNikhil Rai — Portfolio', 'font-size:13px;color:#6d5dfc;font-weight:700;');
+})();
