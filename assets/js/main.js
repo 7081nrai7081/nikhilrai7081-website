@@ -136,5 +136,52 @@
     sections.forEach((s) => spy.observe(s));
   }
 
+  /* ---------- Contact form (Web3Forms) ---------- */
+  const form = doc.getElementById('contact-form');
+  if (form) {
+    const status = doc.getElementById('form-status');
+    const keyField = form.querySelector('input[name="access_key"]');
+
+    function setStatus(kind, msg) {
+      if (!status) return;
+      status.className = 'form-status' + (kind ? ' ' + kind : '');
+      status.textContent = msg;
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const key = keyField ? keyField.value.trim() : '';
+      if (!key || key === 'YOUR_ACCESS_KEY_HERE') {
+        setStatus('err', 'Form isn’t configured yet — add your free Web3Forms access key in the HTML.');
+        return;
+      }
+
+      const btn = form.querySelector('button[type="submit"]');
+      const label = btn ? btn.innerHTML : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+      setStatus('', 'Sending your message…');
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form)))
+        });
+        const data = await res.json();
+        if (data.success) {
+          form.reset();
+          setStatus('ok', 'Thanks — your message has been sent. I’ll be in touch soon.');
+        } else {
+          setStatus('err', data.message || 'Something went wrong. Please email me directly instead.');
+        }
+      } catch (err) {
+        setStatus('err', 'Network error. Please try again or email me directly.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerHTML = label; }
+      }
+    });
+  }
+
   console.log('%cNikhil Rai — Portfolio', 'font-size:13px;color:#6d5dfc;font-weight:700;');
 })();
