@@ -374,6 +374,7 @@ h1, h2, h3 { line-height: 1.1; letter-spacing: -0.02em; font-weight: 700; }
   filter: blur(26px);
   animation: float 7s ease-in-out infinite;
 }
+.portrait picture { display: contents; }
 .portrait img,
 .portrait .placeholder {
   position: relative;
@@ -518,7 +519,7 @@ h1, h2, h3 { line-height: 1.1; letter-spacing: -0.02em; font-weight: 700; }
   color: var(--brand-2);
   font-variant-numeric: tabular-nums;
 }
-.principle h4 { font-size: 1rem; margin-bottom: 4px; }
+.principle h3 { font-size: 1rem; margin-bottom: 4px; }
 .principle p { color: var(--muted); font-size: .9rem; }
 
 /* ---------- Cards (Expertise / Projects) ---------- */
@@ -855,7 +856,7 @@ a.card:hover .card-more svg { transform: translateX(4px); }
   font-weight: 700;
   font-size: .95rem;
 }
-.cs-step h4 { font-size: 1.05rem; margin-bottom: 4px; }
+.cs-step h3 { font-size: 1.05rem; margin-bottom: 4px; }
 .cs-step p { color: var(--muted); font-size: .95rem; margin: 0; }
 
 .cs-tags { display: flex; flex-wrap: wrap; gap: 10px; }

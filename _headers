@@ -1,0 +1,13 @@
+# Cache rules for Cloudflare Pages / Netlify (ignored by hosts that don't read _headers)
+
+# Static assets — safe to cache long-term.
+# CSS/JS are cache-busted via ?v=N, so a new version is a new URL.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/favicon.svg
+  Cache-Control: public, max-age=604800
+
+# HTML should always revalidate so new deploys appear immediately.
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate

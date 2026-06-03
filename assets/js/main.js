@@ -10,6 +10,12 @@
   const doc = document;
   const body = doc.body;
 
+  /* ---------- Analytics helper (pushes to GTM dataLayer) ---------- */
+  function track(event, params) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(Object.assign({ event: event }, params || {}));
+  }
+
   /* ---------- Theme toggle ---------- */
   const themeToggle = doc.getElementById('theme-toggle');
   const iconMoon = doc.querySelector('.icon-moon');
@@ -171,6 +177,7 @@
         const data = await res.json();
         if (data.success) {
           form.reset();
+          track('contact_form_submit', { form_location: 'contact_section' });
           setStatus('ok', 'Thanks — your message has been sent. I’ll be in touch soon.');
         } else {
           setStatus('err', data.message || 'Something went wrong. Please email me directly instead.');
@@ -182,6 +189,25 @@
       }
     });
   }
+
+  /* ---------- Click tracking (contact methods + CTAs) ---------- */
+  doc.addEventListener('click', (e) => {
+    const a = e.target.closest('a');
+    if (!a) return;
+    const href = a.getAttribute('href') || '';
+
+    let method = null;
+    if (href.indexOf('mailto:') === 0) method = 'email';
+    else if (href.indexOf('wa.me') > -1 || href.indexOf('whatsapp') > -1) method = 'whatsapp';
+    else if (href.indexOf('linkedin.com') > -1) method = 'linkedin';
+    else if (href.indexOf('instagram.com') > -1) method = 'instagram';
+
+    if (method) {
+      track('contact_click', { contact_method: method, link_url: href });
+    } else if (a.classList.contains('btn')) {
+      track('cta_click', { cta_label: (a.textContent || '').trim(), link_url: href });
+    }
+  });
 
   console.log('%cNikhil Rai — Portfolio', 'font-size:13px;color:#6d5dfc;font-weight:700;');
 })();

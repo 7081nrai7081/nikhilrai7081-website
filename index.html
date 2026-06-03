@@ -34,7 +34,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
 <link rel="preload" href="assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/style.css?v=3">
+<link rel="preload" href="assets/images/profile.webp" as="image" type="image/webp" fetchpriority="high">
+<link rel="stylesheet" href="assets/css/style.css?v=4">
 
 <script type="application/ld+json">
 {
@@ -87,6 +88,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <span id="top"></span>
 
+<main id="main">
+
 <!-- ===== HERO ===== -->
 <section class="hero">
   <div class="container">
@@ -124,8 +127,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="hero-visual reveal">
         <div class="portrait">
           <div class="ring" aria-hidden="true"></div>
-          <img src="assets/images/profile.jpg" alt="Nikhil Rai"
-            onerror="this.style.display='none';document.getElementById('placeholder').style.display='grid';">
+          <picture>
+            <source srcset="assets/images/profile.webp" type="image/webp">
+            <img src="assets/images/profile.jpg" alt="Nikhil Rai" width="760" height="760" fetchpriority="high" decoding="async"
+              onerror="this.parentNode.style.display='none';document.getElementById('placeholder').style.display='grid';">
+          </picture>
           <div class="placeholder" id="placeholder"><span>NR</span></div>
 
           <div class="chip chip-1">
@@ -198,15 +204,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="principles reveal">
         <div class="principle">
           <span class="n">01</span>
-          <div><h4>Relationships first</h4><p>Long-term value is built on trust, not transactions.</p></div>
+          <div><h3>Relationships first</h3><p>Long-term value is built on trust, not transactions.</p></div>
         </div>
         <div class="principle">
           <span class="n">02</span>
-          <div><h4>Systems over hustle</h4><p>Repeatable processes outperform one-off effort.</p></div>
+          <div><h3>Systems over hustle</h3><p>Repeatable processes outperform one-off effort.</p></div>
         </div>
         <div class="principle">
           <span class="n">03</span>
-          <div><h4>Execution wins</h4><p>Ideas matter — but consistent delivery compounds.</p></div>
+          <div><h3>Execution wins</h3><p>Ideas matter — but consistent delivery compounds.</p></div>
         </div>
       </div>
 
@@ -415,6 +421,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
+</main>
+
 <!-- ===== FOOTER ===== -->
 <footer class="footer">
   <div class="container">
@@ -435,7 +443,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=3"></script>
+<script src="assets/js/main.js?v=4"></script>
 
 </body>
 </html>
