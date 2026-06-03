@@ -23,16 +23,19 @@
   </g>
 
   <!-- monogram -->
-  <rect x="90" y="90" width="84" height="84" rx="20" fill="#0d0f17" stroke="url(#g)" stroke-width="2.5"/>
-  <text x="132" y="135" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="38" font-weight="800" letter-spacing="-2" fill="url(#g)" text-anchor="middle" dominant-baseline="central">NR</text>
+  <rect x="80" y="78" width="84" height="84" rx="20" fill="#0d0f17" stroke="url(#g)" stroke-width="2.5"/>
+  <text x="122" y="123" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="38" font-weight="800" letter-spacing="-2" fill="url(#g)" text-anchor="middle" dominant-baseline="central">NR</text>
 
-  <text x="90" y="320" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="34" font-weight="600" letter-spacing="4" fill="#8a90a2">NIKHIL RAI</text>
+  <!-- eyebrow -->
+  <text x="82" y="298" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="32" font-weight="600" letter-spacing="5" fill="#8a90a2">NIKHIL RAI</text>
 
-  <text font-family="Inter, Segoe UI, Arial, sans-serif" font-size="74" font-weight="800" letter-spacing="-2.5">
-    <tspan x="88" y="408" fill="#f4f5f7">Creating Growth Through</tspan>
-    <tspan x="88" y="492" fill="url(#g)">Strategy, Partnerships</tspan>
-    <tspan x="88" y="492" dx="8" fill="#f4f5f7"> &amp; Execution</tspan>
-  </text>
+  <!-- headline -->
+  <g font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="70" font-weight="800" letter-spacing="-2.5">
+    <text x="80" y="378" fill="#f4f5f7">Creating Growth Through</text>
+    <text x="80" y="458" fill="url(#g)">Strategy, Partnerships</text>
+    <text x="80" y="538" fill="#f4f5f7">&amp; Execution</text>
+  </g>
 
-  <text x="90" y="560" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="28" font-weight="500" fill="#c3c7d1">Partnerships · Business Development · Lead Generation · Automation</text>
+  <!-- subtitle -->
+  <text x="82" y="596" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="26" font-weight="500" fill="#c3c7d1">Partnerships · Business Development · Lead Generation · Automation</text>
 </svg>
