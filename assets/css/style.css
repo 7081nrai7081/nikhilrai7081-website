@@ -16,7 +16,15 @@
 
     --shadow: 0 10px 40px rgba(0,0,0,.25);
 }
+.contact-card a{
+    color:var(--accent);
+    text-decoration:none;
+    font-weight:600;
+}
 
+.contact-card a:hover{
+    opacity:.8;
+}
 body.light-mode {
     --bg: #f8fafc;
     --bg-secondary: #ffffff;
