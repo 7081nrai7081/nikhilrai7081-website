@@ -3,6 +3,15 @@
    Premium / Apple × Linear × Founder
    ===================================================== */
 
+/* Self-hosted Inter (variable, latin) — no third-party font dependency */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/inter-variable.woff2') format('woff2');
+}
+
 :root {
   /* Dark theme (default) */
   --bg: #07080d;
@@ -865,6 +874,36 @@ a.card:hover .card-more svg { transform: translateX(4px); }
   border: 1px solid var(--border);
 }
 .cs-callout p { margin: 0; color: var(--text); font-size: 1.05rem; }
+
+.cs-results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 8px;
+}
+.cs-result {
+  padding: 22px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  transition: transform .3s var(--ease), border-color .3s;
+}
+.cs-result:hover { transform: translateY(-4px); border-color: var(--border-strong); }
+.cs-result .label {
+  display: block;
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 6px;
+}
+.cs-result p { color: var(--muted); font-size: .92rem; margin: 0; }
+@media (max-width: 720px) { .cs-results { grid-template-columns: 1fr; } }
 
 .cs-nav {
   display: flex;

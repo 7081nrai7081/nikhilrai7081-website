@@ -1,0 +1,23 @@
+#!/bin/sh
+# Auto-bump the ?v=N cache-busting version on style.css / main.js
+# references across all root .html files whenever either asset is committed.
+# Activate once per clone with:  git config core.hooksPath .githooks
+
+staged=$(git diff --cached --name-only)
+echo "$staged" | grep -qE 'assets/(css/style\.css|js/main\.js)$' || exit 0
+
+# Highest current version across the HTML files (default 1).
+cur=$(grep -hoE '(style\.css|main\.js)\?v=[0-9]+' *.html 2>/dev/null \
+      | grep -oE '[0-9]+$' | sort -n | tail -1)
+[ -z "$cur" ] && cur=1
+next=$((cur + 1))
+
+for f in *.html; do
+  [ -f "$f" ] || continue
+  if grep -qE '(style\.css|main\.js)\?v=[0-9]+' "$f"; then
+    sed -i -E "s/(style\.css\?v=)[0-9]+/\1$next/g; s/(main\.js\?v=)[0-9]+/\1$next/g" "$f"
+    git add "$f"
+  fi
+done
+
+echo "pre-commit: bumped asset cache-busting version to v=$next"

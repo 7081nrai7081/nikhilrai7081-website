@@ -11,10 +11,13 @@ work-lead-generation.html  Case study — Lead Generation Systems
 work-automation.html       Case study — Business Automation
 work-seo.html              Case study — SEO & Visibility
 work-operations.html       Case study — Digital Operations
-assets/css/style.css       Styles (dark/light theme, glassmorphism)
+404.html                   Styled not-found page (root-absolute asset paths)
+assets/css/style.css       Styles (dark/light theme, glassmorphism, self-hosted font)
 assets/js/main.js          Theme toggle, nav, scroll progress, reveal, contact form
-assets/images/             profile.jpg (portrait) + og-image.svg (social card)
+assets/fonts/              Self-hosted Inter (variable woff2)
+assets/images/             profile.jpg (portrait) + og-image.svg/.png (social card)
 favicon.svg                Site icon
+.githooks/pre-commit       Auto-bumps ?v=N cache-busting on CSS/JS commits
 robots.txt / sitemap.xml   SEO
 ```
 
@@ -34,11 +37,30 @@ the Google tag inside GTM (container `GTM-MB5JGJQL`) — not these files.
 
 ## Contact form
 
-`index.html` has a contact form wired to [Web3Forms](https://web3forms.com).
-It is inactive until configured: replace `YOUR_ACCESS_KEY_HERE` in `index.html`
-with a free Web3Forms access key.
+`index.html` has a contact form wired to [Web3Forms](https://web3forms.com)
+(submits client-side, no backend). The access key lives in the `access_key`
+hidden input. Web3Forms only accepts submissions from a real browser, so test
+from the deployed site, not via curl.
+
+## Assets & caching
+
+- **Fonts** are self-hosted (`assets/fonts/inter-variable.woff2`) via `@font-face`
+  in `style.css` — no Google Fonts dependency.
+- **Cache-busting:** CSS/JS are referenced with `?v=N`. A pre-commit hook bumps
+  `N` automatically whenever `style.css` or `main.js` is committed. Activate it
+  once per clone:
+
+  ```bash
+  git config core.hooksPath .githooks
+  ```
 
 ## Local preview
+
+Open `index.html` directly in a browser, or serve the folder:
+
+```bash
+python -m http.server 8000   # then visit http://localhost:8000
+```
 
 Open `index.html` directly in a browser, or serve the folder:
 
