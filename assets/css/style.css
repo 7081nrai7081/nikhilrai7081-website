@@ -54,6 +54,11 @@ body.light {
   --text-soft: #2c3344;
   --muted: #5b6376;
 
+  /* Darkened accents for AA contrast on light surfaces (the bright dark-mode
+     values fail WCAG on white). The fixed --grad is unchanged. */
+  --brand-2: #1e66d6;
+  --accent: #0f766e;
+
   --shadow-sm: 0 4px 16px rgba(15, 23, 42, .06);
   --shadow: 0 24px 50px -18px rgba(15, 23, 42, .18);
   --shadow-glow: 0 0 60px -10px rgba(109, 93, 252, .25);
@@ -191,6 +196,11 @@ h1, h2, h3 { line-height: 1.1; letter-spacing: -0.02em; font-weight: 700; }
 }
 @keyframes gradientShift {
   to { background-position: 220% center; }
+}
+/* Light mode: darker gradient so headline text stays legible on white
+   (the dark-mode teal tail drops to ~1.7:1 on a light background). */
+body.light .gradient-text {
+  background-image: linear-gradient(120deg, #6d4bff 0%, #1e66d6 55%, #0f766e 100%);
 }
 
 /* ---------- Scroll progress ---------- */
