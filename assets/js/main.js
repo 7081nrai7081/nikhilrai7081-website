@@ -280,5 +280,5 @@
     }
   });
 
-  console.log('%cNikhil Rai — Portfolio', 'font-size:13px;color:#6d5dfc;font-weight:700;');
+  console.log('%cNikhil Rai — Portfolio', 'font-size:13px;color:#6366f1;font-weight:700;');
 })();
