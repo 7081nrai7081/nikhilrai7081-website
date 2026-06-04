@@ -105,6 +105,26 @@ html { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent;
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
 
+/* Skip-to-content link — visible only when focused via keyboard */
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  z-index: 3000;
+  transform: translate(-50%, -150%);
+  padding: 11px 20px;
+  border-radius: 12px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  font-weight: 600;
+  font-size: .92rem;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  transition: transform .25s var(--ease);
+}
+.skip-link:focus-visible { transform: translate(-50%, 0); }
+
 /* Ambient backdrop */
 .backdrop {
   position: fixed;
