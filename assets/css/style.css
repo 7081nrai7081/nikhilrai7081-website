@@ -152,6 +152,13 @@ html { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent;
     radial-gradient(38rem 30rem at 96% 4%, rgba(56, 189, 248, .18), transparent 60%),
     radial-gradient(42rem 38rem at 62% 112%, rgba(34, 211, 238, .13), transparent 60%);
   transition: opacity .4s var(--ease);
+  animation: auroraDrift 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes auroraDrift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(1.8%, 1.4%, 0) scale(1.06); }
+  100% { transform: translate3d(-1.6%, -1%, 0) scale(1.04); }
 }
 .backdrop::after {
   content: '';
@@ -685,7 +692,19 @@ body.light .gradient-text {
   opacity: 0;
   transition: opacity .4s var(--ease);
 }
-.card > * { position: relative; }
+.card > * { position: relative; z-index: 1; }
+/* Diagonal light sweep on hover — premium tactile feedback */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 32%, rgba(255, 255, 255, .1) 48%, transparent 62%);
+  transform: translateX(-130%);
+  transition: transform .85s var(--ease);
+}
+.card:hover::after { transform: translateX(130%); }
 .card:hover {
   transform: translateY(-8px);
   border-color: color-mix(in srgb, var(--brand) 38%, var(--border-strong));
