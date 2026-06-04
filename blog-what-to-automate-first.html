@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<!-- DRAFT: review and add your own examples/voice before sharing widely. -->
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Consent Mode defaults (must run before GTM) -->
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});
+try{if(localStorage.getItem('cookie_consent')==='granted'){gtag('consent','update',{analytics_storage:'granted'});}}catch(e){}
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MB5JGJQL');</script>
+<!-- End Google Tag Manager -->
+
+<title>What to Automate First (and What to Leave Alone) — Nikhil Rai</title>
+<meta name="description" content="Automation should buy back time, but most teams automate the wrong things first. A simple way to decide what to automate, what to fix, and what to leave to people.">
+<meta name="author" content="Nikhil Rai">
+<meta name="theme-color" content="#07080d">
+
+<meta property="og:title" content="What to Automate First (and What to Leave Alone)">
+<meta property="og:description" content="A simple way to decide what to automate, what to fix first, and what to leave to people.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nikhilrai7081.com/blog-what-to-automate-first">
+<meta property="og:image" content="https://nikhilrai7081.com/assets/images/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="canonical" href="https://nikhilrai7081.com/blog-what-to-automate-first">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="shortcut icon" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<link rel="preload" href="/assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/style.css?v=10">
+<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BlogPosting",
+  "headline":"What to Automate First (and What to Leave Alone)",
+  "description":"A simple way to decide what to automate, what to fix first, and what to leave to people.",
+  "datePublished":"2026-06-04",
+  "author":{"@type":"Person","name":"Nikhil Rai","url":"https://nikhilrai7081.com"},
+  "mainEntityOfPage":"https://nikhilrai7081.com/blog-what-to-automate-first",
+  "image":"https://nikhilrai7081.com/assets/images/og-image.png"
+}
+</script>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MB5JGJQL"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div class="backdrop" aria-hidden="true"></div>
+<div class="progress-bar" id="progress"></div>
+
+<header class="header" id="header">
+  <div class="container">
+    <a href="/" class="logo">Nikhil<span>Rai</span></a>
+    <nav class="nav" id="nav">
+      <a href="/#about">About</a>
+      <a href="/#expertise">Expertise</a>
+      <a href="/services">Services</a>
+      <a href="/#journey">Journey</a>
+      <a href="/#projects">Projects</a>
+      <a href="/blog" class="active">Blog</a>
+      <a href="/#contact">Contact</a>
+      <button class="theme-btn" id="theme-toggle" aria-label="Toggle color theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </nav>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+<section class="cs-hero">
+  <div class="container">
+    <a href="/blog" class="cs-back">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back to blog
+    </a>
+    <span class="cs-tag">Automation</span>
+    <h1>What to Automate First (and What to Leave Alone)</h1>
+    <div class="cs-meta">
+      <div class="m"><small>Published</small><b>June 4, 2026</b></div>
+      <div class="m"><small>Read</small><b>6 min</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="cs-body">
+  <div class="container">
+
+    <div class="cs-block">
+      <p>Automation is sold as a way to buy back time, and it can be — but most teams reach for it in the wrong order. They automate the flashy thing, or the thing a tool happens to make easy, and end up with a faster version of a process that was never worth speeding up. The skill isn't wiring tools together; it's choosing <em>what</em> to wire together, and in what order. Here's the way I think about it.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Automate decisions you've already made</h2>
+      <p>The best candidates for automation are the tasks where the decision is already settled and only the execution repeats. "When a form is submitted, add the lead to the CRM and send the welcome email" is a decision you make once and then repeat a thousand times. Anything that still requires fresh judgement each time — pricing a non-standard deal, handling an upset customer, deciding strategy — is a poor fit. Automate the <strong>repetition</strong>, not the <strong>thinking</strong>.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Rank tasks by time × frequency × friction</h2>
+      <p>Not all repetitive work is worth automating. A task you do once a quarter rarely earns back the effort of building and maintaining the automation. Score your candidates on three things and start at the top:</p>
+      <div class="cs-steps">
+        <div class="cs-step"><span class="num">1</span><div><h3>Time</h3><p>How long does one round take? Five seconds saved isn't worth a fragile integration.</p></div></div>
+        <div class="cs-step"><span class="num">2</span><div><h3>Frequency</h3><p>How often does it happen? Daily beats monthly by an order of magnitude.</p></div></div>
+        <div class="cs-step"><span class="num">3</span><div><h3>Friction</h3><p>How error-prone or draining is it? Tasks people dread or fumble are worth more than the clock alone suggests.</p></div></div>
+      </div>
+      <p>High on all three? Automate it first. Low on all three? Leave it — your attention is better spent elsewhere.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Fix the process before you automate it</h2>
+      <p>Automating a broken process just gives you a faster, more confident way to be wrong. If the steps are unclear, the data is messy, or nobody agrees who owns what, no tool will save you. Map the workflow as it really runs today, cut the steps that exist out of habit, and only then decide what to hand to a machine. Simplify first, automate second.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Start at the seams</h2>
+      <p>The highest-leverage automations usually live at the hand-offs — where work passes between two tools or two people. That's where things get re-typed, dropped, or delayed. Connecting your form to your CRM, your CRM to your email, your invoicing to your accounting: each removes a manual copy-paste and a chance to forget. Look for the seams in your process and stitch those first.</p>
+      <div class="cs-tags">
+        <span>Form → CRM</span><span>CRM → Email</span><span>Lead → Calendar</span><span>Invoice → Accounting</span><span>Support → Tracker</span>
+      </div>
+    </div>
+
+    <div class="cs-block">
+      <h2>What to leave alone</h2>
+      <p>Knowing what <em>not</em> to automate is half the discipline. Leave these to people:</p>
+      <div class="cs-tags">
+        <span>Judgement calls</span><span>Relationship moments</span><span>Rare one-offs</span><span>Anything still changing weekly</span><span>The first human reply</span>
+      </div>
+      <p>A warm note to a key partner, a tricky negotiation, the welcome that sets the tone for a new client — these are where the human touch <em>is</em> the value. Automating them doesn't save time so much as quietly erode the thing that made the relationship work.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Keep a human in the loop where it counts</h2>
+      <p>Full automation isn't the only goal — and often shouldn't be. For anything customer-facing or high-stakes, the smart move is to automate the <em>preparation</em> and leave the <em>send</em> to a person: draft the reply, surface the data, queue the action, then let someone glance and approve. You get most of the speed without handing your reputation to a rule you wrote at 2pm on a Tuesday.</p>
+    </div>
+
+    <div class="cs-block">
+      <div class="cs-callout"><p>Automate the decisions you've already made, fix the process before you wire it up, and leave the judgement and the relationships to people. Speed is only an asset when it's pointed at the right work.</p></div>
+    </div>
+
+    <div class="cs-cta">
+      <h2>Want to automate the right things?</h2>
+      <p>I help teams map their workflows and automate the work that actually drains their time — without breaking what makes them good.</p>
+      <a href="https://calendly.com/nikhilrai7081/30min" target="_blank" rel="noopener" class="btn btn-primary">Book a Call
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <a href="/" class="logo">Nikhil<span>Rai</span></a>
+      <nav class="footer-nav">
+        <a href="/#about">About</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#contact">Contact</a>
+        <a href="/blog">Blog</a>
+        <a href="/privacy">Privacy</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Nikhil Rai</span>
+      <span>Growth · Partnerships · Execution</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js?v=10"></script>
+
+</body>
+</html>
