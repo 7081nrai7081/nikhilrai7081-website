@@ -1,3 +1,9 @@
 # Internal planning / source briefs — not for the public site repo
 nikhil-linkedin-profile-data.md
 website-update-brief.md
+
+# Internal SEO tracker — not for public deploy
+SEO-TODO.md
+
+# Unfinished blog template (has {{placeholders}}) — keep local only
+blog-template.html
