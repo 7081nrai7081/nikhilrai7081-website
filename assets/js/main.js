@@ -106,11 +106,20 @@
   const revealEls = doc.querySelectorAll('.reveal');
 
   if ('IntersectionObserver' in window) {
+    // Precompute each element's position among its .reveal siblings so grouped
+    // items (e.g. a row of cards) stagger in document order, not in the order
+    // the observer happens to batch them.
+    revealEls.forEach((el) => {
+      const peers = Array.from(el.parentNode.children).filter((c) => c.classList.contains('reveal'));
+      el.dataset.stagger = peers.indexOf(el);
+    });
+
     const io = new IntersectionObserver((entries, obs) => {
-      entries.forEach((entry, i) => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           // Slight stagger for grouped elements.
-          const delay = Math.min(i * 60, 240);
+          const idx = Number(entry.target.dataset.stagger) || 0;
+          const delay = Math.min(idx * 60, 240);
           entry.target.style.transitionDelay = delay + 'ms';
           entry.target.classList.add('show');
           obs.unobserve(entry.target);
