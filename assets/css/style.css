@@ -1522,6 +1522,10 @@ figure.testimonial { margin: 0; }
   .hero::before, .hero-visual::before, .hero-visual::after { display: none; }
   .hero::after { font-size: 9rem; bottom: -2rem; }
 }
+/* On narrow phones the floating portrait chips crowd the image — hide them. */
+@media (max-width: 480px) {
+  .chip { display: none; }
+}
 
 /* ---- Image header inside cards (work/portfolio) ---- */
 .card-media {
