@@ -1,42 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#6366f1"/>
-      <stop offset=".55" stop-color="#38bdf8"/>
-      <stop offset="1" stop-color="#22d3ee"/>
-    </linearGradient>
-    <radialGradient id="glow1" cx="0" cy="0" r="1" gradientTransform="translate(160 90) scale(620)">
-      <stop offset="0" stop-color="#6366f1" stop-opacity=".5"/>
-      <stop offset="1" stop-color="#6366f1" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="glow2" cx="0" cy="0" r="1" gradientTransform="translate(1100 560) scale(620)">
-      <stop offset="0" stop-color="#22d3ee" stop-opacity=".4"/>
-      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(1120 70) scale(560)">
+      <stop offset="0" stop-color="#e23a5e" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#e23a5e" stop-opacity="0"/>
     </radialGradient>
   </defs>
 
-  <rect width="1200" height="630" fill="#060711"/>
-  <rect width="1200" height="630" fill="url(#glow1)"/>
-  <rect width="1200" height="630" fill="url(#glow2)"/>
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
 
-  <g fill="none" stroke="#ffffff" stroke-opacity=".05">
+  <g fill="none" stroke="#181318" stroke-opacity=".05">
     <path d="M0 157.5H1200M0 315H1200M0 472.5H1200M300 0V630M600 0V630M900 0V630"/>
   </g>
 
   <!-- monogram -->
-  <rect x="80" y="78" width="84" height="84" rx="20" fill="#0d101c" stroke="url(#g)" stroke-width="2.5"/>
-  <text x="122" y="123" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="38" font-weight="800" letter-spacing="-2" fill="url(#g)" text-anchor="middle" dominant-baseline="central">NR</text>
+  <rect x="80" y="78" width="84" height="84" rx="18" fill="#ffffff" stroke="#e23a5e" stroke-width="2.5"/>
+  <text x="122" y="123" font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="38" font-weight="800" letter-spacing="-2" fill="#e23a5e" text-anchor="middle" dominant-baseline="central">NR</text>
 
   <!-- eyebrow -->
-  <text x="82" y="298" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="32" font-weight="600" letter-spacing="5" fill="#8b92a6">NIKHIL RAI</text>
+  <text x="82" y="298" font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="30" font-weight="700" letter-spacing="6" fill="#756f77">NIKHIL RAI</text>
 
   <!-- headline -->
-  <g font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="70" font-weight="800" letter-spacing="-2.5">
-    <text x="80" y="378" fill="#f5f6fa">Creating Growth Through</text>
-    <text x="80" y="458" fill="url(#g)">Strategy, Partnerships</text>
-    <text x="80" y="538" fill="#f5f6fa">&amp; Execution</text>
+  <g font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="70" font-weight="800" letter-spacing="-2.5">
+    <text x="80" y="378" fill="#181318">Creating Growth Through</text>
+    <text x="80" y="458" fill="#e23a5e">Strategy, Partnerships</text>
+    <text x="80" y="538" fill="#181318">&amp; Execution</text>
   </g>
 
   <!-- subtitle -->
-  <text x="82" y="596" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="26" font-weight="500" fill="#c6cbd9">Partnerships · Business Development · Lead Generation · Automation</text>
+  <text x="82" y="596" font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="26" font-weight="500" fill="#4a444b">Partnerships · Business Development · Lead Generation · Automation</text>
 </svg>
