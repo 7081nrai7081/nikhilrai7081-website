@@ -3,7 +3,7 @@
    Premium / Apple × Linear × Founder
    ===================================================== */
 
-/* Self-hosted Inter (variable, latin) — no third-party font dependency */
+/* Self-hosted Inter (body) + Poppins (display) — no third-party dependency */
 @font-face {
   font-family: 'Inter';
   font-style: normal;
@@ -11,59 +11,67 @@
   font-display: swap;
   src: url('../fonts/inter-variable.woff2') format('woff2');
 }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 600; font-display: swap; src: url('../fonts/poppins-600.woff2') format('woff2'); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 700; font-display: swap; src: url('../fonts/poppins-700.woff2') format('woff2'); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 800; font-display: swap; src: url('../fonts/poppins-800.woff2') format('woff2'); }
 
 :root {
-  /* Dark theme (default) — Refined Indigo → Sky → Cyan */
-  --bg: #060711;
-  --bg-elev: #0d101c;
-  --surface: rgba(255, 255, 255, 0.035);
-  --surface-2: rgba(255, 255, 255, 0.065);
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.16);
+  /* Light agency theme (default) — white base, crimson accent */
+  --bg: #ffffff;
+  --bg-elev: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f7f3f4;
+  --border: rgba(20, 14, 18, 0.10);
+  --border-strong: rgba(20, 14, 18, 0.18);
 
-  --text: #f5f6fa;
-  --text-soft: #c6cbd9;
-  --muted: #8b92a6;
+  --text: #181318;
+  --text-soft: #4a444b;
+  --muted: #756f77;
 
-  --brand: #6366f1;     /* indigo-500 */
-  --brand-2: #38bdf8;   /* sky-400 */
-  --accent: #22d3ee;    /* cyan-400 */
+  --brand: #e23a5e;     /* crimson */
+  --brand-2: #e23a5e;
+  --accent: #c42a4b;    /* deeper red — small text / AA contrast */
 
-  --grad: linear-gradient(120deg, #6366f1 0%, #38bdf8 52%, #22d3ee 100%);
-  --grad-soft: linear-gradient(120deg, rgba(99, 102, 241, .18), rgba(34, 211, 238, .16));
+  --grad: #e23a5e;
+  --grad-soft: rgba(226, 58, 94, 0.10);
 
-  --shadow-sm: 0 4px 16px rgba(0, 0, 0, .4);
-  --shadow: 0 24px 56px -16px rgba(0, 0, 0, .62);
-  --shadow-glow: 0 0 60px -10px rgba(99, 102, 241, .5);
+  /* Dark crimson feature bands */
+  --dark-bg: #1c0d13;
+  --dark-bg-2: #34101f;
 
-  --radius: 20px;
-  --radius-lg: 28px;
+  --shadow-sm: 0 2px 10px rgba(20, 12, 16, .06);
+  --shadow: 0 22px 50px -22px rgba(20, 12, 16, .22);
+  --shadow-glow: 0 16px 40px -16px rgba(226, 58, 94, .35);
+
+  --radius: 12px;
+  --radius-lg: 16px;
   --maxw: 1140px;
   --ease: cubic-bezier(.22, 1, .36, 1);
 }
 
-body.light {
-  --bg: #f4f6fc;
-  --bg-elev: #ffffff;
-  --surface: rgba(255, 255, 255, 0.72);
-  --surface-2: rgba(255, 255, 255, 0.92);
-  --border: rgba(15, 23, 42, 0.07);
-  --border-strong: rgba(15, 23, 42, 0.13);
+body.dark {
+  /* Optional dark crimson theme (toggle) */
+  --bg: #140b10;
+  --bg-elev: #1d1019;
+  --surface: #1d1019;
+  --surface-2: #271320;
+  --border: rgba(255, 235, 242, 0.12);
+  --border-strong: rgba(255, 235, 242, 0.22);
 
-  --text: #0c1322;
-  --text-soft: #303849;
-  --muted: #5a6275;
+  --text: #f6eef1;
+  --text-soft: #d3c7cd;
+  --muted: #9a8e96;
 
-  --brand: #4f46e5;     /* indigo-600 — richer on white */
+  --brand: #ff5c7d;
+  --brand-2: #ff5c7d;
+  --accent: #ff829a;
 
-  /* Darkened accents for AA contrast on light surfaces (the bright dark-mode
-     values fail WCAG on white). The fixed --grad is unchanged. */
-  --brand-2: #2563eb;
-  --accent: #0e7490;
+  --grad: #ff5c7d;
+  --grad-soft: rgba(255, 92, 125, 0.14);
 
-  --shadow-sm: 0 4px 16px rgba(15, 23, 42, .06);
-  --shadow: 0 26px 54px -20px rgba(30, 41, 90, .2);
-  --shadow-glow: 0 0 60px -10px rgba(99, 102, 241, .26);
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, .4);
+  --shadow: 0 22px 50px -22px rgba(0, 0, 0, .7);
+  --shadow-glow: 0 16px 40px -16px rgba(255, 92, 125, .4);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -135,7 +143,7 @@ html { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent;
 }
 .skip-link:focus-visible { transform: translate(-50%, 0); }
 
-/* Ambient backdrop */
+/* Ambient backdrop — one quiet crimson wash, no grid, no grain */
 .backdrop {
   position: fixed;
   inset: 0;
@@ -147,45 +155,8 @@ html { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent;
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(42rem 32rem at 10% -8%, rgba(99, 102, 241, .26), transparent 60%),
-    radial-gradient(38rem 30rem at 96% 4%, rgba(56, 189, 248, .18), transparent 60%),
-    radial-gradient(42rem 38rem at 62% 112%, rgba(34, 211, 238, .13), transparent 60%);
-  transition: opacity .4s var(--ease);
-  animation: auroraDrift 26s ease-in-out infinite alternate;
-  will-change: transform;
+  background: radial-gradient(48rem 30rem at 100% -12%, var(--grad-soft), transparent 62%);
 }
-@keyframes auroraDrift {
-  0%   { transform: translate3d(0, 0, 0) scale(1); }
-  50%  { transform: translate3d(1.8%, 1.4%, 0) scale(1.06); }
-  100% { transform: translate3d(-1.6%, -1%, 0) scale(1.04); }
-}
-.backdrop::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 64px 64px;
-  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
-  opacity: .5;
-}
-
-/* Subtle film grain — adds tactile, premium depth without weight.
-   Attached to body::after so it needs no markup change on any page. */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: .04;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-body.light::after { opacity: .025; mix-blend-mode: multiply; }
 
 .container {
   width: min(var(--maxw), 90%);
@@ -204,41 +175,33 @@ body.light::after { opacity: .025; mix-blend-mode: multiply; }
 }
 
 /* ---------- Typography ---------- */
-h1, h2, h3 { line-height: 1.1; letter-spacing: -0.02em; font-weight: 700; }
+h1, h2, h3 {
+  font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+  line-height: 1.14;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+}
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: .8rem;
-  font-weight: 600;
-  letter-spacing: .14em;
+  gap: 9px;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--brand);
 }
 .eyebrow::before {
   content: '';
-  width: 24px;
+  width: 22px;
   height: 2px;
   border-radius: 2px;
-  background: var(--grad);
+  background: var(--brand);
 }
 
+/* Highlighted phrase inside headlines — solid crimson, no animation */
 .gradient-text {
-  background: var(--grad);
-  background-size: 220% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: gradientShift 9s linear infinite;
-}
-@keyframes gradientShift {
-  to { background-position: 220% center; }
-}
-/* Light mode: darker gradient so headline text stays legible on white
-   (the dark-mode teal tail drops to ~1.7:1 on a light background). */
-body.light .gradient-text {
-  background-image: linear-gradient(120deg, #4f46e5 0%, #2563eb 55%, #0e7490 100%);
+  color: var(--brand);
 }
 
 /* ---------- Scroll progress ---------- */
@@ -297,7 +260,7 @@ body.light .gradient-text {
   border-radius: 10px;
   transition: color .25s, background .25s;
 }
-.nav a:hover { color: var(--text); background: var(--surface); }
+.nav a:hover { color: var(--text); background: var(--surface-2); }
 .nav a.active { color: var(--text); }
 .nav a::after {
   content: '';
@@ -380,12 +343,12 @@ body.light .gradient-text {
   width: 8px; height: 8px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 0 4px rgba(34, 211, 238, .2);
+  box-shadow: 0 0 0 4px rgba(226, 58, 94, .25);
   animation: pulse 2.4s var(--ease) infinite;
 }
 @keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 4px rgba(34, 211, 238, .2); }
-  50% { box-shadow: 0 0 0 7px rgba(34, 211, 238, .04); }
+  0%, 100% { box-shadow: 0 0 0 4px rgba(226, 58, 94, .25); }
+  50% { box-shadow: 0 0 0 7px rgba(226, 58, 94, .04); }
 }
 .hero h1 {
   font-size: clamp(2.5rem, 6vw, 4.4rem);
@@ -431,7 +394,7 @@ body.light .gradient-text {
 .btn-primary:hover {
   transform: translateY(-3px);
   background-position: right center;
-  box-shadow: 0 16px 40px -10px rgba(99, 102, 241, .7), inset 0 1px 0 rgba(255, 255, 255, .35);
+  box-shadow: 0 16px 40px -10px rgba(226, 58, 94, .4), inset 0 1px 0 rgba(255, 255, 255, .35);
 }
 .btn-primary:hover svg { transform: translateX(4px); }
 .btn:active { transform: translateY(-1px) scale(.97); }
@@ -628,7 +591,7 @@ body.light .gradient-text {
   transform: translateY(-6px);
   border-color: color-mix(in srgb, var(--brand) 32%, var(--border-strong));
   background: var(--surface-2);
-  box-shadow: 0 0 44px -18px rgba(99, 102, 241, .4);
+  box-shadow: 0 0 44px -18px rgba(226, 58, 94, .22);
 }
 .stat .ico {
   display: grid;
@@ -719,7 +682,7 @@ body.light .gradient-text {
 .card:hover {
   transform: translateY(-8px);
   border-color: color-mix(in srgb, var(--brand) 38%, var(--border-strong));
-  box-shadow: var(--shadow), 0 0 50px -16px rgba(99, 102, 241, .45);
+  box-shadow: var(--shadow), 0 0 50px -16px rgba(226, 58, 94, .22);
 }
 .card:hover::before { opacity: 1; }
 a.card:active { transform: translateY(-4px) scale(.992); }
@@ -805,7 +768,7 @@ a.card:active { transform: translateY(-4px) scale(.992); }
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(30rem 20rem at 50% -20%, rgba(99, 102, 241, .22), transparent 70%);
+  background: radial-gradient(30rem 20rem at 50% -20%, rgba(226, 58, 94, .14), transparent 70%);
   pointer-events: none;
 }
 .contact-wrap > * { position: relative; }
@@ -1230,7 +1193,7 @@ a.card:hover .card-more svg { transform: translateX(4px); }
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(28rem 16rem at 100% 0%, rgba(99, 102, 241, .18), transparent 70%);
+  background: radial-gradient(28rem 16rem at 100% 0%, rgba(226, 58, 94, .12), transparent 70%);
   pointer-events: none;
 }
 .newsletter-card > * { position: relative; }
@@ -1404,3 +1367,231 @@ a.card:hover .card-more svg { transform: translateX(4px); }
 }
 figure.testimonial { margin: 0; }
 .testimonial blockquote.quote { margin: 0 0 22px; }
+
+/* =====================================================
+   Dark crimson feature band (two-tone, like the reference)
+   Scopes token overrides so child components adapt automatically.
+   ===================================================== */
+.band-dark {
+  background: linear-gradient(165deg, var(--dark-bg) 0%, var(--dark-bg-2) 100%);
+  color: var(--text); /* re-assert so children inherit the light band text, not body's dark */
+  --text: #f8eef2;
+  --text-soft: #d8ccd2;
+  --muted: #ad9ea6;
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-2: rgba(255, 255, 255, 0.09);
+  --border: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.22);
+  --brand: #ff7a96;
+  --brand-2: #ff7a96;
+  --grad: #ff7a96;
+  --grad-soft: rgba(255, 122, 150, 0.16);
+}
+.section.band-dark { padding-block: clamp(58px, 9vh, 100px); }
+.band-dark .stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+/* gentle angled top edge + dot texture for the dark band */
+.section.band-dark {
+  clip-path: polygon(0 22px, 100% 0, 100% 100%, 0 100%);
+  position: relative;
+}
+.section.band-dark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, .9) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+  opacity: .05;
+  pointer-events: none;
+}
+.section.band-dark > .container { position: relative; z-index: 1; }
+
+/* =====================================================
+   Brand decoration system — crisp crimson motifs
+   (dot grids, outline shapes, monogram, framed portrait,
+   tinted sections). Decorative only — aria-hidden / pseudo.
+   ===================================================== */
+
+/* Alternating soft-tint section background for rhythm */
+.section.tint { background: var(--surface-2); }
+
+/* Reusable dot-grid block */
+.dotgrid {
+  position: absolute;
+  background-image: radial-gradient(currentColor 1.4px, transparent 1.6px);
+  background-size: 17px 17px;
+  color: var(--brand);
+  opacity: .22;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---- Hero: layered brand accents ---- */
+.hero { position: relative; overflow: hidden; }
+.hero > .container { position: relative; z-index: 1; }
+/* big faint monogram watermark */
+.hero::after {
+  content: 'NR';
+  position: absolute;
+  right: -1.5rem;
+  bottom: -5rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  font-size: clamp(13rem, 30vw, 27rem);
+  line-height: .8;
+  letter-spacing: -.04em;
+  color: var(--brand);
+  opacity: .05;
+  pointer-events: none;
+  z-index: 0;
+}
+/* dot-grid accent, upper area */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 14%;
+  left: -40px;
+  width: 180px;
+  height: 150px;
+  background-image: radial-gradient(var(--brand) 1.4px, transparent 1.6px);
+  background-size: 17px 17px;
+  opacity: .2;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Branded portrait frame: crimson offset frame + dot-grid behind */
+.hero-visual { position: relative; }
+.hero-visual::before {
+  content: '';
+  position: absolute;
+  right: -6%;
+  top: -8%;
+  width: 130px;
+  height: 130px;
+  background-image: radial-gradient(var(--brand) 1.4px, transparent 1.6px);
+  background-size: 16px 16px;
+  opacity: .25;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-visual::after {
+  content: '';
+  position: absolute;
+  left: 4%;
+  bottom: -6%;
+  width: 64px;
+  height: 64px;
+  border: 2px solid var(--brand);
+  border-radius: 14px;
+  transform: rotate(12deg);
+  opacity: .5;
+  pointer-events: none;
+  z-index: 0;
+}
+/* Portrait ring becomes a crisp branded offset frame (not a blurred glow) */
+.portrait .ring {
+  inset: auto;
+  position: absolute;
+  right: -16px;
+  bottom: -16px;
+  width: 70%;
+  height: 70%;
+  background: none;
+  border: 2px solid var(--brand);
+  border-radius: 18px;
+  opacity: .55;
+  filter: none;
+  animation: none;
+  z-index: -1;
+}
+
+/* Section heading accent — a small crimson square + outline ring per centered head */
+.section-head.center { position: relative; }
+
+/* Outline ring accent usable anywhere */
+.decor-ring {
+  position: absolute;
+  border: 2px solid var(--brand);
+  border-radius: 50%;
+  opacity: .35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (max-width: 720px) {
+  .hero::before, .hero-visual::before, .hero-visual::after { display: none; }
+  .hero::after { font-size: 9rem; bottom: -2rem; }
+}
+
+/* ---- Image header inside cards (work/portfolio) ---- */
+.card-media {
+  display: block;
+  margin: -30px -30px 22px;
+  height: 188px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+.card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .6s var(--ease);
+}
+a.card:hover .card-media img { transform: scale(1.06); }
+
+/* ---- Feature band: real photo + checklist (the "why" section) ---- */
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(32px, 5vw, 66px);
+  align-items: center;
+}
+.feature-media {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.feature-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  aspect-ratio: 5 / 4;
+}
+/* small crimson accent square behind the photo */
+.feature-media::after {
+  content: '';
+  position: absolute;
+  right: -18px; bottom: -18px;
+  width: 90px; height: 90px;
+  border: 2px solid var(--brand);
+  border-radius: 16px;
+  z-index: -1;
+}
+.feature-copy .eyebrow { margin-bottom: 14px; }
+.feature-copy h2 {
+  font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+  margin-bottom: 16px;
+}
+.feature-copy > p { color: var(--text-soft); font-size: 1.06rem; margin-bottom: 26px; max-width: 52ch; }
+.feature-list { list-style: none; display: grid; gap: 16px; margin: 0; padding: 0; }
+.feature-list li { display: flex; align-items: flex-start; gap: 13px; }
+.feature-list .ck {
+  flex-shrink: 0;
+  display: grid; place-items: center;
+  width: 26px; height: 26px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #fff;
+}
+.feature-list b { font-weight: 600; display: block; margin-bottom: 2px; }
+.feature-list span.t { color: var(--muted); font-size: .95rem; }
+@media (max-width: 860px) {
+  .feature-grid { grid-template-columns: 1fr; gap: 36px; }
+  .feature-media img { aspect-ratio: 16 / 10; }
+}

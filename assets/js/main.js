@@ -22,29 +22,28 @@
   const iconSun = doc.querySelector('.icon-sun');
 
   function applyTheme(theme) {
-    const light = theme === 'light';
-    body.classList.toggle('light', light);
+    const dark = theme === 'dark';
+    body.classList.toggle('dark', dark);
+    // Light is default: show the moon (click → go dark); dark shows the sun.
     if (iconMoon && iconSun) {
-      iconMoon.style.display = light ? 'none' : 'block';
-      iconSun.style.display = light ? 'block' : 'none';
+      iconMoon.style.display = dark ? 'none' : 'block';
+      iconSun.style.display = dark ? 'block' : 'none';
     }
     if (themeToggle) {
-      themeToggle.setAttribute('aria-label', light ? 'Switch to dark theme' : 'Switch to light theme');
+      themeToggle.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
     }
   }
 
-  // Initial theme: saved preference, else system, else dark.
+  // Initial theme: saved preference, else always the light agency look.
+  // (Don't auto-follow the OS — the brand design is light by default.)
   let stored = null;
   try { stored = localStorage.getItem('theme'); } catch (e) {}
-  if (!stored) {
-    stored = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches
-      ? 'light' : 'dark';
-  }
+  if (stored !== 'dark' && stored !== 'light') stored = 'light';
   applyTheme(stored);
 
   if (themeToggle) {
     themeToggle.addEventListener('click', () => {
-      const next = body.classList.contains('light') ? 'dark' : 'light';
+      const next = body.classList.contains('dark') ? 'light' : 'dark';
       applyTheme(next);
       try { localStorage.setItem('theme', next); } catch (e) {}
     });
@@ -289,5 +288,5 @@
     }
   });
 
-  console.log('%cNikhil Rai — Portfolio', 'font-size:13px;color:#6366f1;font-weight:700;');
+  console.log('%cNikhil Rai — Portfolio', 'font-size:13px;color:#e23a5e;font-weight:700;');
 })();
