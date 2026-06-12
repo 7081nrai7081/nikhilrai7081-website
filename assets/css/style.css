@@ -1660,3 +1660,5 @@ a.card:hover .card-media img { transform: scale(1.06); }
   .lang-switch { margin: 6px 0 0; }
   .lang-menu { right: auto; left: 0; }
 }
+
+/* i18n: sitemap auto-regen + language switcher (v=22+) */

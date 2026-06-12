@@ -1,23 +1,38 @@
 #!/bin/sh
-# Auto-bump the ?v=N cache-busting version on style.css / main.js
-# references across all root .html files whenever either asset is committed.
-# Activate once per clone with:  git config core.hooksPath .githooks
+# Pre-commit automation (activate once per clone: git config core.hooksPath .githooks)
+#   1. When style.css / main.js change, bump the ?v=N cache-busting version
+#      across every tracked .html file (root + language subfolders).
+#   2. Always regenerate sitemap.xml from the tracked .html files.
+# Both steps are fail-safe: they never abort the commit.
 
+hookdir=$(dirname "$0")
+
+# --- 1. Cache-bust on asset change ---
 staged=$(git diff --cached --name-only)
-echo "$staged" | grep -qE 'assets/(css/style\.css|js/main\.js)$' || exit 0
+if printf '%s\n' "$staged" | grep -qE 'assets/(css/style\.css|js/main\.js)$'; then
+  htmls=$(git ls-files '*.html')
+  cur=$(printf '%s\n' "$htmls" | tr '\n' '\0' | xargs -0 grep -hoE '(style\.css|main\.js)\?v=[0-9]+' 2>/dev/null \
+        | grep -oE '[0-9]+$' | sort -n | tail -1)
+  [ -z "$cur" ] && cur=1
+  next=$((cur + 1))
+  printf '%s\n' "$htmls" | while IFS= read -r f; do
+    [ -f "$f" ] || continue
+    if grep -qE '(style\.css|main\.js)\?v=[0-9]+' "$f"; then
+      sed -i -E "s/(style\.css\?v=)[0-9]+/\1$next/g; s/(main\.js\?v=)[0-9]+/\1$next/g" "$f"
+      git add "$f"
+    fi
+  done
+  echo "pre-commit: bumped asset cache-busting version to v=$next"
+fi
 
-# Highest current version across the HTML files (default 1).
-cur=$(grep -hoE '(style\.css|main\.js)\?v=[0-9]+' *.html 2>/dev/null \
-      | grep -oE '[0-9]+$' | sort -n | tail -1)
-[ -z "$cur" ] && cur=1
-next=$((cur + 1))
-
-for f in *.html; do
-  [ -f "$f" ] || continue
-  if grep -qE '(style\.css|main\.js)\?v=[0-9]+' "$f"; then
-    sed -i -E "s/(style\.css\?v=)[0-9]+/\1$next/g; s/(main\.js\?v=)[0-9]+/\1$next/g" "$f"
-    git add "$f"
+# --- 2. Sitemap (always; sees any HTML just re-staged above) ---
+if sh "$hookdir/gen-sitemap.sh"; then
+  if ! git diff --quiet -- sitemap.xml || ! git ls-files --error-unmatch sitemap.xml >/dev/null 2>&1; then
+    git add sitemap.xml
+    echo "pre-commit: regenerated sitemap.xml"
   fi
-done
+else
+  echo "pre-commit: sitemap generation failed; sitemap.xml left unchanged" >&2
+fi
 
-echo "pre-commit: bumped asset cache-busting version to v=$next"
+exit 0
