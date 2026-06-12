@@ -238,16 +238,24 @@
     try { choice = localStorage.getItem('cookie_consent'); } catch (e) {}
     if (choice === 'granted' || choice === 'denied') return; // already decided
 
+    // Localized copy keyed off <html lang>. Falls back to English.
+    const COOKIE_I18N = {
+      en: { body: 'This site uses cookies for analytics to understand how it’s used. See the ', link: 'Privacy Policy', decline: 'Decline', accept: 'Accept', label: 'Cookie consent' },
+      es: { body: 'Este sitio usa cookies de analítica para entender cómo se utiliza. Consulta la ', link: 'Política de Privacidad', decline: 'Rechazar', accept: 'Aceptar', label: 'Consentimiento de cookies' }
+    };
+    const lang = (doc.documentElement.getAttribute('lang') || 'en').slice(0, 2).toLowerCase();
+    const t = COOKIE_I18N[lang] || COOKIE_I18N.en;
+
     const banner = doc.createElement('div');
     banner.className = 'cookie-banner';
     banner.setAttribute('role', 'dialog');
-    banner.setAttribute('aria-label', 'Cookie consent');
+    banner.setAttribute('aria-label', t.label);
     banner.innerHTML =
-      '<p>This site uses cookies for analytics to understand how it’s used. ' +
-      'See the <a href="/privacy">Privacy Policy</a>.</p>' +
+      '<p>' + t.body +
+      '<a href="/privacy">' + t.link + '</a>.</p>' +
       '<div class="cookie-actions">' +
-      '<button type="button" class="btn btn-ghost" data-consent="denied">Decline</button>' +
-      '<button type="button" class="btn btn-primary" data-consent="granted">Accept</button>' +
+      '<button type="button" class="btn btn-ghost" data-consent="denied">' + t.decline + '</button>' +
+      '<button type="button" class="btn btn-primary" data-consent="granted">' + t.accept + '</button>' +
       '</div>';
 
     function choose(value) {
