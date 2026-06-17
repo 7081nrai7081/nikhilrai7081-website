@@ -241,7 +241,8 @@
     // Localized copy keyed off <html lang>. Falls back to English.
     const COOKIE_I18N = {
       en: { body: 'This site uses cookies for analytics to understand how it’s used. See the ', link: 'Privacy Policy', decline: 'Decline', accept: 'Accept', label: 'Cookie consent' },
-      es: { body: 'Este sitio usa cookies de analítica para entender cómo se utiliza. Consulta la ', link: 'Política de Privacidad', decline: 'Rechazar', accept: 'Aceptar', label: 'Consentimiento de cookies' }
+      es: { body: 'Este sitio usa cookies de analítica para entender cómo se utiliza. Consulta la ', link: 'Política de Privacidad', decline: 'Rechazar', accept: 'Aceptar', label: 'Consentimiento de cookies' },
+      hi: { body: 'यह साइट यह समझने के लिए एनालिटिक्स कुकीज़ का उपयोग करती है कि इसका उपयोग कैसे होता है। देखें ', link: 'गोपनीयता नीति', decline: 'अस्वीकार करें', accept: 'स्वीकार करें', label: 'कुकी सहमति' }
     };
     const lang = (doc.documentElement.getAttribute('lang') || 'en').slice(0, 2).toLowerCase();
     const t = COOKIE_I18N[lang] || COOKIE_I18N.en;
