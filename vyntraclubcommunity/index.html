@@ -242,6 +242,51 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   /* ---------- Sticky mobile CTA ---------- */
   .sticky-cta { display: none; }
 
+  /* ---------- Join popup ---------- */
+  .popup-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: center;
+    padding: 22px;
+    background: rgba(8, 6, 18, 0.72); backdrop-filter: blur(6px);
+    opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility .25s ease;
+  }
+  .popup-overlay.open { opacity: 1; visibility: visible; }
+  .popup {
+    position: relative; width: 100%; max-width: 440px;
+    background: var(--bg-soft); border: 1px solid var(--card-border);
+    border-radius: 22px; padding: 40px 32px 34px; text-align: center;
+    box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.7);
+    transform: translateY(16px) scale(.97); transition: transform .28s cubic-bezier(.2,.9,.3,1.2);
+  }
+  .popup-overlay.open .popup { transform: translateY(0) scale(1); }
+  .popup::before {
+    content: ""; position: absolute; inset: 0; border-radius: 22px; z-index: -1;
+    background: radial-gradient(70% 60% at 50% 0%, rgba(168,85,247,0.28), transparent 70%);
+  }
+  .popup .emoji { font-size: 2.6rem; display: block; margin-bottom: 10px; }
+  .popup h3 { font-size: 1.55rem; font-weight: 800; margin-bottom: 12px; }
+  .popup p { color: var(--muted); font-size: 1.02rem; margin-bottom: 14px; }
+  .popup .free-pill {
+    display: inline-block; font-family: 'Sora', sans-serif; font-weight: 700;
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 999px; margin-bottom: 18px;
+    background: var(--grad); color: #1a0a14;
+  }
+  .popup .btn { width: 100%; justify-content: center; margin-bottom: 14px; }
+  .popup .dismiss {
+    background: none; border: none; color: var(--muted); cursor: pointer;
+    font-family: 'Inter', sans-serif; font-size: 0.92rem; text-decoration: underline;
+  }
+  .popup .dismiss:hover { color: var(--text); }
+  .popup-close {
+    position: absolute; top: 14px; right: 16px;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(255,255,255,0.06); border: 1px solid var(--card-border);
+    color: var(--text); font-size: 1.1rem; line-height: 1; cursor: pointer;
+    display: grid; place-items: center; transition: background .15s ease;
+  }
+  .popup-close:hover { background: rgba(255,255,255,0.14); }
+
   /* ---------- Responsive ---------- */
   @media (max-width: 880px) {
     .grid-4 { grid-template-columns: repeat(2, 1fr); }
@@ -424,6 +469,76 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <div class="sticky-cta">
     <a class="btn" href="https://chat.whatsapp.com/HnHOqXxM3YxKIjBvOphTsT" target="_blank" rel="noopener">Join the Community — Free</a>
   </div>
+
+  <!-- ===================== JOIN POPUP ===================== -->
+  <div class="popup-overlay" id="joinPopup" role="dialog" aria-modal="true" aria-labelledby="popupTitle" aria-hidden="true">
+    <div class="popup">
+      <button class="popup-close" id="popupClose" aria-label="Close">&times;</button>
+      <span class="emoji">🎉</span>
+      <span class="free-pill">100% Free to Join</span>
+      <h3 id="popupTitle">Don't miss your next weekend.</h3>
+      <p>Become a founding member of Lucknow's social community — and get in before our first event on <strong>11 July</strong>.</p>
+      <a class="btn" href="https://chat.whatsapp.com/HnHOqXxM3YxKIjBvOphTsT" target="_blank" rel="noopener" data-join="popup">Join the Community — Free</a>
+      <br>
+      <button class="dismiss" id="popupDismiss">Maybe later</button>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    window.dataLayer = window.dataLayer || [];
+
+    /* --- Track every "Join" click into the dataLayer (GA4 via GTM) --- */
+    var WA = 'chat.whatsapp.com/HnHOqXxM3YxKIjBvOphTsT';
+    document.querySelectorAll('a[href*="' + WA + '"]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        var loc = a.getAttribute('data-join') ||
+          (a.closest('.hero') ? 'hero' :
+           a.closest('.final') ? 'final_cta' :
+           a.closest('.sticky-cta') ? 'sticky' :
+           a.closest('footer') ? 'footer' : 'other');
+        window.dataLayer.push({ event: 'join_click', join_location: loc });
+      });
+    });
+
+    /* --- Join popup: shows once per session, on 10s timer OR exit-intent --- */
+    var overlay = document.getElementById('joinPopup');
+    var shown = false;
+    var KEY = 'vyntra_popup_seen';
+
+    function alreadySeen() { try { return sessionStorage.getItem(KEY) === '1'; } catch (e) { return false; } }
+    function markSeen() { try { sessionStorage.setItem(KEY, '1'); } catch (e) {} }
+
+    function openPopup() {
+      if (shown || alreadySeen()) return;
+      shown = true; markSeen();
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+      window.dataLayer.push({ event: 'popup_shown', popup: 'join' });
+    }
+    function closePopup() {
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+
+    if (!alreadySeen()) {
+      // 10-second timer
+      var timer = setTimeout(openPopup, 10000);
+      // Desktop exit-intent (mouse leaves toward the top of the viewport)
+      document.addEventListener('mouseout', function (e) {
+        if (!e.relatedTarget && e.clientY <= 0) { clearTimeout(timer); openPopup(); }
+      });
+    }
+
+    document.getElementById('popupClose').addEventListener('click', closePopup);
+    document.getElementById('popupDismiss').addEventListener('click', function () {
+      window.dataLayer.push({ event: 'popup_dismissed', popup: 'join' });
+      closePopup();
+    });
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closePopup(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePopup(); });
+  })();
+  </script>
 
 </body>
 </html>
