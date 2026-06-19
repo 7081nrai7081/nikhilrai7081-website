@@ -352,6 +352,35 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
     }
     .sticky-cta .btn { width: 100%; justify-content: center; padding: 16px; }
   }
+
+  /* ---------- Motion / polish (opt-in, reduced-motion safe) ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    /* Scroll-reveal: only hide when JS is active so no-JS users still see content */
+    .js-anim .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .7s cubic-bezier(.22, .61, .36, 1),
+                  transform .7s cubic-bezier(.22, .61, .36, 1);
+      will-change: opacity, transform;
+    }
+    .js-anim .reveal.in { opacity: 1; transform: none; }
+
+    /* Living hero aurora — the glows breathe slowly instead of sitting static */
+    .hero::before {
+      animation: auroraDrift 20s ease-in-out infinite alternate;
+      transform-origin: 50% 30%;
+    }
+    @keyframes auroraDrift {
+      from { transform: translate3d(0, 0, 0) scale(1); }
+      to   { transform: translate3d(0, -2.5%, 0) scale(1.1); }
+    }
+
+    /* Pulse the live "Up Next" tag to pull the eye */
+    .event .tag.live { animation: livePulse 2.6s ease-in-out infinite; }
+    @keyframes livePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255, 77, 141, 0); }
+      50%      { box-shadow: 0 0 0 7px rgba(255, 77, 141, 0.12); }
+    }
+  }
 </style>
 </head>
 
@@ -601,6 +630,57 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
       tick();
       el.hidden = false;
       var iv = setInterval(tick, 1000);
+    })();
+
+    /* --- Scroll-reveal: fade-and-rise sections as they enter view --- */
+    (function () {
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce || !('IntersectionObserver' in window)) return;
+      document.documentElement.classList.add('js-anim');
+
+      var selector = [
+        '.hero-eyebrow', '.hero h1', '.hero p.sub', '.founder-badge', '.countdown', '.hero .btn',
+        'section .eyebrow', 'section .section-title', 'section .section-lead', 'section .highlight',
+        '.card', '.perk', '.event', '.audience-list li', '.audience-note',
+        '.final h2', '.final .steps', '.final .kicker', '.final .btn',
+        'footer .footer-logo', 'footer p', 'footer .footer-tags', 'footer .footer-domain'
+      ].join(',');
+
+      // Stagger children inside grids/lists for a cascading entrance
+      ['.grid', '.perks', '.events', '.audience-list'].forEach(function (gsel) {
+        document.querySelectorAll(gsel).forEach(function (group) {
+          Array.prototype.forEach.call(group.children, function (child, i) {
+            child.style.transitionDelay = (i * 70) + 'ms';
+          });
+        });
+      });
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+
+      var revealables = document.querySelectorAll(selector);
+      revealables.forEach(function (el) {
+        el.classList.add('reveal');
+        io.observe(el);
+      });
+
+      /* Safety net: if the observer isn't firing for elements already on
+         screen (broken/unsupported env), drop the animation and show everything
+         so content is never trapped behind opacity:0. */
+      setTimeout(function () {
+        var vh = window.innerHeight || document.documentElement.clientHeight;
+        var onScreen = Array.prototype.filter.call(revealables, function (el) {
+          var r = el.getBoundingClientRect();
+          return r.top < vh && r.bottom > 0;
+        });
+        var anyRevealed = onScreen.some(function (el) { return el.classList.contains('in'); });
+        if (onScreen.length && !anyRevealed) {
+          revealables.forEach(function (el) { el.style.transition = 'none'; el.classList.add('in'); });
+        }
+      }, 800);
     })();
 
     /* --- Join popup: shows once per session, on 10s timer OR exit-intent --- */
