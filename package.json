@@ -1,0 +1,22 @@
+{
+  "name": "nikhilrai7081-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Nikhil Rai — portfolio & agency site (static HTML/CSS/JS).",
+  "type": "module",
+  "scripts": {
+    "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
+    "lint:js": "eslint \"assets/js/**/*.js\"",
+    "lint:css": "stylelint \"assets/css/**/*.css\"",
+    "lint:html": "htmlhint \"**/*.html\"",
+    "lint:fix": "eslint \"assets/js/**/*.js\" --fix && stylelint \"assets/css/**/*.css\" --fix"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "eslint": "^9.0.0",
+    "globals": "^15.0.0",
+    "htmlhint": "^1.1.4",
+    "stylelint": "^16.0.0",
+    "stylelint-config-standard": "^36.0.0"
+  }
+}

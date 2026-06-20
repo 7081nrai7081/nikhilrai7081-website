@@ -1,3 +1,8 @@
+# Tooling
+node_modules/
+.shots/
+.iconwork/
+
 # Internal planning / source briefs — not for the public site repo
 nikhil-linkedin-profile-data.md
 website-update-brief.md

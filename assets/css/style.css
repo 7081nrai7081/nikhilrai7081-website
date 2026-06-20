@@ -17,9 +17,9 @@
 
 :root {
   /* Light agency theme (default) — white base, crimson accent */
-  --bg: #ffffff;
-  --bg-elev: #ffffff;
-  --surface: #ffffff;
+  --bg: #fff;
+  --bg-elev: #fff;
+  --surface: #fff;
   --surface-2: #f7f3f4;
   --border: rgba(20, 14, 18, 0.10);
   --border-strong: rgba(20, 14, 18, 0.18);
@@ -1201,7 +1201,7 @@ a.card:hover .card-more svg { transform: translateX(4px); }
 .newsletter-text h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 8px; }
 .newsletter-text p { color: var(--muted); margin: 0; }
 .newsletter-form { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; flex: 1 1 320px; max-width: 460px; }
-.newsletter-form input[type=email] {
+.newsletter-form input[type="email"] {
   flex: 1 1 200px;
   padding: 13px 16px;
   border-radius: 13px;
@@ -1212,7 +1212,7 @@ a.card:hover .card-more svg { transform: translateX(4px); }
   font-size: .95rem;
   transition: border-color .25s, box-shadow .25s;
 }
-.newsletter-form input[type=email]:focus {
+.newsletter-form input[type="email"]:focus {
   outline: none;
   border-color: var(--brand-2);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 22%, transparent);
