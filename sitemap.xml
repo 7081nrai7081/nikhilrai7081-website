@@ -37,7 +37,7 @@
 
   <url>
     <loc>https://nikhilrai7081.com/blog</loc>
-    <lastmod>2026-06-20</lastmod>
+    <lastmod>2026-06-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://nikhilrai7081.com/blog"/>
@@ -99,6 +99,13 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://nikhilrai7081.com/es/blog-business-development"/>
     <xhtml:link rel="alternate" hreflang="hi" href="https://nikhilrai7081.com/hi/blog-business-development"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://nikhilrai7081.com/blog-business-development"/>
+  </url>
+
+  <url>
+    <loc>https://nikhilrai7081.com/blog-distribution-is-the-product</loc>
+    <lastmod>2026-06-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <url>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  BLOG RSS FEED — this is what powers auto-posting to LinkedIn (via Buffer + Zapier/Make).
+  WHEN YOU PUBLISH A POST: add a new <item> at the TOP of the list below, matching the
+  format of the others (title, link, guid, the post's description, and pubDate in
+  RFC-822 form, e.g. "Sun, 21 Jun 2026 09:00:00 +0000"). Keep newest first.
+  Then commit & push. The automation picks up the new item and queues a LinkedIn post.
+-->
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nikhil Rai — Blog</title>
+    <link>https://nikhilrai7081.com/blog</link>
+    <atom:link href="https://nikhilrai7081.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>Notes and insights on strategic partnerships, business development, lead generation, automation and growth.</description>
+    <language>en</language>
+    <managingEditor>7081nrai7081@gmail.com (Nikhil Rai)</managingEditor>
+    <lastBuildDate>Sun, 21 Jun 2026 09:00:00 +0000</lastBuildDate>
+
+    <item>
+      <title>Distribution Is the Product</title>
+      <link>https://nikhilrai7081.com/blog-distribution-is-the-product</link>
+      <guid isPermaLink="true">https://nikhilrai7081.com/blog-distribution-is-the-product</guid>
+      <description>A great product doesn't market itself. Distribution is a discipline you design — choosing one channel, earning it, and making it compound — not an afterthought you bolt on at launch.</description>
+      <category>Growth</category>
+      <pubDate>Sun, 21 Jun 2026 09:00:00 +0000</pubDate>
+    </item>
+
+    <item>
+      <title>Go-to-Market From Zero: Your First 100 Users</title>
+      <link>https://nikhilrai7081.com/blog-go-to-market-from-zero</link>
+      <guid isPermaLink="true">https://nikhilrai7081.com/blog-go-to-market-from-zero</guid>
+      <description>How to launch when nobody knows you exist — pick a beachhead, go where your first users already gather, do the unscalable work, and turn early momentum into growth.</description>
+      <category>Go-To-Market</category>
+      <pubDate>Thu, 18 Jun 2026 09:00:00 +0000</pubDate>
+    </item>
+
+    <item>
+      <title>Your Lead Problem Isn't Volume — It's Signal</title>
+      <link>https://nikhilrai7081.com/blog-lead-quality-signal</link>
+      <guid isPermaLink="true">https://nikhilrai7081.com/blog-lead-quality-signal</guid>
+      <description>Most teams that think they need more leads actually need better signal. How to read buying intent and route effort to the leads that convert.</description>
+      <category>Lead Generation</category>
+      <pubDate>Fri, 05 Jun 2026 09:00:00 +0000</pubDate>
+    </item>
+
+    <item>
+      <title>Good Operations Is Invisible</title>
+      <link>https://nikhilrai7081.com/blog-operations</link>
+      <guid isPermaLink="true">https://nikhilrai7081.com/blog-operations</guid>
+      <description>You notice operations only when they're bad. The processes, ownership and reporting that let a team execute calmly and predictably.</description>
+      <category>Operations</category>
+      <pubDate>Thu, 04 Jun 2026 09:00:00 +0000</pubDate>
+    </item>
+
+    <item>
+      <title>Business Development Is a System, Not a Rolodex</title>
+      <link>https://nikhilrai7081.com/blog-business-development</link>
+      <guid isPermaLink="true">https://nikhilrai7081.com/blog-business-development</guid>
+      <description>BD isn't sales or networking — it's the disciplined work of finding and creating growth opportunities. How to run it as a repeatable system.</description>
+      <category>Business Development</category>
+      <pubDate>Thu, 04 Jun 2026 08:00:00 +0000</pubDate>
+    </item>
+
+    <item>
+      <title>Growth Marketing Without the Hacks</title>
+      <link>https://nikhilrai7081.com/blog-growth-marketing</link>
+      <guid isPermaLink="true">https://nikhilrai7081.com/blog-growth-marketing</guid>
+      <description>Growth marketing isn't viral tricks — it's a disciplined system of experiments across the funnel. A framework for growth that compounds.</description>
+      <category>Growth Marketing</category>
+      <pubDate>Thu, 04 Jun 2026 07:00:00 +0000</pubDate>
+    </item>
+
+    <item>
+      <title>What to Automate First (and What to Leave Alone)</title>
+      <link>https://nikhilrai7081.com/blog-what-to-automate-first</link>
+      <guid isPermaLink="true">https://nikhilrai7081.com/blog-what-to-automate-first</guid>
+      <description>Automation should buy back time, but most teams automate the wrong things first. A simple way to decide what to automate, fix, or leave to people.</description>
+      <category>Automation</category>
+      <pubDate>Thu, 04 Jun 2026 06:00:00 +0000</pubDate>
+    </item>
+
+    <item>
+      <title>How to Build Strategic Partnerships That Actually Drive Growth</title>
+      <link>https://nikhilrai7081.com/blog-strategic-partnerships</link>
+      <guid isPermaLink="true">https://nikhilrai7081.com/blog-strategic-partnerships</guid>
+      <description>Most partnerships stall after the announcement. A practical framework for building ones that create real, lasting growth.</description>
+      <category>Partnerships</category>
+      <pubDate>Wed, 03 Jun 2026 09:00:00 +0000</pubDate>
+    </item>
+
+    <item>
+      <title>Building a Lead-Gen System That Runs Without You</title>
+      <link>https://nikhilrai7081.com/blog-lead-generation-system</link>
+      <guid isPermaLink="true">https://nikhilrai7081.com/blog-lead-generation-system</guid>
+      <description>Turn sporadic outreach into a predictable system — the components that make pipeline repeatable instead of reliant on hustle.</description>
+      <category>Lead Generation</category>
+      <pubDate>Wed, 03 Jun 2026 08:00:00 +0000</pubDate>
+    </item>
+
+  </channel>
+</rss>
