@@ -5,8 +5,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Google AdSense -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8667955384195110" crossorigin="anonymous"></script>
 
 <!-- Warm up the analytics connection early -->
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
@@ -19,13 +17,11 @@ gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personali
 try{if(localStorage.getItem('cookie_consent')==='granted'){gtag('consent','update',{analytics_storage:'granted'});}}catch(e){}
 </script>
 
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MB5JGJQL');</script>
-<!-- End Google Tag Manager -->
+<!-- Defer GTM + AdSense until first interaction / after load (perf) -->
+<script>
+(function(){var ld=false;function go(){if(ld)return;ld=true;(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MB5JGJQL');var a=document.createElement('script');a.async=true;a.crossOrigin='anonymous';a.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8667955384195110';document.head.appendChild(a);}var ev=['scroll','keydown','pointerdown','touchstart','mousemove'];ev.forEach(function(e){window.addEventListener(e,go,{passive:true,once:true});});if(document.readyState==='complete'){setTimeout(go,2500);}else{window.addEventListener('load',function(){setTimeout(go,2500);});}})();
+</script>
+<!-- End deferred third-party -->
 
 <title>बिज़नेस डेवलपमेंट एक सिस्टम है, संपर्कों की सूची नहीं — Nikhil Rai</title>
 <meta name="description" content="बिज़नेस डेवलपमेंट न सेल्स है न नेटवर्किंग: यह ग्रोथ के अवसर ढूँढने और बनाने का अनुशासित काम है। इसे एक दोहराने योग्य सिस्टम की तरह कैसे चलाएँ।">
