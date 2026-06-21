@@ -34,6 +34,8 @@
 
   --grad: #e23a5e;
   --grad-soft: rgba(226, 58, 94, 0.10);
+  /* Solid CTA fill — dark enough for white text to clear AA (≈4.8:1) in both themes */
+  --btn-grad: linear-gradient(135deg, #d4304f 0%, #b62442 100%);
 
   /* Dark crimson feature bands */
   --dark-bg: #1c0d13;
@@ -243,7 +245,7 @@ h1, h2, h3 {
   text-decoration: none;
   color: var(--text);
 }
-.logo span { color: var(--brand-2); }
+.logo span { color: var(--accent); }
 
 .nav {
   display: flex;
@@ -385,7 +387,7 @@ h1, h2, h3 {
 .btn svg { transition: transform .25s var(--ease); }
 .btn-primary {
   position: relative;
-  background: var(--grad);
+  background: var(--btn-grad);
   background-size: 160% auto;
   color: #fff;
   box-shadow: var(--shadow-glow), inset 0 1px 0 rgba(255, 255, 255, .28);
@@ -1099,7 +1101,7 @@ a.card:hover .card-more svg { transform: translateX(4px); }
 }
 .cookie-banner.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
 .cookie-banner p { margin: 0; flex: 1 1 280px; font-size: .9rem; color: var(--text-soft); }
-.cookie-banner a { color: var(--brand-2); font-weight: 600; text-decoration: none; }
+.cookie-banner a { color: var(--accent); font-weight: 600; text-decoration: underline; }
 .cookie-actions { display: flex; gap: 10px; flex-shrink: 0; }
 .cookie-banner .btn { padding: 10px 18px; font-size: .88rem; }
 @media (max-width: 520px) {

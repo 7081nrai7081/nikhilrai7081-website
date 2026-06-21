@@ -74,6 +74,15 @@
     });
   }
 
+  /* ---------- Landmark labels + current-page state (a11y) ---------- */
+  // Distinguish the multiple <nav> landmarks so screen-reader landmark
+  // navigation isn't a list of identical "navigation" entries.
+  if (nav && !nav.hasAttribute('aria-label')) nav.setAttribute('aria-label', 'Primary');
+  const footerNav = doc.querySelector('.footer-nav');
+  if (footerNav && !footerNav.hasAttribute('aria-label')) footerNav.setAttribute('aria-label', 'Footer');
+  // Expose the static active link (subpages) as the current page, not colour-only.
+  doc.querySelectorAll('.nav a.active').forEach((a) => a.setAttribute('aria-current', 'page'));
+
   /* ---------- Header shadow + scroll progress ---------- */
   const header = doc.getElementById('header');
   const progress = doc.getElementById('progress');
@@ -141,7 +150,11 @@
         if (entry.isIntersecting) {
           const id = entry.target.getAttribute('id');
           navLinks.forEach((link) => {
-            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+            const isCurrent = link.getAttribute('href') === '#' + id;
+            link.classList.toggle('active', isCurrent);
+            // Convey the active section to assistive tech, not just visually.
+            if (isCurrent) link.setAttribute('aria-current', 'true');
+            else link.removeAttribute('aria-current');
           });
         }
       });
@@ -251,6 +264,7 @@
     banner.className = 'cookie-banner';
     banner.setAttribute('role', 'dialog');
     banner.setAttribute('aria-label', t.label);
+    banner.setAttribute('tabindex', '-1');
     banner.innerHTML =
       '<p>' + t.body +
       '<a href="/privacy">' + t.link + '</a>.</p>' +
@@ -275,7 +289,12 @@
     });
 
     body.appendChild(banner);
-    requestAnimationFrame(function () { banner.classList.add('show'); });
+    requestAnimationFrame(function () {
+      banner.classList.add('show');
+      // Direct focus to the newly added consent dialog (it's a fixed banner,
+      // so this announces it to AT without scrolling the page).
+      try { banner.focus({ preventScroll: true }); } catch (e) { banner.focus(); }
+    });
   })();
 
   /* ---------- Click tracking (contact methods + CTAs) ---------- */
