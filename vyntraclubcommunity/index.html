@@ -266,6 +266,18 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
   .card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
   .card p { color: var(--muted); font-size: 0.96rem; }
 
+  /* Cards & event tiles are tappable → open the Join popup */
+  .card, .event { cursor: pointer; }
+  .card::after, .event::after {
+    content: "Join to know more →";
+    display: block; margin-top: 16px;
+    font-family: 'Sora', sans-serif; font-weight: 700; font-size: 0.82rem;
+    letter-spacing: 0.01em; color: var(--brand-1);
+  }
+  .card:focus-visible, .event:focus-visible {
+    outline: 2px solid var(--brand-1); outline-offset: 3px;
+  }
+
   /* ---------- Perks checklist ---------- */
   .perks-section { background: var(--bg-soft); }
   .perks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 28px; margin-top: 40px; }
@@ -681,8 +693,8 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
       <button class="popup-close" id="popupClose" aria-label="Close">&times;</button>
       <span class="emoji">🎉</span>
       <span class="free-pill">100% Free to Join</span>
-      <h3 id="popupTitle">Don't miss your next weekend.</h3>
-      <p>Become a founding member of Lucknow's social community — and get in before our first event on <strong>11 July</strong>.</p>
+      <h3 id="popupTitle">Join the community for more</h3>
+      <p>Get full event details, member-only invites, and updates — and be part of Lucknow's <strong>best social community</strong>. It's 100% free.</p>
       <a class="btn" href="https://chat.whatsapp.com/HnHOqXxM3YxKIjBvOphTsT" target="_blank" rel="noopener" data-join="popup">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.039zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
         Join Free on WhatsApp
@@ -880,12 +892,14 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
     function alreadySeen() { try { return sessionStorage.getItem(KEY) === '1'; } catch (e) { return false; } }
     function markSeen() { try { sessionStorage.setItem(KEY, '1'); } catch (e) {} }
 
-    function openPopup() {
-      if (shown || alreadySeen()) return;
+    function openPopup(source, force) {
+      if (!force && (shown || alreadySeen())) return;
       shown = true; markSeen();
       overlay.classList.add('open');
       overlay.setAttribute('aria-hidden', 'false');
-      window.dataLayer.push({ event: 'popup_shown', popup: 'join' });
+      var jb = overlay.querySelector('.btn');
+      if (jb) { try { jb.focus({ preventScroll: true }); } catch (e) { jb.focus(); } }
+      window.dataLayer.push({ event: 'popup_shown', popup: 'join', source: source || 'auto' });
     }
     function closePopup() {
       overlay.classList.remove('open');
@@ -908,6 +922,28 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
     });
     overlay.addEventListener('click', function (e) { if (e.target === overlay) closePopup(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePopup(); });
+
+    /* --- Cards & event tiles open the Join popup ("join the community for more info") --- */
+    (function () {
+      var tiles = document.querySelectorAll('.card, .event');
+      Array.prototype.forEach.call(tiles, function (tile) {
+        tile.setAttribute('role', 'button');
+        tile.setAttribute('tabindex', '0');
+        var h = tile.querySelector('h3');
+        var title = (h ? h.textContent : 'this').trim();
+        tile.setAttribute('aria-label', 'Join the community to learn more about ' + title);
+        function activate() {
+          if (typeof gtag === 'function') { gtag('event', 'card_click', { card: title }); }
+          if (typeof fbq === 'function') { fbq('trackCustom', 'CardClick', { card: title }); }
+          window.dataLayer.push({ event: 'card_click', card: title });
+          openPopup('card:' + title, true);
+        }
+        tile.addEventListener('click', activate);
+        tile.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); activate(); }
+        });
+      });
+    })();
   })();
   </script>
 
