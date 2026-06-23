@@ -67,9 +67,11 @@
   })(window,document,'clarity','script');
 </script>
 
-<!-- Defer GTM + AdSense until first interaction / after load (perf) -->
+<!-- Defer GTM until first interaction / after load (perf).
+     AdSense intentionally NOT loaded here: this is a single-goal ad
+     landing page — ads would compete with the Join CTA and slow load. -->
 <script>
-(function(){var ld=false;function go(){if(ld)return;ld=true;(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MB5JGJQL');var a=document.createElement('script');a.async=true;a.crossOrigin='anonymous';a.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8667955384195110';document.head.appendChild(a);}var ev=['scroll','keydown','pointerdown','touchstart','mousemove'];ev.forEach(function(e){window.addEventListener(e,go,{passive:true,once:true});});if(document.readyState==='complete'){setTimeout(go,2500);}else{window.addEventListener('load',function(){setTimeout(go,2500);});}})();
+(function(){var ld=false;function go(){if(ld)return;ld=true;(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MB5JGJQL');}var ev=['scroll','keydown','pointerdown','touchstart','mousemove'];ev.forEach(function(e){window.addEventListener(e,go,{passive:true,once:true});});if(document.readyState==='complete'){setTimeout(go,2500);}else{window.addEventListener('load',function(){setTimeout(go,2500);});}})();
 </script>
 <!-- End deferred third-party -->
 
@@ -347,6 +349,11 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
   .final .kicker { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.15rem; margin: 22px 0 28px; }
   .final .btn { font-size: 1.12rem; padding: 19px 44px; }
 
+  /* Mid-page CTA band + reassurance + popup hint */
+  .cta-band { padding: 48px 0; text-align: center; }
+  .reassure { color: var(--muted); font-size: 0.9rem; margin-top: 14px; }
+  .popup-hint { font-size: 0.78rem; color: var(--muted); margin: 12px 0 4px; line-height: 1.45; }
+
   /* ---------- Footer ---------- */
   footer { padding: 56px 0 48px; text-align: center; border-top: 1px solid var(--card-border); }
   .footer-logo { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 1.6rem; letter-spacing: 0.04em; margin-bottom: 14px; }
@@ -522,7 +529,7 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
     <div class="wrap">
       <span class="hero-eyebrow">Lucknow's Social Discovery Community</span>
       <h1>Lucknow Deserves<br><span class="gradient-text">Better Weekends.</span></h1>
-      <p class="sub">Join a growing community discovering music events, workshops, social mixers, open mics, creative experiences, and unique gatherings across Lucknow.</p>
+      <p class="sub">Music nights, open mics, workshops &amp; meetups — and the people worth showing up for. Join Lucknow's social discovery community, free.</p>
 
       <div>
         <a class="btn" href="https://chat.whatsapp.com/HnHOqXxM3YxKIjBvOphTsT" target="_blank" rel="noopener">
@@ -599,6 +606,17 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
     </div>
   </section>
 
+  <!-- ===================== MID-PAGE CTA ===================== -->
+  <section class="cta-band">
+    <div class="wrap center">
+      <a class="btn" data-join="mid" href="https://chat.whatsapp.com/HnHOqXxM3YxKIjBvOphTsT" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.039zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        Join the Community — Free
+      </a>
+      <p class="reassure">Free to join · event drops &amp; first access to tickets · leave anytime</p>
+    </div>
+  </section>
+
   <!-- ===================== WHAT'S COMING NEXT ===================== -->
   <section>
     <div class="wrap center">
@@ -636,19 +654,17 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
     </div>
   </section>
 
-  <!-- ===================== WHO IS IT FOR ===================== -->
+  <!-- ===================== FOUNDER NOTE ===================== -->
+  <!-- EDIT THIS to Nikhil's real words — keep it short, honest & human -->
   <section class="audience-section">
-    <div class="wrap center" style="display:flex; flex-direction:column; align-items:center;">
-      <span class="eyebrow">Who Is Vyntra For?</span>
-      <h2 class="section-title">For people who want more from their weekends.</h2>
-      <ul class="audience-list">
-        <li>A student looking to meet new people</li>
-        <li>A young professional tired of the same routine</li>
-        <li>A creator seeking inspiration</li>
-        <li>A musician looking for community</li>
-        <li>Someone who simply wants better experiences</li>
-      </ul>
-      <p class="audience-note gradient-text">You'll fit right in.</p>
+    <div class="wrap center" style="max-width:720px; margin:0 auto;">
+      <span class="eyebrow">From the Founder</span>
+      <h2 class="section-title">Hi, I'm Nikhil 👋</h2>
+      <p class="section-lead" style="margin:0 auto 24px;">Finding good people and real things to do in Lucknow on a weekend shouldn't be this hard — so we're building it. Music nights, open mics, workshops and meetups, with a community that actually shows up. Our first event is 11 July. Come be part of it from day one.</p>
+      <a class="btn" data-join="founder" href="https://chat.whatsapp.com/HnHOqXxM3YxKIjBvOphTsT" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.039zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        Join the Community — Free
+      </a>
     </div>
   </section>
 
@@ -668,6 +684,7 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
         <span class="avatars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
         <span>Join <strong>20</strong> founding members already inside</span>
       </p>
+      <p class="reassure">After you join: event drops &amp; first access to tickets — no spam, leave anytime.</p>
     </div>
   </section>
 
@@ -703,7 +720,7 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.039zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
         Join Free on WhatsApp
       </a>
-      <br>
+      <p class="popup-hint">Tip: if WhatsApp doesn't open, tap the ⋯ menu and choose "Open in browser".</p>
       <button class="dismiss" id="popupDismiss">Maybe later</button>
     </div>
   </div>
