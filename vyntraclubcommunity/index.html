@@ -67,13 +67,11 @@
   })(window,document,'clarity','script');
 </script>
 
-<!-- Defer GTM until first interaction / after load (perf).
-     AdSense intentionally NOT loaded here: this is a single-goal ad
-     landing page — ads would compete with the Join CTA and slow load. -->
-<script>
-(function(){var ld=false;function go(){if(ld)return;ld=true;(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MB5JGJQL');}var ev=['scroll','keydown','pointerdown','touchstart','mousemove'];ev.forEach(function(e){window.addEventListener(e,go,{passive:true,once:true});});if(document.readyState==='complete'){setTimeout(go,2500);}else{window.addEventListener('load',function(){setTimeout(go,2500);});}})();
-</script>
-<!-- End deferred third-party -->
+<!-- GTM (GTM-MB5JGJQL) intentionally NOT loaded on this landing page.
+     It was double-counting GA4 against the direct gtag.js above. This page
+     now emits a SINGLE GA4 signal (G-MYX7TJMGPH, direct) plus Meta Pixel,
+     Microsoft Clarity and server-side CAPI — all installed directly, no GTM
+     dependency. The rest of the site still uses GTM. (Removed 2026-06-23.) -->
 
 <!-- Meta Pixel Code -->
 <script>
@@ -519,11 +517,6 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
 
 <body>
 
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MB5JGJQL"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
   <!-- ===================== HERO ===================== -->
   <header class="hero">
     <div class="wrap">
@@ -799,7 +792,7 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
         if (typeof window.clarity === 'function') {
           window.clarity('set', 'join_click', 'true');
         }
-        // GTM dataLayer (kept for any container-side tags)
+        // dataLayer push — harmless no-op now GTM is off this page (gtag fires GA4 directly)
         window.dataLayer.push({ event: 'join_click', join_location: loc });
 
         // In-app browsers: take over navigation to reliably reach WhatsApp.
