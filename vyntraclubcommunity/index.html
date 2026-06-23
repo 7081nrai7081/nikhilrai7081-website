@@ -352,7 +352,7 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
   /* Mid-page CTA band + reassurance + popup hint */
   .cta-band { padding: 48px 0; text-align: center; }
   .reassure { color: var(--muted); font-size: 0.9rem; margin-top: 14px; }
-  .popup-hint { font-size: 0.78rem; color: var(--muted); margin: 12px 0 4px; line-height: 1.45; }
+  .popup-hint { display: none; font-size: 0.78rem; color: var(--muted); margin: 12px 0 4px; line-height: 1.45; }
 
   /* ---------- Footer ---------- */
   footer { padding: 56px 0 48px; text-align: center; border-top: 1px solid var(--card-border); }
@@ -735,12 +735,48 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
        (beacon transport) and the Meta Pixel both use sendBeacon/img, which also
        survive a same-view navigation inside Instagram/Facebook in-app browsers,
        so we never preventDefault — the WhatsApp link stays fully intact. */
-    var WA = 'chat.whatsapp.com/HnHOqXxM3YxKIjBvOphTsT';
-    document.querySelectorAll('a[href*="' + WA + '"]').forEach(function (a) {
-      a.addEventListener('click', function () {
+    var WA_PATH = 'chat.whatsapp.com/HnHOqXxM3YxKIjBvOphTsT';
+    var WA_URL = 'https://' + WA_PATH;
+    var UA = navigator.userAgent || '';
+    // In-app webviews (Instagram / Facebook / TikTok / etc.) where the
+    // WhatsApp app-switch is unreliable and target="_blank" misbehaves.
+    var IN_APP = /Instagram|FBAN|FBAV|FB_IAB|FBIOS|Line\/|musical_ly|TikTok|Snapchat/i.test(UA);
+    var IS_ANDROID = /Android/i.test(UA);
+
+    // Reveal the "open in browser" tip inside the popup only for in-app users.
+    if (IN_APP) { var _ph = document.querySelector('.popup-hint'); if (_ph) _ph.style.display = 'block'; }
+
+    // Open WhatsApp as reliably as possible from inside an in-app browser.
+    // Called synchronously inside the click gesture so iOS honours the
+    // universal link / Android resolves the app intent.
+    function forceOpenWhatsApp() {
+      if (IS_ANDROID) {
+        // Force the WhatsApp app via an Android intent, with an https fallback
+        // (covers "app not installed" AND webviews that can't resolve intents).
+        var start = Date.now();
+        try {
+          window.location.href =
+            'intent://' + WA_PATH +
+            '#Intent;scheme=https;package=com.whatsapp;S.browser_fallback_url=' +
+            encodeURIComponent(WA_URL) + ';end';
+        } catch (e) { window.location.href = WA_URL; return; }
+        // If the intent didn't take over (page still visible), fall back to https.
+        setTimeout(function () {
+          if (!document.hidden && (Date.now() - start) < 2500) window.location.href = WA_URL;
+        }, 1200);
+      } else {
+        // iOS & others: a top-level navigation hands off to the WhatsApp
+        // universal link far better than target="_blank" inside a webview.
+        window.location.href = WA_URL;
+      }
+    }
+
+    document.querySelectorAll('a[href*="' + WA_PATH + '"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
         var loc = a.getAttribute('data-join') ||
           (a.closest('.hero') ? 'hero' :
            a.closest('.final') ? 'final_cta' :
+           a.closest('.cta-band') ? 'mid' :
            a.closest('.sticky-cta') ? 'sticky' :
            a.closest('footer') ? 'footer' : 'other');
 
@@ -765,6 +801,11 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
         }
         // GTM dataLayer (kept for any container-side tags)
         window.dataLayer.push({ event: 'join_click', join_location: loc });
+
+        // In-app browsers: take over navigation to reliably reach WhatsApp.
+        // sendBeacon-based tracking (GA4 beacon + CAPI) survives the redirect.
+        // Normal browsers keep the default <a target="_blank"> behaviour.
+        if (IN_APP) { e.preventDefault(); forceOpenWhatsApp(); }
       });
     });
 
