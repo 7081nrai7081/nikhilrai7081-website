@@ -6,15 +6,65 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-<!-- Warm up the analytics connection early -->
+<!-- Warm up the analytics connections early -->
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
 <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+<link rel="preconnect" href="https://www.clarity.ms" crossorigin>
+<link rel="preconnect" href="https://connect.facebook.net" crossorigin>
 
-<!-- Consent Mode defaults (must run before GTM) -->
+<!-- ============================================================
+     ANALYTICS IDs — PASTE YOUR REAL IDs HERE (only these two lines)
+     ============================================================ -->
 <script>
-window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});
-try{if(localStorage.getItem('cookie_consent')==='granted'){gtag('consent','update',{analytics_storage:'granted'});}}catch(e){}
+  window.VYNTRA_ANALYTICS = {
+    GA4:     'G-MYX7TJMGPH',     /* <-- GA4 Measurement ID            */
+    CLARITY: 'x19n139y9p',       /* <-- Microsoft Clarity Project ID  */
+    PIXEL:   '912347764598809'   /* Meta Pixel (already live)         */
+  };
+</script>
+
+<!-- Consent Mode v2 — GRANTED by default for this India audience.
+     Nothing is withheld; a prior "Decline" is respected (revoke path). -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('consent','default',{
+    ad_storage:'granted', ad_user_data:'granted',
+    ad_personalization:'granted', analytics_storage:'granted'
+  });
+  try {
+    if (localStorage.getItem('cookie_consent') === 'denied') {
+      gtag('consent','update',{
+        ad_storage:'denied', ad_user_data:'denied',
+        ad_personalization:'denied', analytics_storage:'denied'
+      });
+    }
+  } catch(e){}
+</script>
+
+<!-- Google Analytics 4 (gtag.js) — direct, immediate, in-app-webview safe -->
+<script>
+  (function(){
+    var id = (window.VYNTRA_ANALYTICS||{}).GA4;
+    if (!id || id === 'G-XXXXXXXXXX') return;            /* skip until a real ID is set */
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+    document.head.appendChild(s);
+    gtag('js', new Date());
+    gtag('config', id, { transport_type: 'beacon' });    /* page_view fires automatically */
+  })();
+</script>
+
+<!-- Microsoft Clarity — direct, immediate -->
+<script>
+  (function(c,l,a,r){
+    var i = (window.VYNTRA_ANALYTICS||{}).CLARITY;
+    if (!i || i === 'XXXXXXXXXX') return;                /* skip until a real ID is set */
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    var t=l.createElement(r); t.async=1; t.src='https://www.clarity.ms/tag/'+i;
+    var y=l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t,y);
+  })(window,document,'clarity','script');
 </script>
 
 <!-- Defer GTM + AdSense until first interaction / after load (perf) -->
@@ -35,6 +85,7 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '912347764598809');
 fbq('track', 'PageView');
+fbq('track', 'ViewContent', {content_name: 'vyntra_landing'});
 </script>
 <noscript><img alt="" height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
@@ -606,7 +657,12 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
   (function () {
     window.dataLayer = window.dataLayer || [];
 
-    /* --- Track every "Join" click into the dataLayer (GA4 via GTM) --- */
+    /* === Conversion: fire on EVERY "Join WhatsApp Community" click ===
+       The links are target="_blank" rel="noopener", so this tab survives the
+       outbound navigation and the tracking requests are never cancelled. GA4
+       (beacon transport) and the Meta Pixel both use sendBeacon/img, which also
+       survive a same-view navigation inside Instagram/Facebook in-app browsers,
+       so we never preventDefault — the WhatsApp link stays fully intact. */
     var WA = 'chat.whatsapp.com/HnHOqXxM3YxKIjBvOphTsT';
     document.querySelectorAll('a[href*="' + WA + '"]').forEach(function (a) {
       a.addEventListener('click', function () {
@@ -615,12 +671,61 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
            a.closest('.final') ? 'final_cta' :
            a.closest('.sticky-cta') ? 'sticky' :
            a.closest('footer') ? 'footer' : 'other');
-        // GA4 via GTM
+
+        // Meta Pixel — standard Lead (optimizable) + custom event
+        if (typeof fbq === 'function') {
+          fbq('track', 'Lead', { content_name: 'vyntra_join', source: loc });
+          fbq('trackCustom', 'JoinCommunityClick', { source: loc });
+        }
+        // GA4 (direct gtag) — beacon transport survives the redirect
+        if (typeof gtag === 'function') {
+          gtag('event', 'join_community_click', { method: 'whatsapp', source: loc, transport_type: 'beacon' });
+        }
+        // Microsoft Clarity — tag the session so joiners are filterable
+        if (typeof window.clarity === 'function') {
+          window.clarity('set', 'join_click', 'true');
+        }
+        // GTM dataLayer (kept for any container-side tags)
         window.dataLayer.push({ event: 'join_click', join_location: loc });
-        // Meta Pixel
-        if (typeof fbq === 'function') { fbq('track', 'Lead', { content_name: 'vyntra_join', source: loc }); }
       });
     });
+
+    /* --- Scroll depth at 25/50/75/100% (GA4 + dataLayer) --- */
+    (function () {
+      var marks = [25, 50, 75, 100], hit = {};
+      function onScroll() {
+        var d = document.documentElement;
+        var scrolled = d.scrollTop || document.body.scrollTop;
+        var height = (d.scrollHeight - d.clientHeight) || 1;
+        var pct = Math.min(100, Math.round((scrolled / height) * 100));
+        marks.forEach(function (m) {
+          if (pct >= m && !hit[m]) {
+            hit[m] = true;
+            if (typeof gtag === 'function') { gtag('event', 'scroll_depth', { percent: m }); }
+            window.dataLayer.push({ event: 'scroll_depth', percent: m });
+          }
+        });
+        if (hit[100]) { window.removeEventListener('scroll', onScroll); }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+
+    /* --- CTA-section view: did they reach the final "Join" block? --- */
+    (function () {
+      var target = document.getElementById('join');
+      if (!target || !('IntersectionObserver' in window)) return;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) {
+            if (typeof gtag === 'function') { gtag('event', 'view_cta_section'); }
+            if (typeof fbq === 'function') { fbq('trackCustom', 'ViewCtaSection'); }
+            window.dataLayer.push({ event: 'view_cta_section' });
+            io.disconnect();
+          }
+        });
+      }, { threshold: 0.4 });
+      io.observe(target);
+    })();
 
     /* --- Countdown to the first community event (11 July 2026, IST) --- */
     (function () {
@@ -743,9 +848,9 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
   })();
   </script>
 
-  <!-- Cookie consent (Google Consent Mode v2) — lets visitors grant analytics_storage
-       so GA4 records sessions. Without it, direct ad traffic stays consent-denied and
-       only Microsoft Clarity (not Consent-Mode gated) records. -->
+  <!-- Cookie notice — analytics are GRANTED by default for this audience, so
+       nothing is withheld behind a click. This is a minimal, non-blocking
+       notice; "Decline" revokes (Consent Mode -> denied) and is remembered. -->
   <script>
   (function () {
     var choice = null;
@@ -755,19 +860,21 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
     var banner = document.createElement('div');
     banner.className = 'cookie-banner';
     banner.setAttribute('role', 'dialog');
-    banner.setAttribute('aria-label', 'Cookie consent');
+    banner.setAttribute('aria-label', 'Cookie notice');
     banner.innerHTML =
-      '<p>We use cookies for analytics to understand how this page is used. See the ' +
+      '<p>We use cookies for analytics to improve this page. See the ' +
       '<a href="/privacy">Privacy Policy</a>.</p>' +
       '<div class="cookie-actions">' +
       '<button type="button" class="cookie-decline" data-consent="denied">Decline</button>' +
-      '<button type="button" class="cookie-accept" data-consent="granted">Accept</button>' +
+      '<button type="button" class="cookie-accept" data-consent="granted">Got it</button>' +
       '</div>';
 
     function choose(value) {
       try { localStorage.setItem('cookie_consent', value); } catch (e) {}
-      if (value === 'granted' && typeof window.gtag === 'function') {
-        window.gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (typeof window.gtag === 'function') {
+        window.gtag('consent', 'update', value === 'denied'
+          ? { ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied', analytics_storage:'denied' }
+          : { ad_storage:'granted', ad_user_data:'granted', ad_personalization:'granted', analytics_storage:'granted' });
       }
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({ event: 'cookie_consent', consent: value });
