@@ -84,8 +84,28 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '912347764598809');
-fbq('track', 'PageView');
-fbq('track', 'ViewContent', {content_name: 'vyntra_landing'});
+
+/* Event IDs shared with the server (CAPI) so Meta DEDUPLICATES the
+   browser + server copies of each event instead of double counting. */
+function vyntraEventId(){ return (self.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '.' + Math.random().toString(36).slice(2)); }
+var _vyPvId = vyntraEventId();
+fbq('track', 'PageView', {}, { eventID: _vyPvId });
+fbq('track', 'ViewContent', { content_name: 'vyntra_landing' }, { eventID: _vyPvId + '_vc' });
+
+/* Mirror events to Meta Conversions API (server-side) via /api/capi.
+   Survives in-app-browser / ad-blocker loss. No-ops cleanly if the
+   server has no META_CAPI_TOKEN configured. */
+window.vyntraCapi = function (name, eventId, custom) {
+  try {
+    var fbp = (document.cookie.match(/(?:^|; )_fbp=([^;]+)/) || [])[1] || null;
+    var fbc = (document.cookie.match(/(?:^|; )_fbc=([^;]+)/) || [])[1] || null;
+    if (!fbc) { var m = location.search.match(/[?&]fbclid=([^&]+)/); if (m) fbc = 'fb.1.' + Date.now() + '.' + decodeURIComponent(m[1]); }
+    var body = JSON.stringify({ event_name: name, event_id: eventId, event_source_url: location.href, fbp: fbp, fbc: fbc, custom: custom || {} });
+    if (navigator.sendBeacon) { navigator.sendBeacon('/api/capi', new Blob([body], { type: 'application/json' })); }
+    else { fetch('/api/capi', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body, keepalive: true }); }
+  } catch (e) {}
+};
+window.vyntraCapi('PageView', _vyPvId);
 </script>
 <noscript><img alt="" height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
@@ -672,10 +692,16 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
            a.closest('.sticky-cta') ? 'sticky' :
            a.closest('footer') ? 'footer' : 'other');
 
-        // Meta Pixel — standard Lead (optimizable) + custom event
+        // Meta Pixel — standard Lead (optimizable) + custom event.
+        // Lead is sent both browser-side and via CAPI with one shared
+        // event_id so Meta deduplicates the pair.
+        var leadId = (typeof vyntraEventId === 'function') ? vyntraEventId() : String(Date.now());
         if (typeof fbq === 'function') {
-          fbq('track', 'Lead', { content_name: 'vyntra_join', source: loc });
+          fbq('track', 'Lead', { content_name: 'vyntra_join', source: loc }, { eventID: leadId });
           fbq('trackCustom', 'JoinCommunityClick', { source: loc });
+        }
+        if (typeof window.vyntraCapi === 'function') {
+          window.vyntraCapi('Lead', leadId, { content_name: 'vyntra_join', source: loc });
         }
         // GA4 (direct gtag) — beacon transport survives the redirect
         if (typeof gtag === 'function') {
