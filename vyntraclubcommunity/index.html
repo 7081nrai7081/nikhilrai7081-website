@@ -277,6 +277,10 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
   .card:focus-visible, .event:focus-visible {
     outline: 2px solid var(--brand-1); outline-offset: 3px;
   }
+  /* Perks & audience rows are tappable too → open the Join popup */
+  .perk, .audience-list li { cursor: pointer; transition: border-color .2s ease, background .2s ease; }
+  .perk:hover, .audience-list li:hover { border-color: rgba(255, 77, 141, 0.45); background: rgba(255, 255, 255, 0.06); }
+  .perk:focus-visible, .audience-list li:focus-visible { outline: 2px solid var(--brand-1); outline-offset: 3px; }
 
   /* ---------- Perks checklist ---------- */
   .perks-section { background: var(--bg-soft); }
@@ -923,14 +927,15 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
     overlay.addEventListener('click', function (e) { if (e.target === overlay) closePopup(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePopup(); });
 
-    /* --- Cards & event tiles open the Join popup ("join the community for more info") --- */
+    /* --- Tap-to-join: every card, event tile, perk & audience row opens
+       the Join popup ("join the community for more info") --- */
     (function () {
-      var tiles = document.querySelectorAll('.card, .event');
+      var tiles = document.querySelectorAll('.card, .event, .perk, .audience-list li');
       Array.prototype.forEach.call(tiles, function (tile) {
         tile.setAttribute('role', 'button');
         tile.setAttribute('tabindex', '0');
         var h = tile.querySelector('h3');
-        var title = (h ? h.textContent : 'this').trim();
+        var title = (h ? h.textContent : tile.textContent).replace(/[✓→]/g, '').trim() || 'this';
         tile.setAttribute('aria-label', 'Join the community to learn more about ' + title);
         function activate() {
           if (typeof gtag === 'function') { gtag('event', 'card_click', { card: title }); }
