@@ -16,7 +16,7 @@
 
 const GRAPH_VERSION = 'v21.0';
 const DEFAULT_PIXEL_ID = '912347764598809';
-const ALLOWED_EVENTS = { PageView: 1, Lead: 1, ViewContent: 1 };
+const ALLOWED_EVENTS = { PageView: 1, Lead: 1, ViewContent: 1, ViewCtaSection: 1, JoinCommunityClick: 1 };
 
 function json(body, status) {
   return new Response(JSON.stringify(body), {

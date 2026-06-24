@@ -106,6 +106,7 @@ window.vyntraCapi = function (name, eventId, custom) {
   } catch (e) {}
 };
 window.vyntraCapi('PageView', _vyPvId);
+window.vyntraCapi('ViewContent', _vyPvId + '_vc', { content_name: 'vyntra_landing' });
 </script>
 <noscript><img alt="" height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
@@ -777,12 +778,14 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
         // Lead is sent both browser-side and via CAPI with one shared
         // event_id so Meta deduplicates the pair.
         var leadId = (typeof vyntraEventId === 'function') ? vyntraEventId() : String(Date.now());
+        var joinId = (typeof vyntraEventId === 'function') ? vyntraEventId() : String(Date.now()) + '_jc';
         if (typeof fbq === 'function') {
           fbq('track', 'Lead', { content_name: 'vyntra_join', source: loc }, { eventID: leadId });
-          fbq('trackCustom', 'JoinCommunityClick', { source: loc });
+          fbq('trackCustom', 'JoinCommunityClick', { source: loc }, { eventID: joinId });
         }
         if (typeof window.vyntraCapi === 'function') {
           window.vyntraCapi('Lead', leadId, { content_name: 'vyntra_join', source: loc });
+          window.vyntraCapi('JoinCommunityClick', joinId, { source: loc });
         }
         // GA4 (direct gtag) — beacon transport survives the redirect
         if (typeof gtag === 'function') {
@@ -829,8 +832,10 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
           if (en.isIntersecting) {
+            var ctaId = (typeof vyntraEventId === 'function') ? vyntraEventId() : String(Date.now()) + '_cta';
             if (typeof gtag === 'function') { gtag('event', 'view_cta_section'); }
-            if (typeof fbq === 'function') { fbq('trackCustom', 'ViewCtaSection'); }
+            if (typeof fbq === 'function') { fbq('trackCustom', 'ViewCtaSection', {}, { eventID: ctaId }); }
+            if (typeof window.vyntraCapi === 'function') { window.vyntraCapi('ViewCtaSection', ctaId); }
             window.dataLayer.push({ event: 'view_cta_section' });
             io.disconnect();
           }
