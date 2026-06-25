@@ -5,6 +5,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Preload the self-hosted fonts used in the first paint. The LCP element is
+     the hero <h1> rendered in Sora, so its file is fetched at highest priority
+     and is ready before the text paints (no swap reflow, no render-block). -->
+<link rel="preload" href="/assets/fonts/sora-variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
 
 <!-- Warm up the analytics connections early -->
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
@@ -42,29 +47,22 @@
   } catch(e){}
 </script>
 
-<!-- Google Analytics 4 (gtag.js) — direct, immediate, in-app-webview safe -->
+<!-- Google Analytics 4 (gtag.js) — config is queued into the dataLayer NOW; the
+     heavy gtag.js library is fetched off the critical path by the deferred loader
+     below. The queued commands (incl. page_view) flush the moment it loads. -->
 <script>
   (function(){
     var id = (window.VYNTRA_ANALYTICS||{}).GA4;
     if (!id || id === 'G-XXXXXXXXXX') return;            /* skip until a real ID is set */
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
-    document.head.appendChild(s);
     gtag('js', new Date());
-    gtag('config', id, { transport_type: 'beacon' });    /* page_view fires automatically */
+    gtag('config', id, { transport_type: 'beacon' });    /* page_view fires when gtag.js loads */
   })();
 </script>
 
-<!-- Microsoft Clarity — direct, immediate -->
+<!-- Microsoft Clarity — queue stub installed now so any clarity() call is
+     captured; the tag script itself is fetched off the critical path below. -->
 <script>
-  (function(c,l,a,r){
-    var i = (window.VYNTRA_ANALYTICS||{}).CLARITY;
-    if (!i || i === 'XXXXXXXXXX') return;                /* skip until a real ID is set */
-    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-    var t=l.createElement(r); t.async=1; t.src='https://www.clarity.ms/tag/'+i;
-    var y=l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t,y);
-  })(window,document,'clarity','script');
+  window.clarity = window.clarity || function(){ (window.clarity.q = window.clarity.q || []).push(arguments); };
 </script>
 
 <!-- GTM (GTM-MB5JGJQL) intentionally NOT loaded on this landing page.
@@ -75,14 +73,15 @@
 
 <!-- Meta Pixel Code -->
 <script>
+/* Pixel queue stub only — fbevents.js is fetched off the critical path by the
+   deferred loader below. Every fbq(...) call here is queued and flushes the
+   moment the library loads, so no event is dropped (and the CAPI mirror below
+   fires server-side immediately regardless). */
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
 if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
+n.queue=[]}(window, document,'script');
 fbq('init', '912347764598809');
 
 /* Event IDs shared with the server (CAPI) so Meta DEDUPLICATES the
@@ -113,6 +112,37 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
 
+<!-- ============================================================
+     DEFERRED ANALYTICS LOADER
+     The three heavy third-party libraries (gtag.js, fbevents.js, clarity)
+     are the source of the "unused / legacy JS" and the long main-thread tasks.
+     We fetch them OFF the critical path: on the first user interaction, or when
+     the main thread is idle after first paint (≤3s fallback). Every event was
+     already queued in its stub above and flushes the instant each lib loads, so
+     nothing is dropped; CAPI PageView/ViewContent already fired server-side.
+     ============================================================ -->
+<script>
+  (function(){
+    var A = window.VYNTRA_ANALYTICS || {};
+    function inject(src){
+      var s = document.createElement('script'); s.async = true; s.src = src;
+      var f = document.getElementsByTagName('script')[0]; f.parentNode.insertBefore(s, f);
+    }
+    function load(){
+      if (window.__vyAnalyticsLoaded) return; window.__vyAnalyticsLoaded = true;
+      if (A.GA4     && A.GA4     !== 'G-XXXXXXXXXX') inject('https://www.googletagmanager.com/gtag/js?id=' + A.GA4);
+      if (A.CLARITY && A.CLARITY !== 'XXXXXXXXXX')   inject('https://www.clarity.ms/tag/' + A.CLARITY);
+      if (A.PIXEL)                                   inject('https://connect.facebook.net/en_US/fbevents.js');
+    }
+    var evs = ['touchstart','mousedown','mousemove','keydown','scroll','click'];
+    var opts = { capture: true, passive: true };
+    function onFirst(){ evs.forEach(function(ev){ window.removeEventListener(ev, onFirst, opts); }); load(); }
+    evs.forEach(function(ev){ window.addEventListener(ev, onFirst, opts); });
+    if ('requestIdleCallback' in window) { requestIdleCallback(load, { timeout: 3000 }); }
+    else { window.addEventListener('load', function(){ setTimeout(load, 1200); }); }
+  })();
+</script>
+
 <title>Vyntra | Lucknow's Social Discovery Community</title>
 <meta name="description" content="Vyntra is Lucknow's social discovery community — music events, creative workshops, social mixers, open mics and unique experiences. Join free and discover better weekends.">
 <meta name="theme-color" content="#0c0a1a">
@@ -127,12 +157,17 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
 <link rel="canonical" href="https://nikhilrai7081.com/vyntraclubcommunity">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%E2%9C%A8%3C/text%3E%3C/svg%3E">
 
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Fonts are self-hosted (see the @font-face rules at the top of the inline CSS
+     below). This removes the render-blocking fonts.googleapis.com stylesheet and
+     the two fonts.* preconnects — fonts now load same-origin via <link rel=preload>. -->
 
 <style>
+  /* Self-hosted fonts — no render-blocking third-party stylesheet, no extra
+     origins. One variable woff2 per family covers every weight used here
+     (Sora 600/700/800 display, Inter 400/500/600 body). */
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('/assets/fonts/inter-variable.woff2') format('woff2'); }
+  @font-face { font-family: 'Sora';  font-style: normal; font-weight: 100 900; font-display: swap; src: url('/assets/fonts/sora-variable.woff2') format('woff2'); }
+
   :root {
     --bg: #0c0a1a;
     --bg-soft: #14112b;
@@ -481,11 +516,20 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
       to   { transform: translate3d(0, -2.5%, 0) scale(1.1); }
     }
 
-    /* Pulse the live "Up Next" tag to pull the eye */
-    .event .tag.live { animation: livePulse 2.6s ease-in-out infinite; }
+    /* Pulse the live "Up Next" tag to pull the eye.
+       GPU-composited: a pseudo-element carries a STATIC glow and we animate only
+       its opacity (box-shadow itself can't be composited; opacity can). */
+    .event .tag.live { position: relative; }
+    .event .tag.live::after {
+      content: ""; position: absolute; inset: 0; border-radius: 999px;
+      pointer-events: none;
+      box-shadow: 0 0 0 7px rgba(255, 77, 141, 0.12);
+      opacity: 0; will-change: opacity;
+      animation: livePulse 2.6s ease-in-out infinite;
+    }
     @keyframes livePulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(255, 77, 141, 0); }
-      50%      { box-shadow: 0 0 0 7px rgba(255, 77, 141, 0.12); }
+      0%, 100% { opacity: 0; }
+      50%      { opacity: 1; }
     }
   }
 
@@ -723,6 +767,14 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
   (function () {
     window.dataLayer = window.dataLayer || [];
 
+    /* Run non-critical UI setup after first paint so it doesn't lengthen the
+       main-thread tasks during the LCP/FCP window — the page stays interactive
+       sooner. Conversion (WhatsApp click) tracking below is NOT deferred. */
+    function whenIdle(fn){
+      if ('requestIdleCallback' in window) { requestIdleCallback(fn, { timeout: 2000 }); }
+      else { setTimeout(fn, 1); }
+    }
+
     /* === Conversion: fire on EVERY "Join WhatsApp Community" click ===
        The links are target="_blank" rel="noopener", so this tab survives the
        outbound navigation and the tracking requests are never cancelled. GA4
@@ -893,14 +945,18 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
       var iv = setInterval(tick, 1000);
     })();
 
-    /* --- Scroll-reveal: fade-and-rise sections as they enter view --- */
-    (function () {
+    /* --- Scroll-reveal: fade-and-rise sections as they enter view (deferred) --- */
+    whenIdle(function () {
       var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduce || !('IntersectionObserver' in window)) return;
       document.documentElement.classList.add('js-anim');
 
+      // NOTE: the hero (incl. <h1> = the LCP element, and the Join CTA) is
+      // deliberately NOT in this list. It must paint immediately at full
+      // opacity — an opacity:0 fade-in on the LCP element makes Chrome defer
+      // the LCP timestamp (it ignores not-yet-visible paints), which both
+      // delays and destabilises LCP. The below-the-fold cascade is unchanged.
       var selector = [
-        '.hero-eyebrow', '.hero h1', '.hero p.sub', '.founder-badge', '.countdown', '.hero .btn',
         'section .eyebrow', 'section .section-title', 'section .section-lead', 'section .highlight',
         '.card', '.perk', '.event', '.audience-list li', '.audience-note',
         '.final h2', '.final .steps', '.final .kicker', '.final .btn',
@@ -942,7 +998,7 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
           revealables.forEach(function (el) { el.style.transition = 'none'; el.classList.add('in'); });
         }
       }, 800);
-    })();
+    });
 
     /* --- Join popup: shows once per session, on 10s timer OR exit-intent --- */
     var overlay = document.getElementById('joinPopup');
@@ -984,8 +1040,8 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePopup(); });
 
     /* --- Tap-to-join: every card, event tile, perk & audience row opens
-       the Join popup ("join the community for more info") --- */
-    (function () {
+       the Join popup ("join the community for more info") — deferred --- */
+    whenIdle(function () {
       var tiles = document.querySelectorAll('.card, .event, .perk, .audience-list li');
       Array.prototype.forEach.call(tiles, function (tile) {
         tile.setAttribute('role', 'button');
@@ -1004,7 +1060,7 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
           if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); activate(); }
         });
       });
-    })();
+    });
   })();
   </script>
 
