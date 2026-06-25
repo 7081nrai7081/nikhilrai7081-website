@@ -84,16 +84,12 @@ if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
 n.queue=[]}(window, document,'script');
 fbq('init', '912347764598809');
 
-/* Event IDs shared with the server (CAPI) so Meta DEDUPLICATES the
-   browser + server copies of each event instead of double counting. */
+/* One event_id per event, SHARED by the browser Pixel leg and the server
+   (CAPI) leg so Meta DEDUPLICATES the pair instead of double counting. */
 function vyntraEventId(){ return (self.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '.' + Math.random().toString(36).slice(2)); }
-var _vyPvId = vyntraEventId();
-fbq('track', 'PageView', {}, { eventID: _vyPvId });
-fbq('track', 'ViewContent', { content_name: 'vyntra_landing' }, { eventID: _vyPvId + '_vc' });
 
-/* Mirror events to Meta Conversions API (server-side) via /api/capi.
-   Survives in-app-browser / ad-blocker loss. No-ops cleanly if the
-   server has no META_CAPI_TOKEN configured. */
+/* SERVER leg — Meta Conversions API via /api/capi. Survives in-app-browser /
+   ad-blocker loss. No-ops cleanly if META_CAPI_TOKEN isn't configured. */
 window.vyntraCapi = function (name, eventId, custom) {
   try {
     var fbp = (document.cookie.match(/(?:^|; )_fbp=([^;]+)/) || [])[1] || null;
@@ -104,8 +100,42 @@ window.vyntraCapi = function (name, eventId, custom) {
     else { fetch('/api/capi', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body, keepalive: true }); }
   } catch (e) {}
 };
-window.vyntraCapi('PageView', _vyPvId);
-window.vyntraCapi('ViewContent', _vyPvId + '_vc', { content_name: 'vyntra_landing' });
+
+/* BROWSER leg, fallback transport — a direct facebook.com/tr Pixel beacon that
+   carries the SAME event_id as `eid`. Because fbevents.js is loaded lazily
+   (perf), at most event moments it isn't ready yet; a queued fbq() call would
+   sit unsent until the lib loads — and on a quick bounce or the in-app WhatsApp
+   hand-off it may never load, so the browser copy never reaches Meta and the
+   server copy is left undeduplicated. This beacon needs no library, fires
+   immediately, and survives navigation, guaranteeing the browser leg + its
+   shared eid every time. */
+window.vyntraPixel = function (name, eventId, custom) {
+  try {
+    var A = window.VYNTRA_ANALYTICS || {};
+    var u = 'https://www.facebook.com/tr/?id=' + encodeURIComponent(A.PIXEL || '912347764598809') +
+            '&ev=' + encodeURIComponent(name) + '&eid=' + encodeURIComponent(eventId) +
+            '&dl=' + encodeURIComponent(location.href) + '&rl=' + encodeURIComponent(document.referrer || '') +
+            '&if=false&ts=' + Date.now();
+    if (custom) for (var k in custom) if (Object.prototype.hasOwnProperty.call(custom, k)) u += '&cd[' + encodeURIComponent(k) + ']=' + encodeURIComponent(custom[k]);
+    new Image().src = u;
+  } catch (e) {}
+};
+
+/* Fire BOTH legs under one shared event_id. The browser copy goes through the
+   real Pixel when fbevents.js has already loaded (richest signal: _fbp/_fbc,
+   automatic params), otherwise through the /tr beacon above — either way
+   exactly ONE browser event per action, tagged with the shared id, so it can
+   never double-count and always deduplicates against the CAPI copy.
+   `standard` = true for Meta standard events (track), false for custom. */
+window.vyntraTrack = function (name, eventId, custom, standard) {
+  if (window.fbq && window.fbq.callMethod) { try { fbq(standard ? 'track' : 'trackCustom', name, custom || {}, { eventID: eventId }); } catch (e) { window.vyntraPixel(name, eventId, custom); } }
+  else { window.vyntraPixel(name, eventId, custom); }
+  window.vyntraCapi(name, eventId, custom);
+};
+
+var _vyPvId = vyntraEventId();
+window.vyntraTrack('PageView', _vyPvId, {}, true);
+window.vyntraTrack('ViewContent', _vyPvId + '_vc', { content_name: 'vyntra_landing' }, true);
 </script>
 <noscript><img alt="" height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
@@ -826,18 +856,17 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
            a.closest('.sticky-cta') ? 'sticky' :
            a.closest('footer') ? 'footer' : 'other');
 
-        // Meta Pixel — standard Lead (optimizable) + custom event.
-        // Lead is sent both browser-side and via CAPI with one shared
-        // event_id so Meta deduplicates the pair.
-        var leadId = (typeof vyntraEventId === 'function') ? vyntraEventId() : String(Date.now());
-        var joinId = (typeof vyntraEventId === 'function') ? vyntraEventId() : String(Date.now()) + '_jc';
-        if (typeof fbq === 'function') {
-          fbq('track', 'Lead', { content_name: 'vyntra_join', source: loc }, { eventID: leadId });
-          fbq('trackCustom', 'JoinCommunityClick', { source: loc }, { eventID: joinId });
-        }
-        if (typeof window.vyntraCapi === 'function') {
-          window.vyntraCapi('Lead', leadId, { content_name: 'vyntra_join', source: loc });
-          window.vyntraCapi('JoinCommunityClick', joinId, { source: loc });
+        // Meta — standard Lead (optimizable) + custom Join event. Each fires
+        // one browser Pixel copy and one CAPI copy under a single shared
+        // event_id so Meta deduplicates the pair. vyntraTrack picks the live
+        // Pixel or the direct /tr beacon depending on whether the deferred
+        // fbevents.js has loaded — so the conversion is captured even when the
+        // in-app browser hands off to WhatsApp before the lib finishes loading.
+        var leadId = vyntraEventId();
+        var joinId = vyntraEventId();
+        if (typeof window.vyntraTrack === 'function') {
+          window.vyntraTrack('Lead', leadId, { content_name: 'vyntra_join', source: loc }, true);
+          window.vyntraTrack('JoinCommunityClick', joinId, { source: loc }, false);
         }
         // GA4 (direct gtag) — beacon transport survives the redirect
         if (typeof gtag === 'function') {
@@ -884,10 +913,9 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
           if (en.isIntersecting) {
-            var ctaId = (typeof vyntraEventId === 'function') ? vyntraEventId() : String(Date.now()) + '_cta';
+            var ctaId = vyntraEventId();
             if (typeof gtag === 'function') { gtag('event', 'view_cta_section'); }
-            if (typeof fbq === 'function') { fbq('trackCustom', 'ViewCtaSection', {}, { eventID: ctaId }); }
-            if (typeof window.vyntraCapi === 'function') { window.vyntraCapi('ViewCtaSection', ctaId); }
+            if (typeof window.vyntraTrack === 'function') { window.vyntraTrack('ViewCtaSection', ctaId, {}, false); }
             window.dataLayer.push({ event: 'view_cta_section' });
             io.disconnect();
           }
