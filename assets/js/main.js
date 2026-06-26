@@ -316,5 +316,57 @@
     }
   });
 
+  /* ---------- VYNTRA community floating banner (site-wide) ---------- */
+  (function () {
+    // Persisted dismissal — stays hidden for this visitor across pages/visits.
+    let dismissed = null;
+    try { dismissed = localStorage.getItem('vyntra_cta_dismissed'); } catch (e) {}
+    if (dismissed === '1') return;
+
+    const WA_URL = 'https://chat.whatsapp.com/HnHOqXxM3YxKIjBvOphTsT';
+
+    const cta = doc.createElement('aside');
+    cta.className = 'vyntra-cta';
+    cta.setAttribute('role', 'complementary');
+    cta.setAttribute('aria-label', 'Join the VYNTRA community on WhatsApp');
+    cta.innerHTML =
+      '<a class="vyntra-cta__link" href="' + WA_URL + '" target="_blank" rel="noopener noreferrer">' +
+        '<img class="vyntra-cta__img" src="/assets/images/vyntra_jamming_night_lucknow.png" ' +
+          'alt="VYNTRA Jamming Night, Lucknow — a Saturday of live music, voices and conversations. Tap to join the community." ' +
+          'width="1448" height="1086" loading="lazy" decoding="async">' +
+        '<span class="vyntra-cta__label">Tap to join the community &rarr;</span>' +
+      '</a>' +
+      '<button type="button" class="vyntra-cta__close" aria-label="Dismiss banner">&times;</button>';
+
+    function dismiss() {
+      try { localStorage.setItem('vyntra_cta_dismissed', '1'); } catch (e) {}
+      cta.classList.remove('show');
+      doc.removeEventListener('keydown', onKey);
+      setTimeout(function () { if (cta.parentNode) cta.parentNode.removeChild(cta); }, 350);
+    }
+
+    function onKey(e) {
+      if (e.key === 'Escape') dismiss();
+    }
+
+    // × dismisses without ever triggering the surrounding WhatsApp link.
+    cta.querySelector('.vyntra-cta__close').addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      dismiss();
+    });
+    doc.addEventListener('keydown', onKey);
+
+    // The WhatsApp click is tracked by the global contact-click handler above
+    // (href contains "whatsapp"), so no extra tracking is wired here.
+    body.appendChild(cta);
+
+    // Reveal ~1.2s after load with a fade + slide-up. The site-wide
+    // prefers-reduced-motion rule neutralises the transition automatically.
+    setTimeout(function () {
+      requestAnimationFrame(function () { cta.classList.add('show'); });
+    }, 1200);
+  })();
+
   console.log('%cNikhil Rai — Portfolio', 'font-size:13px;color:#e23a5e;font-weight:700;');
 })();

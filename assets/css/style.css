@@ -1664,3 +1664,79 @@ a.card:hover .card-media img { transform: scale(1.06); }
 }
 
 /* i18n: sitemap auto-regen + language switcher (v=22+) */
+
+/* =====================================================
+   VYNTRA community floating banner (site-wide)
+   Gold-on-black VYNTRA brand — deliberately off the
+   site's crimson palette. Injected once by main.js so
+   it appears on every page without per-page markup.
+   ===================================================== */
+.vyntra-cta {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1400; /* over content; below the 1500 cookie banner */
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0c0a08;
+  border: 1px solid rgba(201, 154, 63, .45);
+  box-shadow: 0 24px 60px -18px rgba(0, 0, 0, .78);
+  opacity: 0;
+  transform: translateY(24px);
+  pointer-events: none;
+  transition: opacity .5s var(--ease), transform .5s var(--ease);
+}
+.vyntra-cta.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+.vyntra-cta__link { display: block; text-decoration: none; color: inherit; }
+.vyntra-cta__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3; /* matches the 1448×1086 poster — reserves space, no CLS */
+  object-fit: cover;
+}
+.vyntra-cta__label {
+  display: block;
+  padding: 11px 14px;
+  background: #0c0a08;
+  color: #e7b75a;
+  font-weight: 600;
+  font-size: .92rem;
+  text-align: center;
+  border-top: 1px solid rgba(201, 154, 63, .25);
+  transition: color .2s var(--ease), background .2s var(--ease);
+}
+.vyntra-cta__link:hover .vyntra-cta__label,
+.vyntra-cta__link:focus-visible .vyntra-cta__label { color: #f3cd78; background: #15110c; }
+
+.vyntra-cta__close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid rgba(201, 154, 63, .35);
+  border-radius: 50%;
+  background: rgba(8, 6, 4, .62);
+  color: #e7b75a;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  transition: background .2s var(--ease);
+}
+.vyntra-cta__close:hover { background: rgba(8, 6, 4, .9); }
+.vyntra-cta__close:focus-visible { outline: 2px solid #e7b75a; outline-offset: 2px; }
+
+@media (max-width: 560px) {
+  .vyntra-cta { right: 12px; bottom: 12px; width: min(300px, 84vw); }
+  .vyntra-cta__close { top: 6px; right: 6px; width: 40px; height: 40px; font-size: 24px; }
+}
