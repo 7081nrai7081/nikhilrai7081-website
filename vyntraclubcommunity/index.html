@@ -1079,7 +1079,9 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
         tile.setAttribute('aria-label', 'Join the community to learn more about ' + title);
         function activate() {
           if (typeof gtag === 'function') { gtag('event', 'card_click', { card: title }); }
-          if (typeof fbq === 'function') { fbq('trackCustom', 'CardClick', { card: title }); }
+          // Meta — custom CardClick on both legs (browser Pixel + CAPI) under
+          // one shared event_id so Meta deduplicates, matching the other events.
+          if (typeof window.vyntraTrack === 'function') { window.vyntraTrack('CardClick', vyntraEventId(), { card: title }, false); }
           window.dataLayer.push({ event: 'card_click', card: title });
           openPopup('card:' + title, true);
         }
