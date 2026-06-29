@@ -88,6 +88,47 @@ fbq('init', '912347764598809');
    (CAPI) leg so Meta DEDUPLICATES the pair instead of double counting. */
 function vyntraEventId(){ return (self.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '.' + Math.random().toString(36).slice(2)); }
 
+/* ---- Anonymous, stable external_id (first-party) + guaranteed _fbp/_fbc ----
+   These lift Event Match Quality WITHOUT un-deferring the heavy fbevents.js:
+   - external_id: a UUID kept in localStorage + a first-party cookie, SHA-256
+     hashed; the SAME hash is sent on the browser Pixel AND the CAPI leg, so the
+     two copies still deduplicate on the shared event_id. external_id is the one
+     advanced-matching field the Pixel does NOT auto-hash, so the identical hex
+     lands on every leg and matches.
+   - _fbp: fbevents.js normally creates this, but it loads lazily here, so on a
+     quick bounce it never ran (coverage ~4.5%). We write a correctly formatted
+     _fbp cookie up-front; fbevents.js reuses an existing _fbp instead of
+     overwriting it, so coverage approaches 100% at no perf cost.
+   - _fbc: persisted from the ad-click fbclid so it survives across pages. */
+function vyApex(){ var h = location.hostname || ''; if (/^[0-9.]+$/.test(h) || h === 'localhost') return ''; var p = h.split('.'); return p.length > 2 ? p.slice(-2).join('.') : h; }
+function vyCookie(name, val, maxAge){ try { var d = vyApex(); document.cookie = name + '=' + val + '; max-age=' + maxAge + '; path=/; SameSite=Lax' + (location.protocol === 'https:' ? '; Secure' : '') + (d ? '; domain=.' + d : ''); } catch (e) {} }
+function vyRead(name){ return (document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]+)')) || [])[1] || null; }
+
+/* Guarantee _fbp (+ _fbc when an fbclid is present) exist BEFORE any event fires. */
+(function ensureFbCookies(){
+  if (!vyRead('_fbp')) vyCookie('_fbp', 'fb.1.' + Date.now() + '.' + Math.floor(2147483647 * Math.random()), 7776000);
+  if (!vyRead('_fbc')) { var m = location.search.match(/[?&]fbclid=([^&]+)/); if (m) vyCookie('_fbc', 'fb.1.' + Date.now() + '.' + decodeURIComponent(m[1]), 7776000); }
+})();
+
+window.vyntraExtId = null;   /* SHA-256 hex of the anonymous id, set once hashed */
+window.vyntraExtIdReady = (function(){
+  var raw = null;
+  try { raw = localStorage.getItem('_vy_xid'); } catch (e) {}
+  if (!raw) { var c = vyRead('_vy_xid'); if (c) { try { raw = decodeURIComponent(c); } catch (e) { raw = c; } } }
+  if (!raw) { raw = (self.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '.' + Math.random().toString(36).slice(2)); }
+  try { localStorage.setItem('_vy_xid', raw); } catch (e) {}
+  vyCookie('_vy_xid', encodeURIComponent(raw), 63072000);   /* 2-year first-party cookie */
+  if (self.crypto && crypto.subtle && crypto.subtle.digest) {
+    try {
+      return crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw)).then(function (buf) {
+        var b = new Uint8Array(buf), h = ''; for (var i = 0; i < b.length; i++) h += ('0' + b[i].toString(16)).slice(-2);
+        window.vyntraExtId = h; return h;
+      }).catch(function () { return null; });
+    } catch (e) {}
+  }
+  return Promise.resolve(null);   /* non-secure context: fire events without external_id */
+})();
+
 /* SERVER leg — Meta Conversions API via /api/capi. Survives in-app-browser /
    ad-blocker loss. No-ops cleanly if META_CAPI_TOKEN isn't configured. */
 window.vyntraCapi = function (name, eventId, custom) {
@@ -95,7 +136,7 @@ window.vyntraCapi = function (name, eventId, custom) {
     var fbp = (document.cookie.match(/(?:^|; )_fbp=([^;]+)/) || [])[1] || null;
     var fbc = (document.cookie.match(/(?:^|; )_fbc=([^;]+)/) || [])[1] || null;
     if (!fbc) { var m = location.search.match(/[?&]fbclid=([^&]+)/); if (m) fbc = 'fb.1.' + Date.now() + '.' + decodeURIComponent(m[1]); }
-    var body = JSON.stringify({ event_name: name, event_id: eventId, event_source_url: location.href, fbp: fbp, fbc: fbc, custom: custom || {} });
+    var body = JSON.stringify({ event_name: name, event_id: eventId, event_source_url: location.href, fbp: fbp, fbc: fbc, external_id: window.vyntraExtId || null, custom: custom || {} });
     if (navigator.sendBeacon) { navigator.sendBeacon('/api/capi', new Blob([body], { type: 'application/json' })); }
     else { fetch('/api/capi', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body, keepalive: true }); }
   } catch (e) {}
@@ -117,6 +158,7 @@ window.vyntraPixel = function (name, eventId, custom) {
             '&dl=' + encodeURIComponent(location.href) + '&rl=' + encodeURIComponent(document.referrer || '') +
             '&if=false&ts=' + Date.now();
     if (custom) for (var k in custom) if (Object.prototype.hasOwnProperty.call(custom, k)) u += '&cd[' + encodeURIComponent(k) + ']=' + encodeURIComponent(custom[k]);
+    if (window.vyntraExtId) u += '&ud[external_id]=' + encodeURIComponent(window.vyntraExtId);
     new Image().src = u;
   } catch (e) {}
 };
@@ -134,8 +176,17 @@ window.vyntraTrack = function (name, eventId, custom, standard) {
 };
 
 var _vyPvId = vyntraEventId();
-window.vyntraTrack('PageView', _vyPvId, {}, true);
-window.vyntraTrack('ViewContent', _vyPvId + '_vc', { content_name: 'vyntra_landing' }, true);
+/* Fire the first events once external_id is ready (a sub-millisecond hash) so
+   PageView/ViewContent already carry it. Re-calling fbq('init') with external_id
+   advanced matching attaches it to EVERY later Pixel event automatically (fbq
+   merges advanced matching across init calls). Falls back to firing immediately
+   if hashing is unavailable, so no event is ever dropped. */
+function vyFireInitial(extId){
+  if (extId && window.fbq) { try { fbq('init', '912347764598809', { external_id: extId }); } catch (e) {} }
+  window.vyntraTrack('PageView', _vyPvId, {}, true);
+  window.vyntraTrack('ViewContent', _vyPvId + '_vc', { content_name: 'vyntra_landing' }, true);
+}
+window.vyntraExtIdReady.then(vyFireInitial).catch(function () { vyFireInitial(null); });
 </script>
 <noscript><img alt="" height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"

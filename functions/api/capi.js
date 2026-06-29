@@ -45,6 +45,10 @@ export async function onRequestPost(context) {
   const userData = { client_ip_address: ip, client_user_agent: ua };
   if (data.fbp) userData.fbp = data.fbp;
   if (data.fbc) userData.fbc = data.fbc;
+  // Anonymous, stable external_id (SHA-256 hex). The browser Pixel sends the
+  // SAME hex (external_id is not auto-hashed by the Pixel), so the two copies
+  // match. Sent as a single-element array per Meta's recommended shape.
+  if (data.external_id) userData.external_id = [String(data.external_id)];
 
   const payload = {
     data: [{
