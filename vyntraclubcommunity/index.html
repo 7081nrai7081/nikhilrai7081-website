@@ -886,6 +886,28 @@ src="https://www.facebook.com/tr?id=912347764598809&ev=PageView&noscript=1"
       });
     });
 
+    /* === Auto-redirect to the WhatsApp community after 15s ===
+       Sends lingering visitors straight into the community even if they never
+       tap a button. We do NOT fire the optimizable Meta "Lead" here — auto-
+       firing it for every idle visitor would corrupt Pixel conversion data —
+       only a distinct GA4 event for visibility. The redirect is cancelled if
+       the tab is hidden (user switched apps) so we never yank them back later. */
+    (function () {
+      var REDIRECT_MS = 15000;
+      var redirected = false;
+      function go() {
+        if (redirected || document.hidden) return;
+        redirected = true;
+        if (typeof gtag === 'function') {
+          gtag('event', 'auto_redirect', { method: 'whatsapp', source: 'timer_15s', transport_type: 'beacon' });
+        }
+        window.dataLayer.push({ event: 'auto_redirect', join_location: 'timer_15s' });
+        if (typeof window.clarity === 'function') { window.clarity('set', 'auto_redirect', 'true'); }
+        window.location.href = WA_URL;
+      }
+      setTimeout(go, REDIRECT_MS);
+    })();
+
     /* --- Scroll depth at 25/50/75/100% (GA4 + dataLayer) --- */
     (function () {
       var marks = [25, 50, 75, 100], hit = {};
