@@ -12,3 +12,9 @@ SEO-TODO.md
 
 # Unfinished blog template (has {{placeholders}}) — keep local only
 blog-template.html
+
+# Internal handoff / AI-orientation docs — keep local, NOT for the public repo or site
+# (the GitHub repo is public AND the live site serves .md files, so committing these
+#  would expose them at nikhilrai7081.com/HANDOFF.md — keep them out of the deploy)
+HANDOFF.md
+CLAUDE.md
