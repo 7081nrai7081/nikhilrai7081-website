@@ -1666,8 +1666,8 @@ a.card:hover .card-media img { transform: scale(1.06); }
 /* i18n: sitemap auto-regen + language switcher (v=22+) */
 
 /* =====================================================
-   VYNTRA community floating banner (site-wide)
-   Gold-on-black VYNTRA brand — deliberately off the
+   Community floating banner (site-wide)
+   Gold-on-black brand — deliberately off the
    site's crimson palette. Injected once by main.js so
    it appears on every page without per-page markup.
    ===================================================== */
@@ -1740,3 +1740,4 @@ a.card:hover .card-media img { transform: scale(1.06); }
   .vyntra-cta { right: 12px; bottom: 12px; width: min(300px, 84vw); }
   .vyntra-cta__close { top: 6px; right: 6px; width: 40px; height: 40px; font-size: 24px; }
 }
+

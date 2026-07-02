@@ -1,7 +1,7 @@
 # Header rules for Cloudflare Pages / Netlify (ignored by hosts that don't read _headers)
 
 # Security headers — applied site-wide.
-# (No Content-Security-Policy: the page relies on inline GTM/AdSense/Clarity/Pixel
+# (No Content-Security-Policy: the page relies on inline GTM/AdSense/Clarity
 #  scripts, so a CSP would need 'unsafe-inline' and add little real protection.)
 /*
   X-Content-Type-Options: nosniff

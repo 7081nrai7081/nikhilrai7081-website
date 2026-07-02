@@ -13,10 +13,9 @@ export default [
       sourceType: 'script',
       globals: {
         ...globals.browser,
-        // Third-party globals injected at runtime (GTM, GA, Meta Pixel).
+        // Third-party globals injected at runtime (GTM, GA).
         dataLayer: 'writable',
         gtag: 'readonly',
-        fbq: 'readonly',
       },
     },
     rules: {

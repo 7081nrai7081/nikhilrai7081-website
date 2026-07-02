@@ -316,7 +316,7 @@
     }
   });
 
-  /* ---------- VYNTRA community floating banner (site-wide) ---------- */
+  /* ---------- Community floating banner (site-wide) ---------- */
   (function () {
     // Persisted dismissal — stays hidden for this visitor across pages/visits.
     let dismissed = null;
