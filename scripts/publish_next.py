@@ -345,6 +345,25 @@ def main():
     blog2 = blog.replace(anchor_cards, anchor_cards + card, 1)
     blog2 = blog2.replace(anchor_ld, anchor_ld + item_ld, 1)
 
+    # Refresh the "featured latest post" hero card with the new post.
+    featured = (
+        f'    <a class="blog-featured" href="/{slug}" id="blog-featured">\n'
+        f'      <span class="blog-featured-media">\n'
+        f'        <img src="/assets/images/og-{slug}.png" alt="{e["og_alt"]}" width="1200" height="630" loading="eager" decoding="async">\n'
+        f'      </span>\n'
+        f'      <span class="blog-featured-body">\n'
+        f'        <span class="blog-featured-flag">Latest post</span>\n'
+        f'        <span class="tag">{e["tag"]}</span>\n'
+        f'        <h2>{e["title"]}</h2>\n'
+        f'        <p>{e["description"]}</p>\n'
+        f'        <span class="card-more">Read article\n          {ARROW}\n        </span>\n'
+        f'      </span>\n'
+        f'    </a>'
+    )
+    blog2, nfeat = re.subn(r'<a class="blog-featured"[\s\S]*?</a>', featured, blog2, count=1)
+    if not nfeat:
+        p("warning: blog-featured card not found; skipped featured refresh.")
+
     feed = rd("feed.xml")
     feed2 = re.sub(r"<lastBuildDate>.*?</lastBuildDate>",
                    f"<lastBuildDate>{rfc}</lastBuildDate>", feed, count=1)
@@ -384,6 +403,13 @@ def main():
     os.remove(os.path.join(ROOT, "_drafts", e["body"]))
     q["queue"] = items[1:]
     wr(qpath, json.dumps(q, ensure_ascii=False, indent=2) + "\n")
+    # Regenerate topic/category pages from the updated listing.
+    try:
+        import subprocess
+        subprocess.run([sys.executable, os.path.join(ROOT, "scripts", "gen_categories.py")],
+                       check=True)
+    except Exception as ex:
+        p("warning: gen_categories failed:", ex)
     p(f"published {slug} ({iso}). {len(q['queue'])} post(s) left in queue.")
     return 0
 

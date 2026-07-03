@@ -31,6 +31,9 @@ jobs:
       - name: Publish next queued post
         run: python scripts/publish_next.py
 
+      - name: Regenerate topic pages
+        run: python scripts/gen_categories.py
+
       - name: Stage changes
         id: stage
         run: |

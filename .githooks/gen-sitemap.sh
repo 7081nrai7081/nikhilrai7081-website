@@ -44,6 +44,7 @@ meta_for() {       # logical key -> "priority changefreq"
     work-*)   echo "0.8 monthly" ;;
     blog)     echo "0.6 weekly" ;;
     blog-*)   echo "0.7 monthly" ;;
+    topic-*)  echo "0.6 weekly" ;;
     privacy)  echo "0.3 yearly" ;;
     *)        echo "0.5 monthly" ;;
   esac
