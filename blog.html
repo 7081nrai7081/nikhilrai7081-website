@@ -54,7 +54,7 @@ try{if(localStorage.getItem('cookie_consent')==='granted'){gtag('consent','updat
 <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/style.css?v=30">
+<link rel="stylesheet" href="/assets/css/style.css?v=31">
 <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
 
 <script type="application/ld+json">
@@ -66,7 +66,15 @@ try{if(localStorage.getItem('cookie_consent')==='granted'){gtag('consent','updat
   "description":"Notes and insights on strategic partnerships, business development, lead generation, automation and growth.",
   "author":{"@type":"Person","name":"Nikhil Rai","url":"https://nikhilrai7081.com"},
   "blogPost":[
+    {"@type":"BlogPosting","headline":"B2B Lead Generation Strategy: From Cold List to Predictable Pipeline","url":"https://nikhilrai7081.com/blog-b2b-lead-generation-strategy","datePublished":"2026-07-03"},
+    {"@type":"BlogPosting","headline":"Growth Operations: The System That Makes Growth Repeatable","url":"https://nikhilrai7081.com/blog-growth-operations","datePublished":"2026-07-03"},
     {"@type":"BlogPosting","headline":"Types of Strategic Partnerships (and How to Choose the Right One)","url":"https://nikhilrai7081.com/blog-types-of-strategic-partnerships","datePublished":"2026-07-02"},
+    {"@type":"BlogPosting","headline":"Signs Your Operations Are Broken (and How to Fix Them)","url":"https://nikhilrai7081.com/blog-signs-your-operations-are-broken","datePublished":"2026-07-01"},
+    {"@type":"BlogPosting","headline":"Product-Led vs Sales-Led Growth: Which Is Right for You?","url":"https://nikhilrai7081.com/blog-product-led-vs-sales-led-growth","datePublished":"2026-07-01"},
+    {"@type":"BlogPosting","headline":"Cold Outreach That Actually Gets Replies","url":"https://nikhilrai7081.com/blog-cold-outreach-that-gets-replies","datePublished":"2026-07-01"},
+    {"@type":"BlogPosting","headline":"Lead Generation vs Demand Generation: What's the Difference?","url":"https://nikhilrai7081.com/blog-lead-generation-vs-demand-generation","datePublished":"2026-07-01"},
+    {"@type":"BlogPosting","headline":"How Much Should You Spend on Automation?","url":"https://nikhilrai7081.com/blog-how-much-to-spend-on-automation","datePublished":"2026-07-01"},
+    {"@type":"BlogPosting","headline":"The Partnership Agreement Checklist: What to Nail Down Before You Sign","url":"https://nikhilrai7081.com/blog-partnership-agreement-checklist","datePublished":"2026-07-01"},
     {"@type":"BlogPosting","headline":"Referrals Don't Happen by Accident","url":"https://nikhilrai7081.com/blog-referral-engine","datePublished":"2026-06-27"},
     {"@type":"BlogPosting","headline":"You Don't Have a Growth Problem — You Have a Positioning Problem","url":"https://nikhilrai7081.com/blog-positioning-problem","datePublished":"2026-06-26"},
     {"@type":"BlogPosting","headline":"Retention Is the Growth You Already Paid For","url":"https://nikhilrai7081.com/blog-retention-is-the-growth","datePublished":"2026-06-22"},
@@ -158,160 +166,208 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       3. Add the post URL to sitemap.xml.
     -->
 
-    <div class="cards">
-      <a class="card reveal" href="/blog-types-of-strategic-partnerships">
+    <div class="blog-filter" role="tablist" aria-label="Filter posts by topic">
+      <button class="chip-btn is-active" role="tab" aria-selected="true" data-filter="all">All</button>
+      <button class="chip-btn" role="tab" aria-selected="false" data-filter="partnerships">Partnerships</button>
+      <button class="chip-btn" role="tab" aria-selected="false" data-filter="growth">Growth</button>
+      <button class="chip-btn" role="tab" aria-selected="false" data-filter="leadgen">Lead Generation</button>
+      <button class="chip-btn" role="tab" aria-selected="false" data-filter="operations">Operations</button>
+      <button class="chip-btn" role="tab" aria-selected="false" data-filter="automation">Automation</button>
+    </div>
+
+    <div class="cards" id="blog-cards">
+      <a class="card reveal" data-cat="leadgen" href="/blog-b2b-lead-generation-strategy">
+        <span class="tag">Lead Generation</span>
+        <h3>B2B Lead Generation Strategy: From Cold List to Predictable Pipeline</h3>
+        <p>The plan that makes pipeline predictable — define your ICP, offer, channel and qualification so B2B lead generation compounds instead of relying on hustle.</p>
+        <span class="card-meta"><time datetime="2026-07-03">Jul 3, 2026</time><span aria-hidden="true"> · </span>9 min read</span>
+        <span class="card-more">Read article
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </span>
+      </a>
+      <a class="card reveal" data-cat="operations" href="/blog-growth-operations">
+        <span class="tag">Operations</span>
+        <h3>Growth Operations: The System That Makes Growth Repeatable</h3>
+        <p>Marketing and sales create motion; growth operations makes it repeatable. What growth ops is, why it's the function nobody owns, and how to build it.</p>
+        <span class="card-meta"><time datetime="2026-07-03">Jul 3, 2026</time><span aria-hidden="true"> · </span>8 min read</span>
+        <span class="card-more">Read article
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </span>
+      </a>
+      <a class="card reveal" data-cat="partnerships" href="/blog-types-of-strategic-partnerships">
         <span class="tag">Partnerships</span>
         <h3>Types of Strategic Partnerships (and How to Choose the Right One)</h3>
         <p>Channel, technology, content, referral and co-marketing partnerships — what each is good for, and how to choose the right type for your goal.</p>
+        <span class="card-meta"><time datetime="2026-07-02">Jul 2, 2026</time><span aria-hidden="true"> · </span>9 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-signs-your-operations-are-broken">
+      <a class="card reveal" data-cat="operations" href="/blog-signs-your-operations-are-broken">
         <span class="tag">Operations</span>
         <h3>Signs Your Operations Are Broken (and How to Fix Them)</h3>
         <p>Broken operations rarely announce themselves — they show up as heroics, dropped balls and slow decisions. The signs to watch for, and how to fix the causes.</p>
+        <span class="card-meta"><time datetime="2026-07-01">Jul 1, 2026</time><span aria-hidden="true"> · </span>7 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-product-led-vs-sales-led-growth">
+      <a class="card reveal" data-cat="growth" href="/blog-product-led-vs-sales-led-growth">
         <span class="tag">Growth</span>
         <h3>Product-Led vs Sales-Led Growth: Which Is Right for You?</h3>
         <p>Product-led vs sales-led growth isn't about which is trendier — it's about your price, product and buyer. How to tell which motion fits, and when to blend both.</p>
+        <span class="card-meta"><time datetime="2026-07-01">Jul 1, 2026</time><span aria-hidden="true"> · </span>7 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-cold-outreach-that-gets-replies">
+      <a class="card reveal" data-cat="leadgen" href="/blog-cold-outreach-that-gets-replies">
         <span class="tag">Lead Generation</span>
         <h3>Cold Outreach That Actually Gets Replies</h3>
         <p>Most cold outreach fails because it's about the sender, not the recipient. A practical framework for outreach that earns replies without spraying volume.</p>
+        <span class="card-meta"><time datetime="2026-07-01">Jul 1, 2026</time><span aria-hidden="true"> · </span>7 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-lead-generation-vs-demand-generation">
+      <a class="card reveal" data-cat="leadgen" href="/blog-lead-generation-vs-demand-generation">
         <span class="tag">Lead Generation</span>
         <h3>Lead Generation vs Demand Generation: What's the Difference?</h3>
         <p>Demand generation creates demand; lead generation captures it. The real difference between the two, why you need both, and how to sequence them so pipeline compounds.</p>
+        <span class="card-meta"><time datetime="2026-07-01">Jul 1, 2026</time><span aria-hidden="true"> · </span>7 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-how-much-to-spend-on-automation">
+      <a class="card reveal" data-cat="automation" href="/blog-how-much-to-spend-on-automation">
         <span class="tag">Automation</span>
         <h3>How Much Should You Spend on Automation?</h3>
         <p>How much to spend on automation isn't a budget question — it's an ROI question. A simple framework to size automation spend by what each task really costs you.</p>
+        <span class="card-meta"><time datetime="2026-07-01">Jul 1, 2026</time><span aria-hidden="true"> · </span>7 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-partnership-agreement-checklist">
+      <a class="card reveal" data-cat="partnerships" href="/blog-partnership-agreement-checklist">
         <span class="tag">Partnerships</span>
         <h3>The Partnership Agreement Checklist: What to Nail Down Before You Sign</h3>
         <p>Most partnerships fail on the things nobody agreed up front. The goals, ownership, economics and exit terms to settle before you sign.</p>
+        <span class="card-meta"><time datetime="2026-07-01">Jul 1, 2026</time><span aria-hidden="true"> · </span>8 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-referral-engine">
+      <a class="card reveal" data-cat="growth" href="/blog-referral-engine">
         <span class="tag">Growth</span>
         <h3>Referrals Don't Happen by Accident</h3>
         <p>Word of mouth is your highest-trust, lowest-cost channel — and most teams leave it to luck. How to turn referrals into a system you design, ask for and reward.</p>
+        <span class="card-meta"><time datetime="2026-06-27">Jun 27, 2026</time><span aria-hidden="true"> · </span>6 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-positioning-problem">
+      <a class="card reveal" data-cat="growth" href="/blog-positioning-problem">
         <span class="tag">Positioning</span>
         <h3>You Don't Have a Growth Problem — You Have a Positioning Problem</h3>
-        <p>Most "growth problems" are positioning problems in disguise. Why clarity about who you're for and what you replace beats more spend, more channels and more features — and how to fix it.</p>
+        <p>Most "growth problems" are positioning problems in disguise. Why clarity about who you're for and what you replace beats more spend, more channels and more features.</p>
+        <span class="card-meta"><time datetime="2026-06-26">Jun 26, 2026</time><span aria-hidden="true"> · </span>6 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-retention-is-the-growth">
+      <a class="card reveal" data-cat="growth" href="/blog-retention-is-the-growth">
         <span class="tag">Growth</span>
         <h3>Retention Is the Growth You Already Paid For</h3>
-        <p>Acquisition gets the budget, but retention compounds. Why keeping and expanding the customers you already won out-grows chasing new ones — and the activation, expansion and rescue habits that make it happen.</p>
+        <p>Acquisition gets the budget, but retention compounds. Why keeping and expanding the customers you already won out-grows chasing new ones — and the habits that make it happen.</p>
+        <span class="card-meta"><time datetime="2026-06-22">Jun 22, 2026</time><span aria-hidden="true"> · </span>6 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-distribution-is-the-product">
+      <a class="card reveal" data-cat="growth" href="/blog-distribution-is-the-product">
         <span class="tag">Growth</span>
         <h3>Distribution Is the Product</h3>
         <p>A great product doesn't market itself. How to design distribution as a discipline — pick one channel, earn it, own it, and make it compound — instead of bolting it on at launch.</p>
+        <span class="card-meta"><time datetime="2026-06-21">Jun 21, 2026</time><span aria-hidden="true"> · </span>6 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-go-to-market-from-zero">
+      <a class="card reveal" data-cat="growth" href="/blog-go-to-market-from-zero">
         <span class="tag">Go-To-Market</span>
         <h3>Go-to-Market From Zero: Your First 100 Users</h3>
         <p>How to launch when nobody knows you exist — pick a beachhead, go where your first users already gather, do the unscalable work, and turn early momentum into growth.</p>
+        <span class="card-meta"><time datetime="2026-06-18">Jun 18, 2026</time><span aria-hidden="true"> · </span>6 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-lead-quality-signal">
+      <a class="card reveal" data-cat="leadgen" href="/blog-lead-quality-signal">
         <span class="tag">Lead Generation</span>
         <h3>Your Lead Problem Isn't Volume — It's Signal</h3>
         <p>Most teams that think they need more leads actually need better signal. How to read buying intent and route effort to the leads that convert.</p>
+        <span class="card-meta"><time datetime="2026-06-05">Jun 5, 2026</time><span aria-hidden="true"> · </span>6 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-operations">
+      <a class="card reveal" data-cat="operations" href="/blog-operations">
         <span class="tag">Operations</span>
         <h3>Good Operations Is Invisible</h3>
         <p>You notice operations only when they're bad. The processes, ownership and reporting that let a team execute calmly and predictably.</p>
+        <span class="card-meta"><time datetime="2026-06-04">Jun 4, 2026</time><span aria-hidden="true"> · </span>5 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-business-development">
+      <a class="card reveal" data-cat="growth" href="/blog-business-development">
         <span class="tag">Business Development</span>
         <h3>Business Development Strategy: A System, Not a Rolodex</h3>
         <p>BD isn't sales or networking — it's the disciplined work of finding and creating growth opportunities. How to run it as a repeatable system.</p>
+        <span class="card-meta"><time datetime="2026-06-04">Jun 4, 2026</time><span aria-hidden="true"> · </span>6 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-growth-marketing">
+      <a class="card reveal" data-cat="growth" href="/blog-growth-marketing">
         <span class="tag">Growth Marketing</span>
         <h3>Growth Marketing Strategy Without the Hacks</h3>
         <p>Growth marketing isn't viral tricks — it's a disciplined system of experiments across the funnel. A framework for growth that compounds.</p>
+        <span class="card-meta"><time datetime="2026-06-04">Jun 4, 2026</time><span aria-hidden="true"> · </span>6 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-what-to-automate-first">
+      <a class="card reveal" data-cat="automation" href="/blog-what-to-automate-first">
         <span class="tag">Automation</span>
         <h3>What to Automate First (and What to Leave Alone)</h3>
         <p>Automation should buy back time, but most teams automate the wrong things first. A simple way to decide what to automate, fix, or leave to people.</p>
+        <span class="card-meta"><time datetime="2026-06-04">Jun 4, 2026</time><span aria-hidden="true"> · </span>6 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-strategic-partnerships">
+      <a class="card reveal" data-cat="partnerships" href="/blog-strategic-partnerships">
         <span class="tag">Partnerships</span>
         <h3>How to Build Strategic Partnerships That Actually Drive Growth</h3>
         <p>Most partnerships stall after the announcement. A practical framework for building ones that create real, lasting growth.</p>
+        <span class="card-meta"><time datetime="2026-06-03">Jun 3, 2026</time><span aria-hidden="true"> · </span>6 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
-      <a class="card reveal" href="/blog-lead-generation-system">
+      <a class="card reveal" data-cat="leadgen" href="/blog-lead-generation-system">
         <span class="tag">Lead Generation</span>
         <h3>Building a Lead-Gen System That Runs Without You</h3>
         <p>Turn sporadic outreach into a predictable system — the components that make pipeline repeatable instead of reliant on hustle.</p>
+        <span class="card-meta"><time datetime="2026-06-03">Jun 3, 2026</time><span aria-hidden="true"> · </span>5 min read</span>
         <span class="card-more">Read article
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
       </a>
     </div>
+
+    <p class="blog-empty" id="blog-empty" hidden>No posts in this topic yet.</p>
 
   </div>
 </section>
@@ -356,7 +412,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </footer>
 
-<script src="/assets/js/main.js?v=30"></script>
+<script src="/assets/js/main.js?v=31"></script>
+<script>
+/* Blog topic filter */
+(function(){
+  var filter = document.querySelector('.blog-filter');
+  if(!filter) return;
+  var cards = Array.prototype.slice.call(document.querySelectorAll('#blog-cards .card'));
+  var empty = document.getElementById('blog-empty');
+  filter.addEventListener('click', function(e){
+    var btn = e.target.closest('.chip-btn');
+    if(!btn) return;
+    var f = btn.getAttribute('data-filter');
+    filter.querySelectorAll('.chip-btn').forEach(function(b){
+      var on = (b === btn);
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    var shown = 0;
+    cards.forEach(function(c){
+      var show = (f === 'all' || c.getAttribute('data-cat') === f);
+      c.classList.toggle('is-hidden', !show);
+      if(show){ c.classList.add('show'); shown++; }
+    });
+    if(empty) empty.hidden = (shown > 0);
+  });
+})();
+</script>
 
 </body>
 </html>

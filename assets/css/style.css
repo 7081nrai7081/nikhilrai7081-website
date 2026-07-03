@@ -657,6 +657,20 @@ h1, h2, h3 {
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
+/* ===== Blog filter + card meta ===== */
+.blog-filter { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px; }
+.chip-btn {
+  font-family: inherit; font-size: .88rem; font-weight: 500;
+  padding: 8px 16px; border-radius: 100px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+  transition: color .2s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
+}
+.chip-btn:hover { color: var(--text); border-color: color-mix(in srgb, var(--brand) 45%, var(--border)); }
+.chip-btn.is-active { background: var(--brand); border-color: var(--brand); color: #fff; }
+.card-meta { display: block; margin-top: 16px; font-size: .8rem; font-weight: 500; color: var(--muted); letter-spacing: .01em; }
+.card.is-hidden { display: none; }
+.blog-empty { text-align: center; color: var(--muted); padding: 30px 0; font-size: 1rem; }
+.cards.related { margin-top: 22px; }
 .card {
   position: relative;
   padding: 30px;
