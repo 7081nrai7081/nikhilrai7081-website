@@ -18,3 +18,7 @@ blog-template.html
 #  would expose them at nikhilrai7081.com/HANDOFF.md — keep them out of the deploy)
 HANDOFF.md
 CLAUDE.md
+
+# Private keyword research exports (Google Keyword Planner) — never publish
+Keyword Stats*.csv
+*keyword*.csv
