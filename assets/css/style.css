@@ -875,8 +875,10 @@ a.card:active { transform: translateY(-4px) scale(.992); }
 .tl-item {
   position: relative;
   padding: 0 0 36px;
+  transition: transform .3s var(--ease);
 }
 .tl-item:last-child { padding-bottom: 0; }
+.tl-item:hover { transform: translateX(4px); }
 .tl-item::before {
   content: '';
   position: absolute;
@@ -886,15 +888,22 @@ a.card:active { transform: translateY(-4px) scale(.992); }
   background: var(--bg);
   border: 3px solid var(--brand-2);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 25%, transparent);
+  transition: box-shadow .3s var(--ease);
 }
+.tl-item:hover::before { box-shadow: 0 0 0 6px color-mix(in srgb, var(--brand) 30%, transparent); }
 .tl-item .yr {
-  font-size: .8rem;
-  font-weight: 600;
-  letter-spacing: .1em;
+  display: inline-block;
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--brand-2);
+  background: var(--grad-soft);
+  border: 1px solid var(--border);
+  padding: 4px 12px;
+  border-radius: 100px;
 }
-.tl-item h3 { font-size: 1.28rem; margin: 6px 0 8px; }
+.tl-item h3 { font-size: 1.28rem; margin: 12px 0 8px; }
 .tl-item p { color: var(--muted); max-width: 600px; }
 
 /* ---------- Contact ---------- */
@@ -1462,17 +1471,33 @@ a.card:hover .card-more svg { transform: translateX(4px); }
 /* ---------- Skills (grouped pills) ---------- */
 .skills-groups {
   display: grid;
-  gap: 28px;
-  max-width: 880px;
+  gap: 0;
+  max-width: 900px;
   margin-inline: auto;
 }
+/* Two-column matrix: category label on the left, pills on the right,
+   separated by hairline dividers — reads as an organised toolkit. */
+.skill-group {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 18px 28px;
+  align-items: start;
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+}
+.skill-group:first-child { border-top: none; padding-top: 4px; }
 .skill-group h3 {
   font-size: .8rem;
   font-weight: 600;
   letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--brand-2);
-  margin-bottom: 14px;
+  margin-bottom: 0;
+  padding-top: 8px;
+}
+@media (max-width: 640px) {
+  .skill-group { grid-template-columns: 1fr; gap: 12px; }
+  .skill-group h3 { padding-top: 0; }
 }
 .pills {
   list-style: none;
