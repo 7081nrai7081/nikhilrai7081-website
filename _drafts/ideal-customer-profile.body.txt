@@ -1,0 +1,78 @@
+    <div class="cs-block">
+      <p>If you could fix only one thing about your go-to-market, fix this: who you're actually for. Almost every downstream problem — messaging that doesn't land, channels that underperform, sales cycles that drag, leads that never close — traces back to a fuzzy answer to that question. Your <strong>ideal customer profile (ICP)</strong> is the decision everything else depends on, and most teams treat it as a box to tick rather than the foundation it is. Here's how to define an ICP sharp enough to actually make the rest of your growth easier.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>ICP is not a persona</h2>
+      <p>People conflate the two, but they answer different questions. A persona describes a <em>person</em> — their role, goals, day-to-day. An ICP describes the <em>company</em> (in B2B) worth selling to at all: the kind of organisation where your offer fits, the deal is worth having, and the customer is likely to succeed and stay. Persona tells you how to talk to a buyer; ICP tells you which buyers are even worth talking to. Get the ICP wrong and the best persona work in the world just helps you sell more efficiently to people who shouldn't be customers.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Why it's the highest-leverage decision you'll make</h2>
+      <p>A sharp ICP quietly improves everything. Messaging gets easier because you're speaking to a specific situation, not a vague everyone. Channels get more efficient because you know exactly where these companies gather. Sales gets faster because you're not dragging poor-fit prospects through a process they'll never complete. And retention improves because customers who fit succeed. A blurry ICP does the opposite — it spreads effort thin across everyone and compounds waste at every stage. This is the same truth behind the idea that most growth problems are really <a href="/blog-positioning-problem">positioning problems</a>: clarity about who you're for is upstream of almost everything.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Build your ICP from your best customers</h2>
+      <p>Don't invent an ICP in a strategy meeting — derive it from reality. Look at the customers you already have and find the ones that actually worked:</p>
+      <div class="cs-steps">
+        <div class="cs-step"><span class="num">1</span><div><h3>Find the winners</h3><p>The customers who bought quickly, stuck around, expanded, and would happily refer you. Not your biggest logos — your <em>best-fit</em> ones.</p></div></div>
+        <div class="cs-step"><span class="num">2</span><div><h3>Find what they share</h3><p>Company size, industry, business model, the trigger that made them buy, the problem they had. Look for the pattern that repeats across the winners.</p></div></div>
+        <div class="cs-step"><span class="num">3</span><div><h3>Write it down as filters</h3><p>Turn the pattern into concrete criteria you can screen against — so anyone on the team can look at a prospect and know whether they fit.</p></div></div>
+      </div>
+    </div>
+
+    <div class="cs-block">
+      <h2>Fit and intent are different axes</h2>
+      <p>A common mistake is treating "good ICP match" and "ready to buy" as the same thing. They're not. Fit is whether a company <em>should</em> be your customer; intent is whether they're showing signs of buying <em>now</em>. You want both, and you route effort accordingly: high fit and high intent gets your best people immediately; high fit but low intent gets nurtured patiently; low fit gets declined no matter how eager. Confusing enthusiasm for fit is how teams fill their pipeline with deals that waste months and never close — the essence of chasing volume when what you need is <a href="/blog-lead-quality-signal">signal</a>.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Use it, or it's just a slide</h2>
+      <p>An ICP only pays off if it changes decisions. Point your outreach lists at it. Filter inbound leads through it. Shape your content and messaging around its specific situation. Say no to opportunities that fall outside it — that discipline is where most of the value is, and it's the hardest part. A defined ICP that everyone ignores when a shiny poor-fit deal appears isn't a strategy; it's decoration. The teams that grow efficiently aren't the ones with the prettiest ICP document — they're the ones who actually let it govern where their time and money go. It's the first decision in any real <a href="/blog-b2b-lead-generation-strategy">B2B lead generation strategy</a>, and everything else is downstream of getting it right.</p>
+      <div class="cs-tags">
+        <span>Ideal customer profile</span><span>ICP</span><span>Lead generation</span><span>B2B</span><span>Targeting</span>
+      </div>
+    </div>
+
+    <div class="cs-block">
+      <div class="cs-callout"><p>Your ICP describes the company worth selling to — not a persona, and not a wish list. Derive it from your best-fit existing customers, turn the shared pattern into concrete filters, keep fit and intent as separate axes, and then actually let it govern who you pursue and who you decline. It's the one decision that makes messaging, channels, sales and retention all easier at once.</p></div>
+    </div>
+
+    <div class="cs-block">
+      <h2>Read next</h2>
+      <div class="cards related">
+        <a class="card" href="/blog-b2b-lead-generation-strategy">
+          <span class="tag">Lead Generation</span>
+          <h3>B2B Lead Generation Strategy</h3>
+          <p>The plan that makes pipeline predictable — starting with the ICP, then offer, channel and qualification.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a class="card" href="/blog-lead-quality-signal">
+          <span class="tag">Lead Generation</span>
+          <h3>Your Lead Problem Isn't Volume — It's Signal</h3>
+          <p>How to read buying intent and route effort to the leads that actually convert.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a class="card" href="/blog-positioning-problem">
+          <span class="tag">Positioning</span>
+          <h3>You Don't Have a Growth Problem — You Have a Positioning Problem</h3>
+          <p>Why clarity about who you're for beats more spend, more channels and more features.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="cs-cta">
+      <h2>Not sure who your best-fit customer really is?</h2>
+      <p>I help founders and teams define a sharp ICP from real customer data — and turn it into targeting, messaging and qualification that compound — <a href="/services">see how I work</a>.</p>
+      <a href="https://calendly.com/nikhilrai7081/30min" target="_blank" rel="noopener" class="btn btn-primary">Book a Call
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>

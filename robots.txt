@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /_drafts/
+Disallow: /_queue/
+Disallow: /scripts/
 
 Sitemap: https://nikhilrai7081.com/sitemap.xml

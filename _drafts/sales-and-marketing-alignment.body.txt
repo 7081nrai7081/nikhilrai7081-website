@@ -1,0 +1,79 @@
+    <div class="cs-block">
+      <p>Marketing says it delivered plenty of leads. Sales says the leads were junk. Marketing points at the pipeline it sourced; sales points at the deals that never closed. Both are convinced they're doing their job and the other team is the problem. This standoff is one of the most expensive things in a growing company, and it's almost never about the people — it's about a missing agreement. <strong>Sales and marketing alignment isn't a personality fix; it's an operating decision.</strong> Here's how to actually get it, rather than just holding another meeting about it.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>The quiet cost of misalignment</h2>
+      <p>Misalignment rarely shows up as a fight. It shows up as leakage. Leads marketing worked hard to generate sit untouched because sales doesn't trust them. Deals stall because the story marketing told doesn't match the conversation sales has. Budget gets spent attracting people sales was never going to pursue. Nobody's obviously failing, yet the whole funnel runs at a fraction of its potential. The two teams are optimising for different numbers, so effort that should compound cancels out instead.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Agree on one shared goal</h2>
+      <p>The root cause is usually that the teams are measured on different things — marketing on leads or traffic, sales on closed revenue — so they naturally pull in different directions. Alignment starts by pointing both at the same outcome: pipeline that becomes revenue. When marketing is accountable not for lead <em>volume</em> but for lead <em>quality that converts</em>, and sales is accountable for working what marketing sources, the incentive to blame each other evaporates. You can't align two teams chasing two different scoreboards. Give them one.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Define a "good lead" — together</h2>
+      <p>The single highest-leverage fix is a shared, written definition of a qualified lead. Not marketing's definition or sales's — one both sign off on. It should be specific enough that anyone can look at a lead and agree whether it counts:</p>
+      <div class="cs-steps">
+        <div class="cs-step"><span class="num">1</span><div><h3>Fit criteria</h3><p>The ICP attributes that make a lead worth pursuing at all — size, industry, role, trigger. Agreed in advance, not argued case by case.</p></div></div>
+        <div class="cs-step"><span class="num">2</span><div><h3>Intent signals</h3><p>The behaviours that say "now," not "someday" — so sales knows which leads to call first and marketing knows what to nurture.</p></div></div>
+        <div class="cs-step"><span class="num">3</span><div><h3>The handoff rules</h3><p>What marketing passes, when, with what context — and what sales commits to do with it, how fast. No lead should die in the gap between the two.</p></div></div>
+      </div>
+      <p>This is also where the <a href="/blog-lead-generation-vs-demand-generation">difference between demand generation and lead generation</a> gets settled in practice: both teams need to agree on what they're creating versus capturing.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Build the operating rhythm</h2>
+      <p>Alignment isn't a one-time offsite; it's a habit. It needs a regular, short meeting where both teams look at the same numbers and close the loop: which leads converted, which didn't and why, what marketing should send more or less of, where deals are getting stuck. That feedback loop is what keeps the shared definition honest as the market shifts — and it's a job that lives squarely in <a href="/blog-growth-operations">growth operations</a>, the function that owns the data and process connecting the two teams. Without a rhythm, even a well-aligned team drifts back into two scoreboards within a quarter.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Alignment is a system, not a truce</h2>
+      <p>The teams that get this right don't have friendlier people; they have better plumbing. One shared goal, one agreed definition of a good lead, a clean handoff, and a standing rhythm to keep it all honest. Put those in place and the old argument simply stops having anything to argue about — the numbers are shared, the definition is written, and the loop catches problems before they calcify into blame. That's the same discipline that turns <a href="/blog-business-development">business development into a repeatable system</a> rather than a series of heroics: outcomes everyone owns, connected by process.</p>
+      <div class="cs-tags">
+        <span>Sales and marketing alignment</span><span>Revenue</span><span>Growth operations</span><span>Pipeline</span><span>B2B</span>
+      </div>
+    </div>
+
+    <div class="cs-block">
+      <div class="cs-callout"><p>Sales and marketing alignment isn't a personality problem — it's a missing agreement. Point both teams at one shared goal (revenue, not leads-vs-closes), write a single definition of a qualified lead together, make the handoff explicit, and run a standing rhythm to keep the loop honest. Alignment is plumbing, not a truce — build the system and the blame has nowhere left to live.</p></div>
+    </div>
+
+    <div class="cs-block">
+      <h2>Read next</h2>
+      <div class="cards related">
+        <a class="card" href="/blog-growth-operations">
+          <span class="tag">Operations</span>
+          <h3>Growth Operations: The System That Makes Growth Repeatable</h3>
+          <p>The function that owns the data and process connecting marketing, sales and the customer.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a class="card" href="/blog-lead-generation-vs-demand-generation">
+          <span class="tag">Lead Generation</span>
+          <h3>Lead Generation vs Demand Generation</h3>
+          <p>Demand creates interest; lead gen captures it. Why you need both and how to sequence them.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a class="card" href="/blog-business-development">
+          <span class="tag">Business Development</span>
+          <h3>Business Development Strategy: A System, Not a Rolodex</h3>
+          <p>The disciplined work of finding and creating growth opportunities — run as a repeatable system.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="cs-cta">
+      <h2>Sales and marketing pointing in different directions?</h2>
+      <p>I help teams align sales and marketing around one goal, one definition of a good lead, and a rhythm that keeps them there — <a href="/services">see how I work</a>.</p>
+      <a href="https://calendly.com/nikhilrai7081/30min" target="_blank" rel="noopener" class="btn btn-primary">Book a Call
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>

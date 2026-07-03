@@ -1,0 +1,58 @@
+name: Weekly blog post
+
+# Publishes the next queued post (_queue/queue.json + _drafts/) once a week.
+# Also runnable on demand from the Actions tab (workflow_dispatch).
+on:
+  schedule:
+    - cron: '0 9 * * 1'   # Mondays 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weekly-post
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (full history for accurate sitemap lastmod)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Publish next queued post
+        run: python scripts/publish_next.py
+
+      - name: Stage changes
+        id: stage
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Queue empty or nothing to publish — no commit."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Regenerate sitemap
+        if: steps.stage.outputs.changed == 'true'
+        run: |
+          sh .githooks/gen-sitemap.sh
+          git add sitemap.xml
+
+      - name: Commit and push
+        if: steps.stage.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          NEW=$(git diff --cached --name-only --diff-filter=A | grep -E '^blog-[a-z0-9-]+\.html$' | head -1)
+          git commit -m "blog: auto-publish ${NEW:-scheduled post} (weekly queue)"
+          git push

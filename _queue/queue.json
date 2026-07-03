@@ -1,0 +1,44 @@
+{
+  "_comment": "Weekly auto-publish queue. The GitHub Action publishes queue[0] each Monday, then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
+  "queue": [
+    {
+      "slug": "blog-content-marketing-strategy-for-b2b",
+      "body": "content-marketing-strategy-for-b2b.body.txt",
+      "title": "Content Marketing Strategy for B2B: A Practical Framework",
+      "description": "A B2B content marketing strategy isn't a blog calendar — it's a system that turns expertise into demand. How to choose topics, formats and distribution that actually generate pipeline.",
+      "og_title": "Content Marketing Strategy for B2B: A Practical Framework",
+      "og_desc": "Turn expertise into demand — how to choose topics, formats and distribution that actually generate pipeline.",
+      "og_alt": "B2B Content Marketing Strategy",
+      "tag": "Growth Marketing",
+      "cat": "growth",
+      "read": "8 min",
+      "summary": "A B2B content marketing strategy isn't a blog calendar — it's a system that turns expertise into demand. How to choose topics, formats and distribution that generate pipeline."
+    },
+    {
+      "slug": "blog-ideal-customer-profile",
+      "body": "ideal-customer-profile.body.txt",
+      "title": "How to Define Your Ideal Customer Profile (ICP)",
+      "description": "Your ideal customer profile is the decision everything else depends on. A practical way to define an ICP that sharpens targeting, messaging and every channel you run.",
+      "og_title": "How to Define Your Ideal Customer Profile (ICP)",
+      "og_desc": "The decision everything else depends on — how to define an ICP that sharpens targeting, messaging and every channel.",
+      "og_alt": "Ideal Customer Profile",
+      "tag": "Lead Generation",
+      "cat": "leadgen",
+      "read": "7 min",
+      "summary": "Your ideal customer profile is the decision everything else depends on. How to define an ICP that sharpens targeting, messaging and every channel you run."
+    },
+    {
+      "slug": "blog-sales-and-marketing-alignment",
+      "body": "sales-and-marketing-alignment.body.txt",
+      "title": "Sales and Marketing Alignment: How to Actually Get It",
+      "description": "Sales and marketing misalignment quietly kills pipeline. A practical guide to shared goals, a common definition of a good lead, and the operating rhythm that keeps both teams pulling together.",
+      "og_title": "Sales and Marketing Alignment: How to Actually Get It",
+      "og_desc": "Misalignment quietly kills pipeline. Shared goals, one definition of a good lead, and the rhythm that keeps both teams together.",
+      "og_alt": "Sales and Marketing Alignment",
+      "tag": "Growth",
+      "cat": "growth",
+      "read": "7 min",
+      "summary": "Sales and marketing misalignment quietly kills pipeline. Shared goals, a common definition of a good lead, and the operating rhythm that keeps both teams pulling together."
+    }
+  ]
+}
