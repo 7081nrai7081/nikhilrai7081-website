@@ -178,12 +178,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="cs-body">
   <div class="container">
 
-@@BODY@@
+@@TOC@@@@BODY@@
 
   </div>
 </section>
 
-<section class="post-author">
+@@NAV@@<section class="post-author">
   <div class="container">
     <div class="author-card">
       <picture><source srcset="/assets/images/profile.webp" type="image/webp"><img src="/assets/images/profile.jpg" alt="Nikhil Rai" width="76" height="76" loading="lazy" decoding="async"></picture>
@@ -232,6 +232,52 @@ def subst(tpl, **kw):
         tpl = tpl.replace("@@" + k + "@@", v)
     return tpl
 
+import html as _htmlmod
+
+CHEV_L = ('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" '
+ 'stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>')
+CHEV_R = ('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" '
+ 'stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>')
+
+def slugify(text):
+    t = re.sub(r"<[^>]+>", "", text)
+    t = _htmlmod.unescape(t).lower()
+    return re.sub(r"[^a-z0-9]+", "-", t).strip("-") or "section"
+
+def add_ids_and_toc(body):
+    """Assign ids to content <h2>s (skip 'Read next') and build a TOC if >=4."""
+    headings = []
+    def repl(m):
+        inner = m.group(1)
+        txt = re.sub(r"<[^>]+>", "", inner).strip()
+        # skip navigational headings (Read next) and the CTA heading
+        before = body[max(0, m.start()-80):m.start()]
+        if txt.lower() == "read next" or "cs-cta" in before:
+            return m.group(0)
+        hid = slugify(txt); base = hid; n = 2
+        while any(h[0] == hid for h in headings):
+            hid = f"{base}-{n}"; n += 1
+        headings.append((hid, txt))
+        return f'<h2 id="{hid}">{inner}</h2>'
+    body = re.sub(r"<h2>(.*?)</h2>", repl, body, flags=re.S)
+    if len(headings) < 4:
+        return body, ""
+    lis = "\n".join(f'      <li><a href="#{h}">{t}</a></li>' for h, t in headings)
+    toc = ('    <nav class="post-toc" aria-label="On this page">\n'
+           '      <p class="post-toc-title">On this page</p>\n'
+           f'      <ol>\n{lis}\n      </ol>\n    </nav>\n\n')
+    return body, toc
+
+def nav_html(prev_href, prev_title):
+    """New post is always newest, so only a Previous link (older post)."""
+    if prev_href:
+        prev = (f'  <a class="post-nav-link post-nav-prev" href="{prev_href}">{CHEV_L}'
+                f'<span><small>Previous</small><b>{prev_title}</b></span></a>\n')
+    else:
+        prev = '  <span class="post-nav-link is-empty"></span>\n'
+    return ('<nav class="post-nav" aria-label="More posts">\n' + prev +
+            '  <span class="post-nav-link is-empty"></span>\n</nav>\n\n')
+
 def main():
     qpath = "_queue/queue.json"
     q = json.loads(rd(qpath))
@@ -252,11 +298,20 @@ def main():
     ver = ver_m.group(1) if ver_m else "1"
 
     body = rd("_drafts/" + e["body"])
+    body, toc = add_ids_and_toc(body)
+
+    # Previous (older) post = the current newest listing card in blog.html.
+    blog = rd("blog.html")
+    pm = re.search(r'<div class="cards" id="blog-cards">\s*<a class="card reveal"[^>]*href="(/[a-z0-9-]+)">'
+                   r'\s*<span class="tag">[^<]*</span>\s*<h3>(.*?)</h3>', blog, flags=re.S)
+    prev_href = pm.group(1) if pm else ""
+    prev_title = re.sub(r"<[^>]+>", "", pm.group(2)).strip() if pm else ""
+    nav = nav_html(prev_href, prev_title)
 
     page = subst(TEMPLATE,
         TITLE=e["title"], DESC=e["description"], OGTITLE=e["og_title"], OGDESC=e["og_desc"],
         OGALT=e["og_alt"], TAG=e["tag"], SLUG=slug, ISO=iso, DISP=disp, READ=e["read"],
-        VER=ver, DOMAIN=DOMAIN, BODY=body.rstrip("\n"))
+        VER=ver, DOMAIN=DOMAIN, TOC=toc, NAV=nav, BODY=body.rstrip("\n"))
 
     # --- listing card (blog.html) ---
     card = (
@@ -312,6 +367,20 @@ def main():
     wr(slug + ".html", page)
     wr("blog.html", blog2)
     wr("feed.xml", feed2)
+    # Point the previously-newest post's empty "Next" slot at the new post.
+    if prev_href:
+        prev_path = prev_href.lstrip("/") + ".html"
+        try:
+            pv = rd(prev_path)
+            nxt = (f'  <a class="post-nav-link post-nav-next" href="/{slug}">'
+                   f'<span><small>Next</small><b>{e["title"]}</b></span>{CHEV_R}</a>\n</nav>')
+            pv2, n = re.subn(r'(<a class="post-nav-link post-nav-prev"[\s\S]*?</a>\n)'
+                             r'  <span class="post-nav-link is-empty"></span>\n</nav>',
+                             r'\1' + nxt, pv, count=1)
+            if n:
+                wr(prev_path, pv2)
+        except FileNotFoundError:
+            pass
     os.remove(os.path.join(ROOT, "_drafts", e["body"]))
     q["queue"] = items[1:]
     wr(qpath, json.dumps(q, ensure_ascii=False, indent=2) + "\n")

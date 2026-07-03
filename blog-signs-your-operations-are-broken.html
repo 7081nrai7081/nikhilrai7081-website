@@ -57,7 +57,7 @@ try{if(localStorage.getItem('cookie_consent')==='granted'){gtag('consent','updat
 <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/style.css?v=32">
+<link rel="stylesheet" href="/assets/css/style.css?v=33">
 <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
 
 <script type="application/ld+json">
@@ -127,17 +127,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="cs-body">
   <div class="container">
 
-    <div class="cs-block">
+        <nav class="post-toc" aria-label="On this page">
+      <p class="post-toc-title">On this page</p>
+      <ol>
+      <li><a href="#broken-operations-don-t-look-broken-they-look-busy">Broken operations don't look broken — they look busy</a></li>
+      <li><a href="#the-signs-to-watch-for">The signs to watch for</a></li>
+      <li><a href="#why-it-happens">Why it happens</a></li>
+      <li><a href="#how-to-fix-it">How to fix it</a></li>
+      </ol>
+    </nav>
+
+<div class="cs-block">
       <p>Broken operations rarely send up a flare. There's no outage, no single dramatic failure you can point to — just a slow, ambient tax on everything the business does. Work still ships, customers still get served, but it costs more effort than it should, depends on the same few heroes, and gets a little more fragile every quarter. <strong>The danger of broken operations is precisely that they look survivable.</strong> Here's how to spot the signs before they harden into a ceiling on your growth.</p>
     </div>
 
     <div class="cs-block">
-      <h2>Broken operations don't look broken — they look busy</h2>
+      <h2 id="broken-operations-don-t-look-broken-they-look-busy">Broken operations don't look broken — they look busy</h2>
       <p>The most common disguise for bad operations is a team that seems impressively hardworking. Everyone's slammed, everyone's responsive, everyone's putting out fires with admirable energy. It reads as a healthy hustle. But constant firefighting isn't a sign of a committed team — it's a sign of a system that manufactures fires. As I've <a href="/blog-operations">written before</a>, good operations are invisible; you only notice them when they're absent. So the busyness itself is the first clue. If heroics are routine, the process is doing something wrong.</p>
     </div>
 
     <div class="cs-block">
-      <h2>The signs to watch for</h2>
+      <h2 id="the-signs-to-watch-for">The signs to watch for</h2>
       <p>Individually, any one of these is normal. Several of them together mean your operations need work:</p>
       <div class="cs-steps">
         <div class="cs-step"><span class="num">1</span><div><h3>The same things fall through the cracks</h3><p>A follow-up missed, an order slipped, a handoff dropped — and not once, but as a recurring pattern. When mistakes repeat, it's not a people problem; it's a process that has no reliable catch.</p></div></div>
@@ -149,12 +159,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div class="cs-block">
-      <h2>Why it happens</h2>
+      <h2 id="why-it-happens">Why it happens</h2>
       <p>Almost no one designs broken operations. They accrete. In the early days you do everything manually and informally, and it works fine because the team is small and everyone can see everything. Then you grow. The informal habits that worked at five people quietly fail at fifteen, but nobody notices the exact moment they stop working — the cracks just widen. Broken operations are rarely a decision; they're the residue of decisions never revisited. What got you here genuinely won't get you there, and the transition is invisible until something snaps.</p>
     </div>
 
     <div class="cs-block">
-      <h2>How to fix it</h2>
+      <h2 id="how-to-fix-it">How to fix it</h2>
       <p>The fix isn't a big-bang reorganisation or an expensive new tool. It's a handful of unglamorous disciplines applied to your most painful process first:</p>
       <div class="cs-steps">
         <div class="cs-step"><span class="num">1</span><div><h3>Make the work visible</h3><p>You can't fix what you can't see. Write down how a core process actually runs today — not the idealised version — end to end. The gaps usually announce themselves the moment it's on paper.</p></div></div>
@@ -212,6 +222,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   </div>
 </section>
+<nav class="post-nav" aria-label="More posts">
+  <a class="post-nav-link post-nav-prev" href="/blog-product-led-vs-sales-led-growth"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg><span><small>Previous</small><b>Product-Led vs Sales-Led Growth</b></span></a>
+  <a class="post-nav-link post-nav-next" href="/blog-types-of-strategic-partnerships"><span><small>Next</small><b>Types of Strategic Partnerships</b></span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+</nav>
+
 <section class="post-author">
   <div class="container">
     <div class="author-card">
@@ -251,7 +266,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </footer>
 
-<script src="/assets/js/main.js?v=32"></script>
+<script src="/assets/js/main.js?v=33"></script>
 
 </body>
 </html>

@@ -59,7 +59,7 @@ try{if(localStorage.getItem('cookie_consent')==='granted'){gtag('consent','updat
 <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/style.css?v=32">
+<link rel="stylesheet" href="/assets/css/style.css?v=33">
 <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
 
 <script type="application/ld+json">
@@ -141,17 +141,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="cs-body">
   <div class="container">
 
-    <div class="cs-block">
+        <nav class="post-toc" aria-label="On this page">
+      <p class="post-toc-title">On this page</p>
+      <ol>
+      <li><a href="#automate-decisions-you-ve-already-made">Automate decisions you've already made</a></li>
+      <li><a href="#rank-tasks-by-time-frequency-friction">Rank tasks by time × frequency × friction</a></li>
+      <li><a href="#fix-the-process-before-you-automate-it">Fix the process before you automate it</a></li>
+      <li><a href="#start-at-the-seams">Start at the seams</a></li>
+      <li><a href="#what-to-leave-alone">What to leave alone</a></li>
+      <li><a href="#keep-a-human-in-the-loop-where-it-counts">Keep a human in the loop where it counts</a></li>
+      </ol>
+    </nav>
+
+<div class="cs-block">
       <p>Automation is sold as a way to buy back time, and it can be — but most teams reach for it in the wrong order. They automate the flashy thing, or the thing a tool happens to make easy, and end up with a faster version of a process that was never worth speeding up. The skill isn't wiring tools together; it's choosing <em>what</em> to wire together, and in what order. Here's the way I think about it.</p>
     </div>
 
     <div class="cs-block">
-      <h2>Automate decisions you've already made</h2>
+      <h2 id="automate-decisions-you-ve-already-made">Automate decisions you've already made</h2>
       <p>The best candidates for automation are the tasks where the decision is already settled and only the execution repeats. "When a form is submitted, add the lead to the CRM and send the welcome email" is a decision you make once and then repeat a thousand times. Anything that still requires fresh judgement each time — pricing a non-standard deal, handling an upset customer, deciding strategy — is a poor fit. Automate the <strong>repetition</strong>, not the <strong>thinking</strong>.</p>
     </div>
 
     <div class="cs-block">
-      <h2>Rank tasks by time × frequency × friction</h2>
+      <h2 id="rank-tasks-by-time-frequency-friction">Rank tasks by time × frequency × friction</h2>
       <p>Not all repetitive work is worth automating. A task you do once a quarter rarely earns back the effort of building and maintaining the automation. Score your candidates on three things and start at the top:</p>
       <div class="cs-steps">
         <div class="cs-step"><span class="num">1</span><div><h3>Time</h3><p>How long does one round take? Five seconds saved isn't worth a fragile integration.</p></div></div>
@@ -162,12 +174,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div class="cs-block">
-      <h2>Fix the process before you automate it</h2>
+      <h2 id="fix-the-process-before-you-automate-it">Fix the process before you automate it</h2>
       <p>Automating a broken process just gives you a faster, more confident way to be wrong. If the steps are unclear, the data is messy, or nobody agrees who owns what, no tool will save you. <a href="/work-automation">Map the workflow</a> as it really runs today, cut the steps that exist out of habit, and only then decide what to hand to a machine. Simplify first, automate second.</p>
     </div>
 
     <div class="cs-block">
-      <h2>Start at the seams</h2>
+      <h2 id="start-at-the-seams">Start at the seams</h2>
       <p>The highest-leverage automations usually live at the hand-offs — where work passes between two tools or two people. That's where things get re-typed, dropped, or delayed. Connecting your form to your CRM, your CRM to your email, your invoicing to your accounting: each removes a manual copy-paste and a chance to forget. Look for the seams in your process and stitch those first.</p>
       <div class="cs-tags">
         <span>Form → CRM</span><span>CRM → Email</span><span>Lead → Calendar</span><span>Invoice → Accounting</span><span>Support → Tracker</span>
@@ -175,7 +187,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div class="cs-block">
-      <h2>What to leave alone</h2>
+      <h2 id="what-to-leave-alone">What to leave alone</h2>
       <p>Knowing what <em>not</em> to automate is half the discipline. Leave these to people:</p>
       <div class="cs-tags">
         <span>Judgement calls</span><span>Relationship moments</span><span>Rare one-offs</span><span>Anything still changing weekly</span><span>The first human reply</span>
@@ -184,7 +196,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div class="cs-block">
-      <h2>Keep a human in the loop where it counts</h2>
+      <h2 id="keep-a-human-in-the-loop-where-it-counts">Keep a human in the loop where it counts</h2>
       <p>Full automation isn't the only goal — and often shouldn't be. For anything customer-facing or high-stakes, the smart move is to automate the <em>preparation</em> and leave the <em>send</em> to a person: draft the reply, surface the data, queue the action, then let someone glance and approve. You get most of the speed without handing your reputation to a rule you wrote at 2pm on a Tuesday.</p>
     </div>
 
@@ -232,6 +244,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   </div>
 </section>
+<nav class="post-nav" aria-label="More posts">
+  <a class="post-nav-link post-nav-prev" href="/blog-strategic-partnerships"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg><span><small>Previous</small><b>How to Build Strategic Partnerships</b></span></a>
+  <a class="post-nav-link post-nav-next" href="/blog-growth-marketing"><span><small>Next</small><b>Growth Marketing Strategy Without the Hacks</b></span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+</nav>
+
 <section class="post-author">
   <div class="container">
     <div class="author-card">
@@ -271,7 +288,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </footer>
 
-<script src="/assets/js/main.js?v=32"></script>
+<script src="/assets/js/main.js?v=33"></script>
 
 </body>
 </html>
