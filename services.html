@@ -53,7 +53,7 @@ try{if(localStorage.getItem('cookie_consent')==='granted'){gtag('consent','updat
 <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/style.css?v=36">
+<link rel="stylesheet" href="/assets/css/style.css?v=37">
 <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
 
 <script type="application/ld+json">
@@ -111,14 +111,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <main id="main">
 <section class="cs-hero">
   <div class="container">
-    <span class="cs-tag">Work With Me</span>
-    <h1>Let's build your next growth channel</h1>
-    <p class="cs-lead">I help organizations find opportunities, build meaningful relationships and put systems in place so growth becomes repeatable — not reliant on luck or hustle.</p>
-    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:30px;">
-      <a href="https://calendly.com/nikhilrai7081/30min" target="_blank" rel="noopener" class="btn btn-primary">Book a Call
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-      <a href="/#contact" class="btn btn-ghost">Send a message</a>
+    <div class="svc-hero-grid">
+      <div class="svc-hero-copy">
+        <span class="cs-tag">Work With Me</span>
+        <h1>Let's build your next growth channel</h1>
+        <p class="cs-lead">I help organizations find opportunities, build meaningful relationships and put systems in place so growth becomes repeatable — not reliant on luck or hustle.</p>
+        <div class="hero-actions" style="margin:30px 0 0;">
+          <a href="https://calendly.com/nikhilrai7081/30min" target="_blank" rel="noopener" class="btn btn-primary">Book a Call
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="/#contact" class="btn btn-ghost">Send a message</a>
+        </div>
+      </div>
+      <aside class="svc-panel" aria-label="How working together looks">
+        <h2>How working together looks</h2>
+        <p>Simple, honest and scoped to what actually moves your numbers.</p>
+        <ul>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span><b>Free 30-minute intro call</b> — we find the real bottleneck before anything else.</span>
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span><b>Remote-first, async-friendly</b> — I work in the tools your team already uses.</span>
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span><b>Project or ongoing</b> — pick one service or an end-to-end growth engine.</span>
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span><b>A clear plan and honest timeline</b> — no jargon, no lock-in.</span>
+          </li>
+        </ul>
+        <div class="svc-panel-foot">
+          <span>Remote-first</span>
+          <span>Project or ongoing</span>
+          <span>No lock-in</span>
+        </div>
+      </aside>
     </div>
   </div>
 </section>
@@ -132,42 +163,60 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p>Pick the piece you need, or combine them into an end-to-end growth engine.</p>
     </div>
     <div class="cards">
-      <div class="card reveal">
+      <a class="card reveal" href="/topic-partnerships">
         <div class="ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
         <h3>Strategic Partnerships</h3>
         <p>Sourcing the right partners, structuring deals that work for both sides, and running the relationship so it keeps producing. The goal is access to audiences you'd otherwise spend months and ad budget trying to reach.</p>
-      </div>
-      <div class="card reveal">
+        <span class="card-more">Learn more
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </span>
+      </a>
+      <a class="card reveal" href="/blog-business-development">
         <div class="ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div>
         <h3>Business Development</h3>
         <p>Identifying where your next growth is likely to come from, opening the right conversations, and staying involved through to a signed deal. Less guessing about which doors to knock on, more momentum on the ones that matter.</p>
-      </div>
-      <div class="card reveal">
+        <span class="card-more">Learn more
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </span>
+      </a>
+      <a class="card reveal" href="/work-lead-generation">
         <div class="ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></div>
         <h3>Lead Generation</h3>
         <p>Building outreach and prospecting systems that fill your pipeline on a schedule instead of in bursts. Targeting, messaging, sequencing and tracking, set up so the flow of qualified conversations becomes predictable.</p>
-      </div>
-      <div class="card reveal">
+        <span class="card-more">Learn more
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </span>
+      </a>
+      <a class="card reveal" href="/work-automation">
         <div class="ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M8.46 8.46a5 5 0 0 0 0 7.07"/></svg></div>
         <h3>Automation</h3>
         <p>Mapping the repetitive, error-prone tasks eating your team's time and replacing them with workflows that run on their own. The result is fewer manual handoffs, fewer mistakes and hours given back every week.</p>
-      </div>
-      <div class="card reveal">
+        <span class="card-more">Learn more
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </span>
+      </a>
+      <a class="card reveal" href="/topic-growth">
         <div class="ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
         <h3>Growth Marketing</h3>
         <p>Testing channels and campaigns against real numbers, then doubling down on what compounds. The focus is sustainable reach and conversion you can actually measure — not vanity metrics.</p>
-      </div>
-      <div class="card reveal">
+        <span class="card-more">Learn more
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </span>
+      </a>
+      <a class="card reveal" href="/work-operations">
         <div class="ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
         <h3>Operations</h3>
         <p>Tightening the processes, reporting and tooling that hold everything together as you grow. Clear ownership, clean data and systems your team actually follows, so execution doesn't break when volume increases.</p>
-      </div>
+        <span class="card-more">Learn more
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </span>
+      </a>
     </div>
   </div>
 </section>
 
 <!-- How I work -->
-<section class="section">
+<section class="section tint">
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">How I Work</span>
@@ -270,7 +319,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </footer>
 
-<script src="/assets/js/main.js?v=36"></script>
+<script src="/assets/js/main.js?v=37"></script>
 
 </body>
 </html>
