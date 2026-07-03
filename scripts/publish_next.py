@@ -182,6 +182,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   </div>
 </section>
+
+<section class="post-author">
+  <div class="container">
+    <div class="author-card">
+      <picture><source srcset="/assets/images/profile.webp" type="image/webp"><img src="/assets/images/profile.jpg" alt="Nikhil Rai" width="76" height="76" loading="lazy" decoding="async"></picture>
+      <div class="author-body">
+        <span class="author-eyebrow">Written by</span>
+        <h3>Nikhil Rai</h3>
+        <p>I work across strategic partnerships, business development, lead generation and automation — helping teams find opportunities, build relationships and scale.</p>
+        <div class="author-links">
+          <a href="/services">Work with me</a>
+          <a href="https://www.linkedin.com/in/nikhilrai7081" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fnikhilrai7081.com%2F@@SLUG@@" target="_blank" rel="noopener">Share this post</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 
 <footer class="footer">
