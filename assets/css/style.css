@@ -633,23 +633,35 @@ h1, h2, h3 {
 .principle {
   display: flex;
   gap: 16px;
-  padding: 22px;
+  align-items: flex-start;
+  padding: 20px 22px;
   border-radius: var(--radius);
   background: var(--surface);
   border: 1px solid var(--border);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  transition: transform .3s var(--ease), border-color .3s;
+  border-left: 3px solid transparent;
+  transition: transform .3s var(--ease), border-color .3s, box-shadow .3s;
 }
-.principle:hover { transform: translateX(6px); border-color: var(--border-strong); }
+.principle:hover {
+  transform: translateX(6px);
+  border-color: var(--border-strong);
+  border-left-color: var(--brand);
+  box-shadow: var(--shadow-sm);
+}
 .principle .n {
-  font-size: .9rem;
-  font-weight: 700;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--grad-soft);
   color: var(--brand-2);
+  font-size: .95rem;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 .principle h3 { font-size: 1rem; margin-bottom: 4px; }
-.principle p { color: var(--muted); font-size: .9rem; }
+.principle p { color: var(--muted); font-size: .9rem; line-height: 1.5; }
 
 /* ---------- Cards (Expertise / Projects) ---------- */
 .cards {
