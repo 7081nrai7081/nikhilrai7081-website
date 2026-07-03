@@ -657,6 +657,10 @@ h1, h2, h3 {
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
+/* Balanced single-row variant for exactly-four items (no orphan card). */
+.cards.cards-4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 980px) { .cards.cards-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .cards.cards-4 { grid-template-columns: 1fr; } }
 /* ===== Featured latest post ===== */
 .blog-featured {
   display: grid; grid-template-columns: 1.05fr 1fr; gap: 0;
@@ -1924,11 +1928,31 @@ a.card:hover .card-media img { transform: scale(1.06); }
   font-size: .76rem; font-weight: 600; letter-spacing: .01em; color: var(--text-soft);
   padding: 6px 12px; border-radius: 100px; background: var(--surface-2); border: 1px solid var(--border);
 }
-/* Subtle tinted band for section rhythm (breaks the all-white stack). */
-.section.tint { background: var(--surface-2); }
-body.dark .section.tint { background: rgba(255, 255, 255, .03); }
 @media (max-width: 860px) {
   .svc-hero-grid { grid-template-columns: 1fr; gap: 34px; }
   .svc-panel { order: 2; }
 }
+
+/* Hero reassurance line under the CTAs (lowers the friction of booking). */
+.hero-note {
+  display: flex; align-items: center; gap: 9px;
+  margin: -20px 0 30px;
+  font-size: .9rem; color: var(--muted);
+}
+.hero-note svg { flex-shrink: 0; color: var(--brand); }
+
+/* Closing CTA below the Featured Projects grid. */
+.projects-foot {
+  margin-top: 34px;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 8px 14px; text-align: center;
+  font-size: 1rem; color: var(--text-soft);
+}
+.projects-foot a {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-weight: 600; color: var(--brand);
+}
+.projects-foot a:hover { color: var(--accent); }
+.projects-foot a svg { transition: transform .3s var(--ease); }
+.projects-foot a:hover svg { transform: translateX(4px); }
 
