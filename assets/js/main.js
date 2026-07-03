@@ -88,10 +88,24 @@
   const progress = doc.getElementById('progress');
   let ticking = false;
 
+  /* Back-to-top button — built in JS so every page gets it without markup edits.
+     Placed bottom-LEFT to stay clear of the bottom-right WhatsApp community card. */
+  const toTop = doc.createElement('button');
+  toTop.type = 'button';
+  toTop.className = 'to-top';
+  toTop.setAttribute('aria-label', 'Back to top');
+  toTop.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>';
+  toTop.addEventListener('click', function () {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+  });
+  body.appendChild(toTop);
+
   function onScroll() {
     const scrollTop = window.scrollY || doc.documentElement.scrollTop;
 
     if (header) header.classList.toggle('scrolled', scrollTop > 8);
+    toTop.classList.toggle('show', scrollTop > 700);
 
     if (progress) {
       const docEl = doc.documentElement;

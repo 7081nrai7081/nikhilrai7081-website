@@ -1868,3 +1868,36 @@ a.card:hover .card-media img { transform: scale(1.06); }
   .vyntra-cta__close { top: 6px; right: 6px; width: 40px; height: 40px; font-size: 24px; }
 }
 
+/* ===== Back-to-top button (bottom-left; clear of the WhatsApp card) ===== */
+.to-top {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 1300;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(16px) scale(.9);
+  pointer-events: none;
+  transition: opacity .3s var(--ease), transform .3s var(--ease),
+              background .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
+}
+.to-top.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+.to-top:hover { background: var(--brand); border-color: var(--brand); color: #fff; }
+.to-top:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
+@media (max-width: 560px) {
+  .to-top { left: 12px; bottom: 12px; width: 42px; height: 42px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .to-top { transition: opacity .2s linear; transform: none; }
+  .to-top.show { transform: none; }
+}
+
