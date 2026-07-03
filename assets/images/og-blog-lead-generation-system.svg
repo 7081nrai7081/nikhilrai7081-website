@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(1120 70) scale(560)">
+      <stop offset="0" stop-color="#e23a5e" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#e23a5e" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <g fill="none" stroke="#181318" stroke-opacity=".05">
+    <path d="M0 157.5H1200M0 315H1200M0 472.5H1200M300 0V630M600 0V630M900 0V630"/>
+  </g>
+
+  <rect x="80" y="78" width="84" height="84" rx="18" fill="#ffffff" stroke="#e23a5e" stroke-width="2.5"/>
+  <text x="122" y="123" font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="38" font-weight="800" letter-spacing="-2" fill="#e23a5e" text-anchor="middle" dominant-baseline="central">NR</text>
+
+  <text x="82" y="272" font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="30" font-weight="700" letter-spacing="6" fill="#756f77">LEAD GENERATION</text>
+
+  <g font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="66" font-weight="800" letter-spacing="-2.5">
+    <text x="80" y="356" fill="#181318">A Lead-Gen System</text>
+    <text x="80" y="432" fill="#181318">That Runs <tspan fill="#e23a5e">Without You</tspan></text>
+  </g>
+
+  <text x="82" y="528" font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="26" font-weight="500" fill="#4a444b">Turn sporadic outreach into predictable pipeline</text>
+</svg>
