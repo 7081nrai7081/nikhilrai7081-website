@@ -1,0 +1,5 @@
+# Redirect rules for Cloudflare Pages.
+# Old VYNTRA lander (removed 2026-07-02) now lives on its own domain.
+/vyntraclubcommunity      https://vyntra.club/community  301
+/vyntraclubcommunity/     https://vyntra.club/community  301
+/vyntraclubcommunity/*    https://vyntra.club/community  301
