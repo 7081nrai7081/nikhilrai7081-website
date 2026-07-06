@@ -2,19 +2,6 @@
   "_comment": "Weekly auto-publish queue. The GitHub Action publishes queue[0] each Monday, then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
   "queue": [
     {
-      "slug": "blog-content-marketing-strategy-for-b2b",
-      "body": "content-marketing-strategy-for-b2b.body.txt",
-      "title": "Content Marketing Strategy for B2B: A Practical Framework",
-      "description": "A B2B content marketing strategy isn't a blog calendar — it's a system that turns expertise into demand. How to choose topics, formats and distribution that actually generate pipeline.",
-      "og_title": "Content Marketing Strategy for B2B: A Practical Framework",
-      "og_desc": "Turn expertise into demand — how to choose topics, formats and distribution that actually generate pipeline.",
-      "og_alt": "B2B Content Marketing Strategy",
-      "tag": "Growth Marketing",
-      "cat": "growth",
-      "read": "8 min",
-      "summary": "A B2B content marketing strategy isn't a blog calendar — it's a system that turns expertise into demand. How to choose topics, formats and distribution that generate pipeline."
-    },
-    {
       "slug": "blog-ideal-customer-profile",
       "body": "ideal-customer-profile.body.txt",
       "title": "How to Define Your Ideal Customer Profile (ICP)",
