@@ -316,6 +316,8 @@ def main():
     # --- listing card (blog.html) ---
     card = (
         f'      <a class="card reveal" data-cat="{e["cat"]}" href="/{slug}">\n'
+        f'        <span class="card-media"><img src="/assets/images/og-{slug}.png" '
+        f'alt="" loading="lazy" decoding="async" width="1200" height="630"></span>\n'
         f'        <span class="tag">{e["tag"]}</span>\n'
         f'        <h3>{e["title"]}</h3>\n'
         f'        <p>{e["summary"]}</p>\n'
