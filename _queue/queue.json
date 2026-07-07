@@ -26,6 +26,45 @@
       "cat": "growth",
       "read": "7 min",
       "summary": "Sales and marketing misalignment quietly kills pipeline. Shared goals, a common definition of a good lead, and the operating rhythm that keeps both teams pulling together."
+    },
+    {
+      "slug": "blog-demand-generation",
+      "body": "demand-generation.body.txt",
+      "title": "Demand Generation: A Practical Playbook for Pipeline",
+      "description": "Demand generation creates the market that lead generation captures. A practical playbook for building a demand engine that makes your whole funnel cheaper and warmer over time.",
+      "og_title": "Demand Generation: A Practical Playbook for Pipeline",
+      "og_desc": "Create the market before you capture it — a practical playbook for a demand engine that makes the whole funnel cheaper.",
+      "og_alt": "Demand Generation",
+      "tag": "Demand Generation",
+      "cat": "growth",
+      "read": "7 min",
+      "summary": "Demand generation creates the market that lead generation captures. A practical playbook for a demand engine that makes your whole funnel cheaper and warmer over time."
+    },
+    {
+      "slug": "blog-linkedin-lead-generation",
+      "body": "linkedin-lead-generation.body.txt",
+      "title": "LinkedIn Lead Generation: A System for Social Selling",
+      "description": "LinkedIn lead generation done right is social selling — earning attention and trust at scale, then converting it deliberately. A system for getting replies instead of blocks.",
+      "og_title": "LinkedIn Lead Generation: A System for Social Selling",
+      "og_desc": "Social selling that earns replies, not blocks — a system for turning LinkedIn into your best lead-gen channel.",
+      "og_alt": "LinkedIn Lead Generation",
+      "tag": "Lead Generation",
+      "cat": "leadgen",
+      "read": "8 min",
+      "summary": "LinkedIn lead generation done right is social selling — earning attention and trust at scale, then converting it deliberately. A system for getting replies instead of blocks."
+    },
+    {
+      "slug": "blog-ai-lead-generation",
+      "body": "ai-lead-generation.body.txt",
+      "title": "AI Lead Generation: What Actually Moves Pipeline",
+      "description": "AI lead generation is leverage on a system, not a substitute for one. Where AI genuinely moves pipeline, where it quietly hurts you, and how to adopt it without becoming the spam.",
+      "og_title": "AI Lead Generation: What Actually Moves Pipeline",
+      "og_desc": "Leverage on a system, not a substitute — where AI genuinely moves pipeline and where it quietly hurts you.",
+      "og_alt": "AI Lead Generation",
+      "tag": "Lead Generation",
+      "cat": "leadgen",
+      "read": "7 min",
+      "summary": "AI lead generation is leverage on a system, not a substitute for one. Where AI genuinely moves pipeline, where it quietly hurts you, and how to adopt it without becoming the spam."
     }
   ]
 }
