@@ -303,7 +303,8 @@ def main():
     # Previous (older) post = the current newest listing card in blog.html.
     blog = rd("blog.html")
     pm = re.search(r'<div class="cards" id="blog-cards">\s*<a class="card reveal"[^>]*href="(/[a-z0-9-]+)">'
-                   r'\s*<span class="tag">[^<]*</span>\s*<h3>(.*?)</h3>', blog, flags=re.S)
+                   r'\s*(?:<span class="card-media">.*?</span>\s*)?<span class="tag">[^<]*</span>\s*<h3>(.*?)</h3>',
+                   blog, flags=re.S)
     prev_href = pm.group(1) if pm else ""
     prev_title = re.sub(r"<[^>]+>", "", pm.group(2)).strip() if pm else ""
     nav = nav_html(prev_href, prev_title)
