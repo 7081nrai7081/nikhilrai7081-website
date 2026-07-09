@@ -663,6 +663,57 @@ h1, h2, h3 {
 .principle h3 { font-size: 1rem; margin-bottom: 4px; }
 .principle p { color: var(--muted); font-size: .9rem; line-height: 1.5; }
 
+/* ---------- Process (How I Work) ---------- */
+.process {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+}
+.process-step {
+  position: relative;
+  padding: 26px 22px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: transform .35s var(--ease), border-color .35s, box-shadow .35s;
+}
+.process-step:hover {
+  transform: translateY(-6px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+.process-step .n {
+  display: grid;
+  place-items: center;
+  width: 40px; height: 40px;
+  border-radius: 11px;
+  background: var(--grad-soft);
+  color: var(--brand-2);
+  font-size: .95rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 16px;
+}
+.process-step h3 { font-size: 1rem; margin-bottom: 6px; }
+.process-step p { color: var(--muted); font-size: .9rem; line-height: 1.55; }
+/* Connector arrow linking each step to the next */
+.process-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 44px; right: -13px;
+  width: 9px; height: 9px;
+  border-top: 2px solid var(--border-strong);
+  border-right: 2px solid var(--border-strong);
+  transform: rotate(45deg);
+}
+@media (max-width: 900px) {
+  .process { grid-template-columns: repeat(2, 1fr); }
+  .process-step:not(:last-child)::after { display: none; }
+}
+@media (max-width: 520px) {
+  .process { grid-template-columns: 1fr; }
+}
+
 /* ---------- Cards (Expertise / Projects) ---------- */
 .cards {
   display: grid;
