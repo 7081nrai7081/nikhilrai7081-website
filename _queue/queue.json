@@ -2,19 +2,6 @@
   "_comment": "Weekly auto-publish queue. The GitHub Action publishes queue[0] each Monday, then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
   "queue": [
     {
-      "slug": "blog-demand-generation",
-      "body": "demand-generation.body.txt",
-      "title": "Demand Generation: A Practical Playbook for Pipeline",
-      "description": "Demand generation creates the market that lead generation captures. A practical playbook for building a demand engine that makes your whole funnel cheaper and warmer over time.",
-      "og_title": "Demand Generation: A Practical Playbook for Pipeline",
-      "og_desc": "Create the market before you capture it — a practical playbook for a demand engine that makes the whole funnel cheaper.",
-      "og_alt": "Demand Generation",
-      "tag": "Demand Generation",
-      "cat": "growth",
-      "read": "7 min",
-      "summary": "Demand generation creates the market that lead generation captures. A practical playbook for a demand engine that makes your whole funnel cheaper and warmer over time."
-    },
-    {
       "slug": "blog-linkedin-lead-generation",
       "body": "linkedin-lead-generation.body.txt",
       "title": "LinkedIn Lead Generation: A System for Social Selling",
