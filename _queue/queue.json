@@ -1,5 +1,5 @@
 {
-  "_comment": "Weekly auto-publish queue. The GitHub Action publishes queue[0] each Monday, then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
+  "_comment": "Auto-publish queue. The GitHub Action publishes queue[0] three times a week (Mon/Wed/Fri 09:00 UTC), then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt, add assets/images/og-<slug>.svg + rendered .png, and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
   "queue": [
     {
       "slug": "blog-linkedin-lead-generation",
@@ -26,6 +26,45 @@
       "cat": "leadgen",
       "read": "7 min",
       "summary": "AI lead generation is leverage on a system, not a substitute for one. Where AI genuinely moves pipeline, where it quietly hurts you, and how to adopt it without becoming the spam."
+    },
+    {
+      "slug": "blog-lead-nurturing",
+      "body": "lead-nurturing.body.txt",
+      "title": "Lead Nurturing: Turning Interest Into Pipeline",
+      "description": "Most leads don't say no — they go quiet. Lead nurturing is the system that keeps you useful until the timing is right, turning the not-yet-ready majority into pipeline.",
+      "og_title": "Lead Nurturing: Turning Interest Into Pipeline",
+      "og_desc": "Most leads don't say no, they go quiet. A system for staying useful until the timing is right and converting the not-yet-ready.",
+      "og_alt": "Lead Nurturing",
+      "tag": "Lead Generation",
+      "cat": "leadgen",
+      "read": "7 min",
+      "summary": "Most leads don't say no — they go quiet. Lead nurturing is the system that keeps you useful until the timing is right, turning the not-yet-ready majority into pipeline."
+    },
+    {
+      "slug": "blog-sales-pipeline-management",
+      "body": "sales-pipeline-management.body.txt",
+      "title": "Sales Pipeline Management: A System for Predictable Revenue",
+      "description": "A pipeline is a forecast you can act on or a fiction that makes everyone feel busy. How to run stages by buyer action, keep it honest, and forecast on velocity, not vanity.",
+      "og_title": "Sales Pipeline Management: A System for Predictable Revenue",
+      "og_desc": "Stop storing optimism. Define stages by buyer action, keep the pipeline honest, and forecast on velocity instead of total value.",
+      "og_alt": "Sales Pipeline Management",
+      "tag": "Operations",
+      "cat": "operations",
+      "read": "8 min",
+      "summary": "A pipeline is a forecast you can act on or a fiction that makes everyone feel busy. How to run stages by buyer action, keep it honest, and forecast on velocity, not vanity."
+    },
+    {
+      "slug": "blog-channel-partnerships",
+      "body": "channel-partnerships.body.txt",
+      "title": "Channel Partnerships: A Playbook for Partner-Led Growth",
+      "description": "Someone already sells to your exact buyer. Channel partnerships let you grow through their trust, but only when the partner's win is concrete and selling you is effortless.",
+      "og_title": "Channel Partnerships: A Playbook for Partner-Led Growth",
+      "og_desc": "Grow through other companies' trust, not just your own outreach — how to build a channel that actually sells instead of collecting logos.",
+      "og_alt": "Channel Partnerships",
+      "tag": "Partnerships",
+      "cat": "partnerships",
+      "read": "8 min",
+      "summary": "Someone already sells to your exact buyer. Channel partnerships let you grow through their trust, but only when the partner's win is concrete and selling you is effortless."
     }
   ]
 }
