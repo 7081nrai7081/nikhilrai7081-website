@@ -2,19 +2,6 @@
   "_comment": "Auto-publish queue. The GitHub Action publishes queue[0] three times a week (Mon/Wed/Fri 09:00 UTC), then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt, add assets/images/og-<slug>.svg + rendered .png, and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
   "queue": [
     {
-      "slug": "blog-linkedin-lead-generation",
-      "body": "linkedin-lead-generation.body.txt",
-      "title": "LinkedIn Lead Generation: A System for Social Selling",
-      "description": "LinkedIn lead generation done right is social selling — earning attention and trust at scale, then converting it deliberately. A system for getting replies instead of blocks.",
-      "og_title": "LinkedIn Lead Generation: A System for Social Selling",
-      "og_desc": "Social selling that earns replies, not blocks — a system for turning LinkedIn into your best lead-gen channel.",
-      "og_alt": "LinkedIn Lead Generation",
-      "tag": "Lead Generation",
-      "cat": "leadgen",
-      "read": "8 min",
-      "summary": "LinkedIn lead generation done right is social selling — earning attention and trust at scale, then converting it deliberately. A system for getting replies instead of blocks."
-    },
-    {
       "slug": "blog-ai-lead-generation",
       "body": "ai-lead-generation.body.txt",
       "title": "AI Lead Generation: What Actually Moves Pipeline",

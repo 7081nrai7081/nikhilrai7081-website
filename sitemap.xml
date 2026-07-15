@@ -37,7 +37,7 @@
 
   <url>
     <loc>https://nikhilrai7081.com/blog</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://nikhilrai7081.com/blog"/>
@@ -131,7 +131,7 @@
 
   <url>
     <loc>https://nikhilrai7081.com/blog-demand-generation</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -301,6 +301,13 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://nikhilrai7081.com/es/blog-lead-quality-signal"/>
     <xhtml:link rel="alternate" hreflang="hi" href="https://nikhilrai7081.com/hi/blog-lead-quality-signal"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://nikhilrai7081.com/blog-lead-quality-signal"/>
+  </url>
+
+  <url>
+    <loc>https://nikhilrai7081.com/blog-linkedin-lead-generation</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <url>
@@ -540,7 +547,7 @@
 
   <url>
     <loc>https://nikhilrai7081.com/topic-lead-generation</loc>
-    <lastmod>2026-07-08</lastmod>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
