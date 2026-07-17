@@ -2,19 +2,6 @@
   "_comment": "Auto-publish queue. The GitHub Action publishes queue[0] three times a week (Mon/Wed/Fri 09:00 UTC), then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt, add assets/images/og-<slug>.svg + rendered .png, and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
   "queue": [
     {
-      "slug": "blog-ai-lead-generation",
-      "body": "ai-lead-generation.body.txt",
-      "title": "AI Lead Generation: What Actually Moves Pipeline",
-      "description": "AI lead generation is leverage on a system, not a substitute for one. Where AI genuinely moves pipeline, where it quietly hurts you, and how to adopt it without becoming the spam.",
-      "og_title": "AI Lead Generation: What Actually Moves Pipeline",
-      "og_desc": "Leverage on a system, not a substitute — where AI genuinely moves pipeline and where it quietly hurts you.",
-      "og_alt": "AI Lead Generation",
-      "tag": "Lead Generation",
-      "cat": "leadgen",
-      "read": "7 min",
-      "summary": "AI lead generation is leverage on a system, not a substitute for one. Where AI genuinely moves pipeline, where it quietly hurts you, and how to adopt it without becoming the spam."
-    },
-    {
       "slug": "blog-lead-nurturing",
       "body": "lead-nurturing.body.txt",
       "title": "Lead Nurturing: Turning Interest Into Pipeline",
