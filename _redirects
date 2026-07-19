@@ -1,4 +1,8 @@
 # Redirect rules for Cloudflare Pages.
+
+# www -> apex (canonical host is nikhilrai7081.com, no www)
+https://www.nikhilrai7081.com/*  https://nikhilrai7081.com/:splat  301
+
 # Old VYNTRA lander (removed 2026-07-02) now lives on its own domain.
 /vyntraclubcommunity      https://vyntra.club/community  301
 /vyntraclubcommunity/     https://vyntra.club/community  301
