@@ -2,19 +2,6 @@
   "_comment": "Auto-publish queue. The GitHub Action publishes queue[0] three times a week (Mon/Wed/Fri 09:00 UTC), then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt, add assets/images/og-<slug>.svg + rendered .png, and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
   "queue": [
     {
-      "slug": "blog-lead-nurturing",
-      "body": "lead-nurturing.body.txt",
-      "title": "Lead Nurturing: Turning Interest Into Pipeline",
-      "description": "Most leads don't say no — they go quiet. Lead nurturing is the system that keeps you useful until the timing is right, turning the not-yet-ready majority into pipeline.",
-      "og_title": "Lead Nurturing: Turning Interest Into Pipeline",
-      "og_desc": "Most leads don't say no, they go quiet. A system for staying useful until the timing is right and converting the not-yet-ready.",
-      "og_alt": "Lead Nurturing",
-      "tag": "Lead Generation",
-      "cat": "leadgen",
-      "read": "7 min",
-      "summary": "Most leads don't say no — they go quiet. Lead nurturing is the system that keeps you useful until the timing is right, turning the not-yet-ready majority into pipeline."
-    },
-    {
       "slug": "blog-sales-pipeline-management",
       "body": "sales-pipeline-management.body.txt",
       "title": "Sales Pipeline Management: A System for Predictable Revenue",
