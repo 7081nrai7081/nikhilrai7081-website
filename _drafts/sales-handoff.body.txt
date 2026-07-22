@@ -1,0 +1,77 @@
+    <div class="cs-block">
+      <p>A deal closes and everyone celebrates — the hard part is supposedly over. Then three months later the account is quiet, unhappy, or gone, and nobody can quite explain why. Usually the answer isn't the product or the customer. It's the handoff: the moment a deal moves from the person who won it to the person who has to deliver on it, where all the context that made the sale happen quietly stays in the closing rep's head instead of moving with the account.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Why the handoff is where deals actually die</h2>
+      <p>Sales and delivery — whether that's customer success, onboarding, or an account team — are optimized for different things. Sales is optimized to close; delivery is optimized to retain and grow. Without a deliberate handoff, the account crosses that boundary carrying only what's in the CRM fields, which is never the whole picture. The champion's actual motivation, the internal politics, the specific outcome that was promised in the sales conversation but never written into the contract — all of that either transfers or it doesn't, and if it doesn't, the new team spends the first 90 days rediscovering what the old team already knew.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>What actually has to transfer</h2>
+      <p>The contract tells the new owner what was sold. It doesn't tell them why the customer bought, and that gap is where relationships go cold.</p>
+      <div class="cs-steps">
+        <div class="cs-step"><span class="num">1</span><div><h3>The real reason they bought</h3><p>Not the feature list — the specific business pain that made this urgent enough to sign. That's the thing delivery needs to keep solving visibly.</p></div></div>
+        <div class="cs-step"><span class="num">2</span><div><h3>Who the actual stakeholders are</h3><p>The champion, the economic buyer, and anyone who was skeptical — with enough detail that the new team doesn't have to ask "who are you again" in week one.</p></div></div>
+        <div class="cs-step"><span class="num">3</span><div><h3>Every promise made to close it</h3><p>Timelines, custom asks, "we'll figure that out post-sale" comments — if it was said in the sales process, delivery is on the hook for it whether or not it's in writing.</p></div></div>
+        <div class="cs-step"><span class="num">4</span><div><h3>What almost killed the deal</h3><p>Objections, competitor comparisons, internal politics that nearly stalled it — the risks that got the account this far are the risks most likely to resurface at renewal.</p></div></div>
+      </div>
+    </div>
+
+    <div class="cs-block">
+      <h2>Build a handoff process, not a Slack message</h2>
+      <p>"I'll loop you in" is not a handoff — it's a hope that context survives a hallway conversation. A real handoff is a standing step in the process: a short document or call, required before an account is marked closed-won, where the closing rep walks the new owner through the four things above while the customer relationship is still warm enough to ask follow-up questions. This is the same instinct behind good <a href="/blog-growth-operations">growth operations</a> — the system should carry the weight, not the goodwill of whoever happens to remember to mention it.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Draw the ownership line before day one</h2>
+      <p>The other place handoffs quietly fail is ownership ambiguity — a stretch of weeks where sales thinks success owns the account and success thinks sales is still handling onboarding, and the customer is the one who notices nobody's driving. Name the exact moment ownership transfers, put it on both teams' dashboards, and make sure the customer hears from the new owner directly instead of finding out by process of elimination. A gray zone with no owner is exactly the kind of gap covered in <a href="/blog-signs-your-operations-are-broken">signs your operations are broken</a> — the process looks fine on a slide and fails the moment nobody's watching it in practice.</p>
+    </div>
+
+    <div class="cs-block">
+      <div class="cs-callout"><p>Deals rarely die at the handoff because delivery did a bad job — they die because the context that won the deal never made it to the team responsible for keeping it. Make the handoff a required step, not a favor: transfer the real reason they bought, who the stakeholders are, every promise made, and what almost killed the deal — then name the exact moment ownership changes hands. The relationship the customer signed up for should feel continuous, even though the person managing it just changed.</p></div>
+    </div>
+
+    <div class="cs-block">
+      <div class="cs-tags">
+        <span>Sales handoff</span><span>Operations</span><span>Customer success</span><span>Revenue operations</span><span>B2B</span>
+      </div>
+    </div>
+
+    <div class="cs-block">
+      <h2>Read next</h2>
+      <div class="cards related">
+        <a class="card" href="/blog-sales-pipeline-management">
+          <span class="tag">Operations</span>
+          <h3>Sales Pipeline Management: A System for Predictable Revenue</h3>
+          <p>Run stages by buyer action, keep the pipeline honest, and forecast on velocity instead of vanity.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a class="card" href="/blog-signs-your-operations-are-broken">
+          <span class="tag">Operations</span>
+          <h3>Signs Your Operations Are Broken (and How to Fix Them)</h3>
+          <p>The quiet signals that your process only works on the org chart, not in practice.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a class="card" href="/blog-retention-is-the-growth">
+          <span class="tag">Growth</span>
+          <h3>Retention Is the Growth You Already Paid For</h3>
+          <p>Why keeping the customers you have is often the highest-leverage growth lever you're not pulling.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="cs-cta">
+      <h2>Want handoffs that don't lose the deal?</h2>
+      <p>I help teams build the operational connective tissue between sales and delivery — so context survives the handoff and accounts stay warm instead of going cold in the first 90 days — <a href="/services">see how I work</a>.</p>
+      <a href="https://calendly.com/nikhilrai7081/30min" target="_blank" rel="noopener" class="btn btn-primary">Book a Call
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>

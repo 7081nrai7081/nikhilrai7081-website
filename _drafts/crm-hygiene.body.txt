@@ -1,0 +1,76 @@
+    <div class="cs-block">
+      <p>Nobody joins a company hoping to own CRM hygiene. It's the least glamorous job in revenue — deduping contacts, fixing stage names nobody follows, chasing down why the same lead exists four times under three spellings of the same company. So it stays undone, and the CRM decays a little more every week, quietly taxing everything built on top of it: the forecast, the targeting, the automation you were so excited to turn on.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Bad data is a tax on everything downstream</h2>
+      <p>A CRM with duplicate records, stale deal stages, and dead contacts doesn't just look messy — it actively lies to every system that reads from it. Forecasts include deals that died months ago because nobody moved the stage. Marketing automation nurtures contacts who left the company a year back. Lead routing sends a hot prospect to a rep who already has three open (duplicate) records for the same account. Every workflow you build on top of the data inherits the data's mistakes, at whatever scale that workflow runs. Automation doesn't fix bad data — it just executes bad decisions faster, which is exactly the trap discussed in <a href="/blog-what-to-automate-first">what to automate first</a>: automating a broken process breaks it faster, and a broken database is a broken process.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Automate the discipline, not just the alerts</h2>
+      <p>Most teams' idea of "handling" data quality is a dashboard that flags problems after they've already spread. That's better than nothing, but it still relies on someone acting on the alert. The stronger move is preventing the mess at the point of entry: dedupe logic that catches a matching domain or email before a second record gets created, required fields that block a deal from advancing stages without the information the next stage actually needs, and stale-deal rules that auto-flag or auto-close anything untouched for 60-plus days instead of letting it sit forever as phantom pipeline. Prevention at entry beats cleanup after the fact every time, because cleanup never actually happens on schedule.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>A system still needs an owner</h2>
+      <p>Automating the guardrails reduces the mess — it doesn't eliminate the need for a person who's accountable for the data being trustworthy. Someone needs to own the exceptions the rules don't catch, decide what "clean enough" means for your team, and have the authority to enforce entry standards when a rep is tempted to skip a required field to close a task faster. Without an owner, even good automation degrades over time as edge cases pile up unaddressed. This is the same lesson as any process that looks fine on paper and fails in practice — see <a href="/blog-signs-your-operations-are-broken">signs your operations are broken</a> for the broader pattern.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Make hygiene cheap, not a quarterly project</h2>
+      <p>The reason hygiene work gets skipped is that it's usually framed as a big, dreaded cleanup project — block off a week, export everything, manually merge duplicates. That framing guarantees it keeps getting deprioritized. The alternative is making good data entry the path of least resistance every single day: smart defaults, autofill from enrichment instead of manual typing, validation that catches an error the moment it's made instead of a quarter later. A CRM that's slightly annoying to use correctly will always end up messy. One where doing it right is the fastest option stays clean without anyone having to think about it.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Why this compounds more than people expect</h2>
+      <p>Clean data isn't just tidier — it's the difference between lead scoring that means something and lead scoring that's guessing. A scoring model trained on duplicate records and mislabeled stages will confidently rank the wrong accounts as your best leads, which is the exact failure mode behind <a href="/blog-lead-quality-signal">lead quality signal</a> problems: teams chase volume because they can't trust the signal, and they can't trust the signal because the underlying data was never reliable to begin with. Hygiene isn't a side project. It's the foundation everything else in revenue operations sits on.</p>
+    </div>
+
+    <div class="cs-block">
+      <div class="cs-callout"><p>CRM hygiene decays by default because nobody's excited to own it, but every automation and forecast built on top of dirty data inherits its mistakes at scale. Prevent the mess at the point of entry instead of relying on quarterly cleanups, keep a named owner accountable for the exceptions rules can't catch, and make correct data entry the easiest option, not the extra step. A CRM nobody trusts isn't a data problem — it's an operations problem wearing a data costume.</p></div>
+    </div>
+
+    <div class="cs-block">
+      <div class="cs-tags">
+        <span>CRM hygiene</span><span>Automation</span><span>Revenue operations</span><span>Data quality</span><span>B2B</span>
+      </div>
+    </div>
+
+    <div class="cs-block">
+      <h2>Read next</h2>
+      <div class="cards related">
+        <a class="card" href="/blog-what-to-automate-first">
+          <span class="tag">Automation</span>
+          <h3>What to Automate First (and What to Leave Alone)</h3>
+          <p>A framework for picking the right first workflow to automate — and the signs a process isn't ready yet.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a class="card" href="/blog-marketing-automation">
+          <span class="tag">Automation</span>
+          <h3>Marketing Automation: Workflows That Don't Annoy Your Leads</h3>
+          <p>Automation works when it reacts to real behavior instead of a calendar — and when it's tested from the recipient's side first.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a class="card" href="/blog-lead-quality-signal">
+          <span class="tag">Lead Generation</span>
+          <h3>Your Lead Problem Isn't Volume — It's Signal</h3>
+          <p>Why more leads doesn't fix a pipeline problem caused by not trusting which leads are actually good.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="cs-cta">
+      <h2>Want a CRM you can actually trust?</h2>
+      <p>I help teams build the guardrails, ownership and workflows that keep the system of record clean — so forecasts, targeting and automation are all working from data that's actually true — <a href="/services">see how I work</a>.</p>
+      <a href="https://calendly.com/nikhilrai7081/30min" target="_blank" rel="noopener" class="btn btn-primary">Book a Call
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>

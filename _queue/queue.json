@@ -26,6 +26,58 @@
       "cat": "partnerships",
       "read": "8 min",
       "summary": "Someone already sells to your exact buyer. Channel partnerships let you grow through their trust, but only when the partner's win is concrete and selling you is effortless."
+    },
+    {
+      "slug": "blog-integration-partnerships",
+      "body": "integration-partnerships.body.txt",
+      "title": "Integration Partnerships: The Channel That Sells Itself",
+      "description": "When your product connects to a partner's, the case for both of you sells itself in the product, not in a slide. How to build integrations that actually produce pipeline.",
+      "og_title": "Integration Partnerships: The Channel That Sells Itself",
+      "og_desc": "A working integration proves the overlap between two products instead of asserting it. Build it, list it, maintain it, and choose a few over many.",
+      "og_alt": "Integration Partnerships",
+      "tag": "Partnerships",
+      "cat": "partnerships",
+      "read": "7 min",
+      "summary": "When your product connects to a partner's, the case for both of you sells itself in the product, not in a slide. How to build integrations that actually produce pipeline."
+    },
+    {
+      "slug": "blog-marketing-automation",
+      "body": "marketing-automation.body.txt",
+      "title": "Marketing Automation: Workflows That Don't Annoy Your Leads",
+      "description": "Automation earns a bad reputation when it runs on a calendar instead of a lead's actual behavior. How to build workflows that react to reality instead of a schedule.",
+      "og_title": "Marketing Automation: Workflows That Don't Annoy Your Leads",
+      "og_desc": "The gap between helpful automation and annoying automation is whether it reacts to what a lead does or just runs on a schedule.",
+      "og_alt": "Marketing Automation",
+      "tag": "Automation",
+      "cat": "automation",
+      "read": "7 min",
+      "summary": "Automation earns a bad reputation when it runs on a calendar instead of a lead's actual behavior. How to build workflows that react to reality instead of a schedule."
+    },
+    {
+      "slug": "blog-sales-handoff",
+      "body": "sales-handoff.body.txt",
+      "title": "The Sales-to-Success Handoff: Where Deals Go Cold",
+      "description": "A deal closes and the context that won it usually stays in the closing rep's head. What actually has to transfer to delivery, and how to build a handoff that carries it.",
+      "og_title": "The Sales-to-Success Handoff: Where Deals Go Cold",
+      "og_desc": "Deals rarely die at the handoff because delivery did a bad job. They die because the context that won the deal never made it to the team responsible for keeping it.",
+      "og_alt": "Sales to Success Handoff",
+      "tag": "Operations",
+      "cat": "operations",
+      "read": "7 min",
+      "summary": "A deal closes and the context that won it usually stays in the closing rep's head. What actually has to transfer to delivery, and how to build a handoff that carries it."
+    },
+    {
+      "slug": "blog-crm-hygiene",
+      "body": "crm-hygiene.body.txt",
+      "title": "CRM Hygiene: The Automation Nobody Wants to Own",
+      "description": "A messy CRM taxes every system built on top of it, from forecasts to lead scoring to automation. Why prevention at data entry beats quarterly cleanup projects.",
+      "og_title": "CRM Hygiene: The Automation Nobody Wants to Own",
+      "og_desc": "Every automation and forecast built on top of dirty data inherits its mistakes at scale. How to prevent the mess instead of cleaning it up quarterly.",
+      "og_alt": "CRM Hygiene",
+      "tag": "Automation",
+      "cat": "automation",
+      "read": "7 min",
+      "summary": "A messy CRM taxes every system built on top of it, from forecasts to lead scoring to automation. Why prevention at data entry beats quarterly cleanup projects."
     }
   ]
 }
