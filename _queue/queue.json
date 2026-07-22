@@ -2,19 +2,6 @@
   "_comment": "Auto-publish queue. The GitHub Action publishes queue[0] three times a week (Mon/Wed/Fri 09:00 UTC), then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt, add assets/images/og-<slug>.svg + rendered .png, and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
   "queue": [
     {
-      "slug": "blog-sales-pipeline-management",
-      "body": "sales-pipeline-management.body.txt",
-      "title": "Sales Pipeline Management: A System for Predictable Revenue",
-      "description": "A pipeline is a forecast you can act on or a fiction that makes everyone feel busy. How to run stages by buyer action, keep it honest, and forecast on velocity, not vanity.",
-      "og_title": "Sales Pipeline Management: A System for Predictable Revenue",
-      "og_desc": "Stop storing optimism. Define stages by buyer action, keep the pipeline honest, and forecast on velocity instead of total value.",
-      "og_alt": "Sales Pipeline Management",
-      "tag": "Operations",
-      "cat": "operations",
-      "read": "8 min",
-      "summary": "A pipeline is a forecast you can act on or a fiction that makes everyone feel busy. How to run stages by buyer action, keep it honest, and forecast on velocity, not vanity."
-    },
-    {
       "slug": "blog-channel-partnerships",
       "body": "channel-partnerships.body.txt",
       "title": "Channel Partnerships: A Playbook for Partner-Led Growth",
