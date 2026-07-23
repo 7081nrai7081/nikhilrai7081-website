@@ -28,3 +28,7 @@ OFF-PAGE-SEO.md
 
 # Dry-run preview from scripts/publish_next.py
 _preview.html
+
+# ChatGPT review notes & GSC performance exports — internal, not for public repo
+chatgpttodo.txt
+*.zip
