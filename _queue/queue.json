@@ -2,19 +2,6 @@
   "_comment": "Auto-publish queue. The GitHub Action publishes queue[0] three times a week (Mon/Wed/Fri 09:00 UTC), then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt, add assets/images/og-<slug>.svg + rendered .png, and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
   "queue": [
     {
-      "slug": "blog-channel-partnerships",
-      "body": "channel-partnerships.body.txt",
-      "title": "Channel Partnerships: A Playbook for Partner-Led Growth",
-      "description": "Someone already sells to your exact buyer. Channel partnerships let you grow through their trust, but only when the partner's win is concrete and selling you is effortless.",
-      "og_title": "Channel Partnerships: A Playbook for Partner-Led Growth",
-      "og_desc": "Grow through other companies' trust, not just your own outreach — how to build a channel that actually sells instead of collecting logos.",
-      "og_alt": "Channel Partnerships",
-      "tag": "Partnerships",
-      "cat": "partnerships",
-      "read": "8 min",
-      "summary": "Someone already sells to your exact buyer. Channel partnerships let you grow through their trust, but only when the partner's win is concrete and selling you is effortless."
-    },
-    {
       "slug": "blog-integration-partnerships",
       "body": "integration-partnerships.body.txt",
       "title": "Integration Partnerships: The Channel That Sells Itself",
