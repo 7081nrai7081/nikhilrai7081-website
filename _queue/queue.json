@@ -39,6 +39,45 @@
       "cat": "automation",
       "read": "7 min",
       "summary": "A messy CRM taxes every system built on top of it, from forecasts to lead scoring to automation. Why prevention at data entry beats quarterly cleanup projects."
+    },
+    {
+      "slug": "blog-deal-qualification",
+      "body": "deal-qualification.body.txt",
+      "title": "Deal Qualification: Saying No Faster",
+      "description": "Most pipeline problems are qualification problems. A framework for spotting a bad-fit deal early and saying no before it wastes a quarter.",
+      "og_title": "Deal Qualification: Saying No Faster",
+      "og_desc": "A framework for spotting a bad-fit deal early and saying no before it wastes a quarter of pipeline.",
+      "og_alt": "Deal Qualification",
+      "tag": "Lead Generation",
+      "cat": "leadgen",
+      "read": "6 min",
+      "summary": "Most pipeline problems are qualification problems. A framework for spotting a bad-fit deal early and saying no before it wastes a quarter."
+    },
+    {
+      "slug": "blog-customer-onboarding",
+      "body": "customer-onboarding.body.txt",
+      "title": "Customer Onboarding: The First 90 Days",
+      "description": "Churn is usually decided in the first 90 days, not at renewal. How to build an onboarding system that gets customers to value fast.",
+      "og_title": "Customer Onboarding: The First 90 Days",
+      "og_desc": "Retention is decided before renewal ever comes up. A repeatable onboarding system that gets customers to real value in the first 90 days.",
+      "og_alt": "Customer Onboarding",
+      "tag": "Operations",
+      "cat": "operations",
+      "read": "6 min",
+      "summary": "Churn is usually decided in the first 90 days, not at renewal. How to build an onboarding system that gets customers to value fast."
+    },
+    {
+      "slug": "blog-expansion-revenue",
+      "body": "expansion-revenue.body.txt",
+      "title": "Expansion Revenue Is Growth You Already Have",
+      "description": "New logos aren't the only growth channel. Why expansion revenue from existing customers compounds faster, and how to build a system that finds it.",
+      "og_title": "Expansion Revenue Is Growth You Already Have",
+      "og_desc": "The fastest growth channel is often sitting inside accounts you've already won. A system for finding and closing expansion revenue on purpose.",
+      "og_alt": "Expansion Revenue",
+      "tag": "Growth",
+      "cat": "growth",
+      "read": "6 min",
+      "summary": "New logos aren't the only growth channel. Why expansion revenue from existing customers compounds faster, and how to build a system that finds it."
     }
   ]
 }
