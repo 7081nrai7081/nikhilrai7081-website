@@ -481,15 +481,6 @@ body.dark .gradient-text {
   width: min(360px, 80%);
   aspect-ratio: 1;
 }
-.portrait .ring {
-  position: absolute;
-  inset: -14px;
-  border-radius: 36px;
-  background: var(--grad);
-  opacity: .5;
-  filter: blur(26px);
-  animation: float 7s ease-in-out infinite;
-}
 .portrait picture { display: contents; }
 .portrait img,
 .portrait .placeholder {
@@ -514,29 +505,6 @@ body.dark .gradient-text {
 }
 .portrait .placeholder span { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
-.chip {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 11px 15px;
-  border-radius: 16px;
-  background: color-mix(in srgb, var(--bg-elev) 70%, transparent);
-  border: 1px solid var(--border);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  box-shadow: var(--shadow-sm);
-  animation: float 6s ease-in-out infinite;
-}
-.chip-emoji { font-size: 1.25rem; }
-.chip b { display: block; font-size: .9rem; font-weight: 600; }
-.chip small { color: var(--muted); font-size: .76rem; }
-.chip-1 { top: 14%; left: -22px; }
-.chip-2 { bottom: 14%; right: -22px; animation-delay: -3s; }
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-}
 
 .scroll-cue {
   display: flex;
@@ -1466,8 +1434,6 @@ a.card:hover .card-more svg { transform: translateX(4px); }
   .hero-grid { grid-template-columns: 1fr; gap: 48px; }
   .hero-visual { order: -1; }
   .portrait { width: min(280px, 70%); }
-  .chip-1 { left: 0; }
-  .chip-2 { right: 0; }
   .about-grid { grid-template-columns: 1fr; gap: 36px; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .cards { grid-template-columns: repeat(2, 1fr); }
@@ -1681,85 +1647,10 @@ figure.testimonial { margin: 0; }
   z-index: 0;
 }
 
-/* ---- Hero: layered brand accents ---- */
+/* ---- Hero ---- */
 .hero { position: relative; overflow: hidden; }
 .hero > .container { position: relative; z-index: 1; }
-/* big faint monogram watermark */
-.hero::after {
-  content: 'NR';
-  position: absolute;
-  right: -1.5rem;
-  bottom: -5rem;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 800;
-  font-size: clamp(13rem, 30vw, 27rem);
-  line-height: .8;
-  letter-spacing: -.04em;
-  color: var(--brand);
-  opacity: .05;
-  pointer-events: none;
-  z-index: 0;
-}
-/* dot-grid accent, upper area */
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 14%;
-  left: -40px;
-  width: 180px;
-  height: 150px;
-  background-image: radial-gradient(var(--brand) 1.4px, transparent 1.6px);
-  background-size: 17px 17px;
-  opacity: .2;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Branded portrait frame: crimson offset frame + dot-grid behind */
 .hero-visual { position: relative; }
-.hero-visual::before {
-  content: '';
-  position: absolute;
-  right: -6%;
-  top: -8%;
-  width: 130px;
-  height: 130px;
-  background-image: radial-gradient(var(--brand) 1.4px, transparent 1.6px);
-  background-size: 16px 16px;
-  opacity: .25;
-  pointer-events: none;
-  z-index: 0;
-}
-.hero-visual::after {
-  content: '';
-  position: absolute;
-  left: 4%;
-  bottom: -6%;
-  width: 64px;
-  height: 64px;
-  border: 2px solid var(--brand);
-  border-radius: 14px;
-  transform: rotate(12deg);
-  opacity: .5;
-  pointer-events: none;
-  z-index: 0;
-}
-/* Portrait ring becomes a crisp branded offset frame (not a blurred glow) */
-.portrait .ring {
-  inset: auto;
-  position: absolute;
-  right: -16px;
-  bottom: -16px;
-  width: 70%;
-  height: 70%;
-  background: none;
-  border: 2px solid var(--brand);
-  border-radius: 18px;
-  opacity: .55;
-  filter: none;
-  animation: none;
-  z-index: -1;
-}
 
 /* Section heading accent — a small crimson square + outline ring per centered head */
 .section-head.center { position: relative; }
@@ -1772,15 +1663,6 @@ figure.testimonial { margin: 0; }
   opacity: .35;
   pointer-events: none;
   z-index: 0;
-}
-
-@media (max-width: 720px) {
-  .hero::before, .hero-visual::before, .hero-visual::after { display: none; }
-  .hero::after { font-size: 9rem; bottom: -2rem; }
-}
-/* On narrow phones the floating portrait chips crowd the image — hide them. */
-@media (max-width: 480px) {
-  .chip { display: none; }
 }
 
 /* ---- Image header inside cards (work/portfolio) ---- */
