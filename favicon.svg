@@ -1,15 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <defs>
     <linearGradient id="nr" x1="16" y1="14" x2="48" y2="50" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#ff5c7d"/>
-      <stop offset="1" stop-color="#e23a5e"/>
+      <stop offset="0" stop-color="#f0ce72"/>
+      <stop offset="1" stop-color="#e8c158"/>
     </linearGradient>
   </defs>
 
-  <!-- dark crimson background (matches the site's feature bands) -->
-  <rect width="64" height="64" rx="15" fill="#1c0d13"/>
+  <!-- deep navy background (matches the site's feature bands) -->
+  <rect width="64" height="64" rx="15" fill="#0f1b2d"/>
 
-  <!-- NR monogram in the crimson brand -->
+  <!-- NR monogram in the gold brand -->
   <text x="32" y="33.5"
         font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
         font-size="29" font-weight="700" letter-spacing="-2"

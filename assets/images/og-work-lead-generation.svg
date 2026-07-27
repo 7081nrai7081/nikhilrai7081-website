@@ -5,23 +5,14 @@
       <stop offset="1" stop-color="#c9a227" stop-opacity="0"/>
     </radialGradient>
   </defs>
-
   <rect width="1200" height="630" fill="#faf8f3"/>
   <rect width="1200" height="630" fill="url(#glow)"/>
-
   <g fill="none" stroke="#14181f" stroke-opacity=".05">
     <path d="M0 157.5H1200M0 315H1200M0 472.5H1200M300 0V630M600 0V630M900 0V630"/>
   </g>
-
   <rect x="80" y="78" width="84" height="84" rx="18" fill="#faf8f3" stroke="#c9a227" stroke-width="2.5"/>
   <text x="122" y="123" font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="38" font-weight="800" letter-spacing="-2" fill="#c9a227" text-anchor="middle" dominant-baseline="central">NR</text>
-
-  <text x="82" y="272" font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="30" font-weight="700" letter-spacing="6" fill="#6b7280">LEAD GENERATION</text>
-
-  <g font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="66" font-weight="800" letter-spacing="-2.5">
-    <text x="80" y="356" fill="#14181f">Your Lead Problem Isn't</text>
-    <text x="80" y="432" fill="#14181f">Volume — It's <tspan fill="#c9a227">Signal</tspan></text>
-  </g>
-
-  <text x="82" y="528" font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="26" font-weight="500" fill="#454c5c">Read intent and route effort to the leads that convert</text>
+  <text x="82" y="272" font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="30" font-weight="700" letter-spacing="6" fill="#6b7280">CASE STUDY</text>
+  <text x="80" y="410" font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="66" font-weight="800" letter-spacing="-2.5" fill="#14181f">Lead Generation Systems</text>
+  <text x="82" y="528" font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="26" font-weight="500" fill="#454c5c">nikhilrai7081.com</text>
 </svg>

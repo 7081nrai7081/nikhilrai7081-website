@@ -16,34 +16,34 @@
 @font-face { font-family: 'Poppins'; font-style: normal; font-weight: 800; font-display: swap; src: url('../fonts/poppins-800.woff2') format('woff2'); }
 
 :root {
-  /* Light agency theme (default) — white base, crimson accent */
-  --bg: #fffdfd;
+  /* Light agency theme (default) — warm off-white base, navy text, gold accent */
+  --bg: #faf8f3;
   --bg-elev: #fff;
   --surface: #fff;
-  --surface-2: #f8f3f3;
-  --border: rgba(23, 16, 22, 0.11);
-  --border-strong: rgba(23, 16, 22, 0.20);
+  --surface-2: #f1ece2;
+  --border: rgba(20, 24, 31, 0.11);
+  --border-strong: rgba(20, 24, 31, 0.20);
 
-  --text: #17121a;
-  --text-soft: #4b434c;
-  --muted: #786f77;
+  --text: #14181f;
+  --text-soft: #454c5c;
+  --muted: #6b7280;
 
-  --brand: #d92651;     /* refined crimson — deeper, more confident than candy pink */
-  --brand-2: #d92651;
-  --accent: #b81d3f;    /* deeper red — small text / AA contrast */
+  --brand: #c9a227;     /* warm gold accent */
+  --brand-2: #c9a227;
+  --accent: #a9861f;    /* deeper gold — small text / AA contrast */
 
-  --grad: #d92651;
-  --grad-soft: rgba(217, 38, 81, 0.09);
-  /* Rich CTA fill — vivid-to-deep crimson, dark enough for white text to clear AA in both themes */
-  --btn-grad: linear-gradient(135deg, #e2365b 0%, #b81d3f 100%);
+  --grad: #c9a227;
+  --grad-soft: rgba(201, 162, 39, 0.09);
+  /* Rich CTA fill — bright-to-deep gold, dark enough for white text to clear AA in both themes */
+  --btn-grad: linear-gradient(135deg, #d4af37 0%, #a9861f 100%);
 
-  /* Dark crimson feature bands */
-  --dark-bg: #1c0d13;
-  --dark-bg-2: #34101f;
+  /* Deep navy feature bands */
+  --dark-bg: #0f1b2d;
+  --dark-bg-2: #1b2a42;
 
-  --shadow-sm: 0 1px 2px rgba(23, 14, 20, .05), 0 4px 14px rgba(23, 14, 20, .05);
-  --shadow: 0 1px 2px rgba(23, 14, 20, .05), 0 24px 50px -24px rgba(23, 14, 20, .24);
-  --shadow-glow: 0 10px 30px -12px rgba(217, 38, 81, .40);
+  --shadow-sm: 0 1px 2px rgba(20, 24, 31, .05), 0 4px 14px rgba(20, 24, 31, .05);
+  --shadow: 0 1px 2px rgba(20, 24, 31, .05), 0 24px 50px -24px rgba(20, 24, 31, .24);
+  --shadow-glow: 0 10px 30px -12px rgba(201, 162, 39, .40);
 
   --radius: 12px;
   --radius-lg: 16px;
@@ -52,28 +52,28 @@
 }
 
 body.dark {
-  /* Optional dark crimson theme (toggle) */
-  --bg: #140b10;
-  --bg-elev: #1d1019;
-  --surface: #1d1019;
-  --surface-2: #271320;
-  --border: rgba(255, 235, 242, 0.12);
-  --border-strong: rgba(255, 235, 242, 0.22);
+  /* Optional dark navy theme (toggle) */
+  --bg: #0b111c;
+  --bg-elev: #121b2b;
+  --surface: #121b2b;
+  --surface-2: #182338;
+  --border: rgba(230, 225, 210, 0.12);
+  --border-strong: rgba(230, 225, 210, 0.22);
 
-  --text: #f6eef1;
-  --text-soft: #d3c7cd;
-  --muted: #9a8e96;
+  --text: #f5f2e8;
+  --text-soft: #d8d2c0;
+  --muted: #9a9686;
 
-  --brand: #ff5c7d;
-  --brand-2: #ff5c7d;
-  --accent: #ff829a;
+  --brand: #e8c158;
+  --brand-2: #e8c158;
+  --accent: #f0ce72;
 
-  --grad: #ff5c7d;
-  --grad-soft: rgba(255, 92, 125, 0.14);
+  --grad: #e8c158;
+  --grad-soft: rgba(232, 193, 88, 0.14);
 
   --shadow-sm: 0 2px 10px rgba(0, 0, 0, .4);
   --shadow: 0 22px 50px -22px rgba(0, 0, 0, .7);
-  --shadow-glow: 0 16px 40px -16px rgba(255, 92, 125, .4);
+  --shadow-glow: 0 16px 40px -16px rgba(232, 193, 88, .4);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -115,7 +115,7 @@ body {
   color: var(--text);
 }
 
-/* Inline prose links — on-brand crimson with a refined underline.
+/* Inline prose links, on-brand gold with a refined underline.
    Scoped to unclassed links (buttons, cards, nav all carry a class). */
 p a:not([class]),
 li a:not([class]),
@@ -166,7 +166,7 @@ html { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent;
 }
 .skip-link:focus-visible { transform: translate(-50%, 0); }
 
-/* Ambient backdrop — one quiet crimson wash, no grid, no grain */
+/* Ambient backdrop, one quiet gold wash, no grid, no grain */
 .backdrop {
   position: fixed;
   inset: 0;
@@ -222,16 +222,16 @@ h1, h2, h3 {
   background: var(--brand);
 }
 
-/* Highlighted phrase inside headlines — solid crimson, no animation */
+/* Highlighted phrase inside headlines — solid gold, no animation */
 .gradient-text {
   color: var(--brand); /* fallback for no-background-clip */
-  background: linear-gradient(120deg, #e2365b 0%, #b81d3f 100%);
+  background: linear-gradient(120deg, #d4af37 0%, #a9861f 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 body.dark .gradient-text {
-  background: linear-gradient(120deg, #ff6b8a 0%, #ff9fb2 100%);
+  background: linear-gradient(120deg, #f0ce72 0%, #e8c158 100%);
   -webkit-background-clip: text;
   background-clip: text;
 }
@@ -1591,23 +1591,23 @@ figure.testimonial { margin: 0; }
 .testimonial blockquote.quote { margin: 0 0 22px; }
 
 /* =====================================================
-   Dark crimson feature band (two-tone, like the reference)
+   Dark navy feature band (two-tone, like the reference)
    Scopes token overrides so child components adapt automatically.
    ===================================================== */
 .band-dark {
   background: linear-gradient(165deg, var(--dark-bg) 0%, var(--dark-bg-2) 100%);
   color: var(--text); /* re-assert so children inherit the light band text, not body's dark */
-  --text: #f8eef2;
-  --text-soft: #d8ccd2;
-  --muted: #ad9ea6;
+  --text: #f8f4e8;
+  --text-soft: #d4cfc0;
+  --muted: #a89f8e;
   --surface: rgba(255, 255, 255, 0.045);
   --surface-2: rgba(255, 255, 255, 0.09);
   --border: rgba(255, 255, 255, 0.12);
   --border-strong: rgba(255, 255, 255, 0.22);
-  --brand: #ff7a96;
-  --brand-2: #ff7a96;
-  --grad: #ff7a96;
-  --grad-soft: rgba(255, 122, 150, 0.16);
+  --brand: #e8c158;
+  --brand-2: #e8c158;
+  --grad: #e8c158;
+  --grad-soft: rgba(232, 193, 88, 0.16);
 }
 .section.band-dark { padding-block: clamp(58px, 9vh, 100px); }
 .band-dark .stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
@@ -1628,7 +1628,7 @@ figure.testimonial { margin: 0; }
 .section.band-dark > .container { position: relative; z-index: 1; }
 
 /* =====================================================
-   Brand decoration system — crisp crimson motifs
+   Brand decoration system, crisp gold motifs
    (dot grids, outline shapes, monogram, framed portrait,
    tinted sections). Decorative only — aria-hidden / pseudo.
    ===================================================== */
@@ -1652,7 +1652,7 @@ figure.testimonial { margin: 0; }
 .hero > .container { position: relative; z-index: 1; }
 .hero-visual { position: relative; }
 
-/* Section heading accent — a small crimson square + outline ring per centered head */
+/* Section heading accent, a small gold square + outline ring per centered head */
 .section-head.center { position: relative; }
 
 /* Outline ring accent usable anywhere */
@@ -1704,7 +1704,7 @@ a.card:hover .card-media img { transform: scale(1.06); }
   display: block;
   aspect-ratio: 5 / 4;
 }
-/* small crimson accent square behind the photo */
+/* small gold accent square behind the photo */
 .feature-media::after {
   content: '';
   position: absolute;
