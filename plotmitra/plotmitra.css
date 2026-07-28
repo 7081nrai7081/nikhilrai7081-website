@@ -152,6 +152,17 @@ a { color: var(--pm-green); }
   .pm-partners-grid { grid-template-columns: 1fr; }
 }
 
+/* Article (guides) */
+.pm-article { padding: 56px 0 72px; }
+.pm-article-wrap { max-width: 760px; }
+.pm-article h1 { font-size: clamp(1.7rem, 4vw, 2.3rem); }
+.pm-article-lede { font-size: 1.1rem; color: var(--pm-text-soft); margin-bottom: 32px; }
+.pm-article h2 { font-size: 1.25rem; margin-top: 36px; }
+.pm-article p { font-size: 1rem; }
+.pm-article-cta { margin-top: 48px; padding: 28px; background: var(--pm-surface-2); border-radius: var(--pm-radius-lg); text-align: center; }
+.pm-article-cta h3 { margin-bottom: .3em; }
+.pm-article-cta p { max-width: 48ch; margin: 0 auto 18px; }
+
 /* Footer */
 .pm-footer { border-top: 1px solid var(--pm-border); padding: 28px 0 40px; background: var(--pm-surface-2); }
 .pm-footer-inner { text-align: center; }
