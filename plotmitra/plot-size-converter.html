@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Plot Size Converter: Sq Ft, Sq Yard (Gaj), Acre, Bigha | Plot Mitra</title>
+<meta name="description" content="Convert plot sizes between square feet, square yards (gaj), square metres, acres and hectares — plus a UP bigha/biswa reference table.">
+<meta name="author" content="Nikhil Rai">
+<meta name="theme-color" content="#f8f5ec">
+
+<meta property="og:title" content="Plot Size Converter: Sq Ft, Sq Yard (Gaj), Acre, Bigha">
+<meta property="og:description" content="Convert plot sizes between square feet, square yards (gaj), square metres, acres and hectares — plus a UP bigha/biswa reference table.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Plot Mitra">
+<meta property="og:url" content="https://nikhilrai7081.com/plotmitra/plot-size-converter.html">
+<meta property="og:image" content="https://nikhilrai7081.com/plotmitra/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://nikhilrai7081.com/plotmitra/assets/og-image.jpg">
+
+<link rel="canonical" href="https://nikhilrai7081.com/plotmitra/plot-size-converter.html">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+<link rel="preload" href="../assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/poppins-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="plotmitra.css?v=1">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Plot Mitra", "item": "https://nikhilrai7081.com/plotmitra/" },
+    { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://nikhilrai7081.com/plotmitra/guides.html" },
+    { "@type": "ListItem", "position": 3, "name": "Plot Size Converter" }
+  ]
+}
+</script>
+</head>
+
+<body>
+
+<header class="pm-header">
+  <div class="pm-wrap pm-header-inner">
+    <a href="index.html" class="pm-logo">Plot<span>Mitra</span></a>
+    <button type="button" class="pm-nav-toggle" id="pm-nav-toggle" aria-expanded="false" aria-controls="pm-nav" aria-label="Menu">☰</button>
+    <nav class="pm-nav" id="pm-nav">
+      <a href="index.html#listings">Plots &amp; Homes</a>
+      <a href="guides.html">Guides</a>
+      <a href="index.html#partners">Partner with us</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="index.html#interest-form" class="pm-btn pm-btn-sm">Register interest</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="pm-article">
+    <div class="pm-wrap pm-article-wrap">
+      <span class="pm-eyebrow">Free Tool</span>
+      <h1>Plot Size Converter</h1>
+      <p class="pm-article-lede">Enter an area in any unit to convert it instantly. Useful when a seller quotes a plot in gaj or bigha and you want the square feet figure, or vice versa.</p>
+
+      <div class="pm-converter">
+        <div class="pm-converter-input">
+          <label for="pm-conv-value">Area</label>
+          <input type="number" id="pm-conv-value" value="1000" min="0" step="any">
+          <select id="pm-conv-unit">
+            <option value="sqft" selected>Square Feet (sq ft)</option>
+            <option value="sqyd">Square Yards / Gaj</option>
+            <option value="sqm">Square Metres</option>
+            <option value="acre">Acre</option>
+            <option value="hectare">Hectare</option>
+          </select>
+        </div>
+
+        <table class="pm-converter-table" id="pm-conv-results">
+          <tbody>
+            <tr><td>Square Feet</td><td id="out-sqft">—</td></tr>
+            <tr><td>Square Yards / Gaj</td><td id="out-sqyd">—</td></tr>
+            <tr><td>Square Metres</td><td id="out-sqm">—</td></tr>
+            <tr><td>Acre</td><td id="out-acre">—</td></tr>
+            <tr><td>Hectare</td><td id="out-hectare">—</td></tr>
+            <tr><td>Bigha (Purvanchal/Lucknow-area standard)</td><td id="out-bigha">—</td></tr>
+            <tr><td>Biswa (same standard)</td><td id="out-biswa">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>About bigha and biswa in UP</h2>
+      <p>Unlike square feet, gaj, acres and hectares — which are fixed, standard units everywhere — <strong>bigha and biswa sizes vary by district in Uttar Pradesh</strong>. The figures above use the common convention for the Lucknow/Purvanchal region (1 bigha = 20 biswa = 27,225 sq ft, 1 biswa ≈ 1,361 sq ft). Some western UP districts (around Meerut, Muzaffarnagar, Bulandshahr) use a much smaller bigha — under a third of this size. We don't have confident district-level data for Kanpur specifically, so <strong>always confirm the local conversion with your tehsil/revenue office or a local surveyor before relying on it for a real transaction</strong>.</p>
+
+      <h2>Fixed conversions used above</h2>
+      <ul class="pm-check-list">
+        <li>1 square yard (gaj) = 9 square feet</li>
+        <li>1 square metre ≈ 10.7639 square feet</li>
+        <li>1 acre = 43,560 square feet</li>
+        <li>1 hectare = 107,639 square feet</li>
+      </ul>
+
+      <div class="pm-article-cta">
+        <h3>Looking for a plot in Lucknow or Kanpur?</h3>
+        <p>Register your interest and Plot Mitra will connect you with matching plot owners and dealers as inventory becomes available.</p>
+        <a href="index.html#interest-form" class="pm-btn pm-btn-lg">Register your interest</a>
+      </div>
+
+      <p style="margin-top:32px;font-size:.85rem;">Related: <a href="buying-a-plot-in-lucknow.html">Buying a Plot in Lucknow</a> · <a href="buying-a-plot-in-kanpur.html">Buying a Plot in Kanpur</a> · <a href="stamp-duty-registration-charges-up.html">Stamp Duty &amp; Registration Charges in UP</a></p>
+    </div>
+  </article>
+</main>
+
+<footer class="pm-footer">
+  <div class="pm-wrap pm-footer-inner">
+    <p>Plot Mitra — a project by <a href="https://nikhilrai7081.com">Nikhil Rai</a>. · <a href="privacy.html">Privacy &amp; data use</a></p>
+    <p class="pm-footer-disclaimer">Figures are for quick reference only, especially bigha/biswa — confirm locally before relying on them for a real transaction.</p>
+  </div>
+</footer>
+
+<script src="plotmitra.js?v=1"></script>
+<script>
+(function () {
+  var SQFT_PER = { sqft: 1, sqyd: 9, sqm: 10.7639, acre: 43560, hectare: 107639, bigha: 27225, biswa: 1361.25 };
+  var valueInput = document.getElementById('pm-conv-value');
+  var unitSelect = document.getElementById('pm-conv-unit');
+
+  function fmt(n) {
+    if (!isFinite(n)) return '—';
+    return n.toLocaleString('en-IN', { maximumFractionDigits: n < 10 ? 4 : 2 });
+  }
+
+  function update() {
+    var val = parseFloat(valueInput.value);
+    if (isNaN(val) || val < 0) {
+      ['sqft', 'sqyd', 'sqm', 'acre', 'hectare', 'bigha', 'biswa'].forEach(function (u) {
+        document.getElementById('out-' + u).textContent = '—';
+      });
+      return;
+    }
+    var unit = unitSelect.value;
+    var sqft = val * SQFT_PER[unit];
+    Object.keys(SQFT_PER).forEach(function (u) {
+      document.getElementById('out-' + u).textContent = fmt(sqft / SQFT_PER[u]) + (u === 'sqft' ? ' sq ft' : u === 'sqyd' ? ' sq yd' : u === 'sqm' ? ' sq m' : u === 'acre' ? ' acre' : u === 'hectare' ? ' ha' : u === 'bigha' ? ' bigha' : ' biswa');
+    });
+  }
+
+  valueInput.addEventListener('input', update);
+  unitSelect.addEventListener('change', update);
+  update();
+})();
+</script>
+
+</body>
+</html>

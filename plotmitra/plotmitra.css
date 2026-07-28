@@ -176,6 +176,19 @@ a { color: var(--pm-green); }
 .pm-article-cta h3 { margin-bottom: .3em; }
 .pm-article-cta p { max-width: 48ch; margin: 0 auto 18px; }
 
+/* Converter tool */
+.pm-converter { display: grid; grid-template-columns: 280px 1fr; gap: 32px; align-items: start; background: var(--pm-surface); border: 1px solid var(--pm-border); border-radius: var(--pm-radius-lg); padding: 28px; box-shadow: var(--pm-shadow); margin: 32px 0; }
+.pm-converter-input { display: flex; flex-direction: column; gap: 10px; }
+.pm-converter-input label { font-weight: 700; font-size: .92rem; color: var(--pm-green-deep); }
+.pm-converter-input input, .pm-converter-input select { font-family: inherit; font-size: 1.1rem; padding: .7em .9em; border: 1.5px solid var(--pm-border); border-radius: 10px; background: var(--pm-bg); color: var(--pm-text); }
+.pm-converter-table { width: 100%; border-collapse: collapse; font-size: .98rem; }
+.pm-converter-table td { padding: 10px 8px; border-bottom: 1px solid var(--pm-border); }
+.pm-converter-table td:first-child { color: var(--pm-text-soft); }
+.pm-converter-table td:last-child { text-align: right; font-weight: 700; color: var(--pm-green-deep); font-variant-numeric: tabular-nums; }
+@media (max-width: 640px) {
+  .pm-converter { grid-template-columns: 1fr; }
+}
+
 /* Footer */
 .pm-footer { border-top: 1px solid var(--pm-border); padding: 28px 0 40px; background: var(--pm-surface-2); }
 .pm-footer-inner { text-align: center; }
