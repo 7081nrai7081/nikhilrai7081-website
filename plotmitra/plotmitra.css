@@ -1,0 +1,155 @@
+/* =====================================================
+   PLOT MITRA — Lucknow & Kanpur plot lead-gen
+   Distinct brand from the main portfolio site: earthy
+   green + warm gold, reuses the site's self-hosted fonts.
+   ===================================================== */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../assets/fonts/inter-variable.woff2') format('woff2');
+}
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 700; font-display: swap; src: url('../assets/fonts/poppins-700.woff2') format('woff2'); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 800; font-display: swap; src: url('../assets/fonts/poppins-800.woff2') format('woff2'); }
+
+:root {
+  --pm-bg: #f8f5ec;
+  --pm-surface: #ffffff;
+  --pm-surface-2: #f0ece0;
+  --pm-border: rgba(31, 41, 25, .12);
+  --pm-text: #1f2919;
+  --pm-text-soft: #48533f;
+  --pm-muted: #6b7462;
+
+  --pm-green: #2f5233;
+  --pm-green-deep: #1f3a23;
+  --pm-gold: #c98a2c;
+  --pm-gold-deep: #a66f1f;
+
+  --pm-radius: 14px;
+  --pm-radius-lg: 20px;
+  --pm-shadow: 0 1px 2px rgba(31, 41, 25, .06), 0 20px 40px -24px rgba(31, 41, 25, .28);
+  --pm-maxw: 1120px;
+  --pm-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--pm-bg);
+  color: var(--pm-text);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: 'Poppins', 'Inter', sans-serif; font-weight: 800; color: var(--pm-green-deep); margin: 0 0 .5em; line-height: 1.2; }
+p { margin: 0 0 1em; color: var(--pm-text-soft); }
+
+.pm-wrap { max-width: var(--pm-maxw); margin: 0 auto; padding: 0 24px; }
+
+a { color: var(--pm-green); }
+
+/* Buttons */
+.pm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5em;
+  padding: .8em 1.6em;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--pm-gold) 0%, var(--pm-gold-deep) 100%);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: transform .2s var(--pm-ease), box-shadow .2s var(--pm-ease);
+}
+.pm-btn:hover { transform: translateY(-1px); box-shadow: 0 12px 24px -12px rgba(166, 111, 31, .5); }
+.pm-btn-outline { background: transparent; color: var(--pm-green-deep); border: 1.5px solid var(--pm-border); }
+.pm-btn-outline:hover { border-color: var(--pm-green); }
+.pm-btn-lg { padding: 1em 2em; font-size: 1.05rem; }
+.pm-btn-sm { padding: .55em 1.1em; font-size: .9rem; }
+
+/* Header */
+.pm-header { position: sticky; top: 0; z-index: 20; background: rgba(248, 245, 236, .92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--pm-border); }
+.pm-header-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; }
+.pm-logo { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--pm-green-deep); text-decoration: none; }
+.pm-logo span { color: var(--pm-gold); }
+.pm-nav { display: flex; align-items: center; gap: 24px; }
+.pm-nav a:not(.pm-btn) { color: var(--pm-text-soft); text-decoration: none; font-weight: 600; font-size: .95rem; }
+.pm-nav a:not(.pm-btn):hover { color: var(--pm-green-deep); }
+
+/* Hero */
+.pm-hero { padding: 72px 0 56px; text-align: center; }
+.pm-eyebrow { display: inline-block; padding: .35em 1em; border-radius: 999px; background: var(--pm-surface-2); color: var(--pm-green-deep); font-weight: 700; font-size: .85rem; letter-spacing: .02em; margin-bottom: 18px; }
+.pm-hero h1 { font-size: clamp(1.9rem, 4.5vw, 3rem); max-width: 18ch; margin-left: auto; margin-right: auto; }
+.pm-hero-sub { max-width: 56ch; margin: 0 auto 28px; font-size: 1.08rem; }
+.pm-hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* How it works */
+.pm-how { padding: 56px 0; }
+.pm-how h2, .pm-listings h2, .pm-form-section h2, .pm-sell h2 { text-align: center; font-size: clamp(1.5rem, 3vw, 2rem); }
+.pm-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+.pm-step { background: var(--pm-surface); border: 1px solid var(--pm-border); border-radius: var(--pm-radius-lg); padding: 28px; }
+.pm-step-num { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: var(--pm-green); color: #fff; font-weight: 800; margin-bottom: 14px; }
+.pm-step h3 { font-size: 1.1rem; margin-bottom: .35em; }
+.pm-step p { margin: 0; font-size: .95rem; }
+
+/* Listings */
+.pm-listings { padding: 56px 0; background: var(--pm-surface-2); }
+.pm-listings-note { text-align: center; max-width: 60ch; margin: 0 auto 32px; }
+.pm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.pm-card { position: relative; background: var(--pm-surface); border: 1px solid var(--pm-border); border-radius: var(--pm-radius-lg); padding: 24px; box-shadow: var(--pm-shadow); }
+.pm-card-badge { position: absolute; top: 16px; right: 16px; background: var(--pm-gold); color: #fff; font-size: .7rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: .3em .7em; border-radius: 999px; }
+.pm-card-tag { display: inline-block; font-size: .78rem; font-weight: 700; color: var(--pm-green); background: rgba(47, 82, 51, .1); padding: .25em .7em; border-radius: 999px; margin-bottom: 10px; }
+.pm-card h3 { font-size: 1.1rem; margin-bottom: .5em; }
+.pm-card-meta { list-style: none; margin: 0 0 18px; padding: 0; font-size: .92rem; color: var(--pm-text-soft); }
+.pm-card-meta li { padding: 3px 0; }
+
+/* Form */
+.pm-form-section { padding: 64px 0; }
+.pm-form-wrap { max-width: 640px; }
+.pm-form-sub { text-align: center; }
+.pm-form { background: var(--pm-surface); border: 1px solid var(--pm-border); border-radius: var(--pm-radius-lg); padding: 32px; box-shadow: var(--pm-shadow); }
+.pm-form-row { margin-bottom: 18px; display: flex; flex-direction: column; gap: 6px; }
+.pm-form-row label { font-weight: 700; font-size: .92rem; color: var(--pm-green-deep); }
+.pm-form-row input[type="text"], .pm-form-row input[type="tel"], .pm-form-row input[type="email"], .pm-form-row select, .pm-form-row textarea {
+  font-family: inherit; font-size: 1rem; padding: .7em .9em; border: 1.5px solid var(--pm-border); border-radius: 10px; background: var(--pm-bg); color: var(--pm-text);
+}
+.pm-form-row input:focus, .pm-form-row select:focus, .pm-form-row textarea:focus { outline: none; border-color: var(--pm-green); }
+.pm-form-row-split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.pm-form-row-split > div { display: flex; flex-direction: column; gap: 6px; }
+.pm-radio-group { display: flex; gap: 20px; }
+.pm-radio { display: flex; align-items: center; gap: 6px; font-weight: 500; color: var(--pm-text); font-size: .95rem; }
+.pm-checkbox { display: flex; align-items: flex-start; gap: 10px; font-weight: 500; font-size: .88rem; color: var(--pm-text-soft); }
+.pm-checkbox input { margin-top: 3px; }
+.pm-submit-btn { width: 100%; }
+.pm-form-status { text-align: center; margin: 14px 0 0; font-weight: 600; font-size: .92rem; min-height: 1.2em; }
+.pm-form-status.pm-status-ok { color: var(--pm-green); }
+.pm-form-status.pm-status-err { color: #a33; }
+
+/* Sell section */
+.pm-sell { padding: 56px 0 72px; text-align: center; }
+.pm-sell p { max-width: 56ch; margin: 0 auto 24px; }
+
+/* Footer */
+.pm-footer { border-top: 1px solid var(--pm-border); padding: 28px 0 40px; background: var(--pm-surface-2); }
+.pm-footer-inner { text-align: center; }
+.pm-footer p { margin: 0 0 .4em; font-size: .88rem; }
+.pm-footer-disclaimer { color: var(--pm-muted); font-size: .8rem; max-width: 60ch; margin: 0 auto; }
+
+@media (max-width: 720px) {
+  .pm-nav { gap: 14px; }
+  .pm-nav a:not(.pm-btn) { display: none; }
+  .pm-steps { grid-template-columns: 1fr; }
+  .pm-form-row-split { grid-template-columns: 1fr; }
+}
