@@ -10,7 +10,8 @@ set -eu
 
 DOMAIN="https://nikhilrai7081.com"
 OUT="sitemap.xml"
-EXCLUDE_RE='^(404|blog-template)\.html$'   # not indexable
+EXCLUDE_RE='^(404|blog-template)\.html$'   # not indexable (matched by filename)
+FULLPATH_EXCLUDE_RE='^plotmitra/(index|privacy)\.html$'   # noindexed pages (matched by full path)
 
 staged=$(git diff --cached --name-only 2>/dev/null || true)
 
@@ -64,6 +65,7 @@ SEP='|'   # non-whitespace separator: preserves the empty homepage key
 git ls-files '*.html' | while IFS= read -r f; do
   base=${f##*/}
   printf '%s\n' "$base" | grep -qE "$EXCLUDE_RE" && continue
+  printf '%s\n' "$f" | grep -qE "$FULLPATH_EXCLUDE_RE" && continue
   printf '%s|%s|%s|%s\n' \
     "$(logical_for "$f")" "$(lang_for "$f")" "$(url_for "$f")" "$(lastmod_for "$f")"
 done > "$TMP"
