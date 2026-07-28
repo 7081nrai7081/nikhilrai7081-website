@@ -137,9 +137,20 @@ a { color: var(--pm-green); }
 .pm-form-status.pm-status-ok { color: var(--pm-green); }
 .pm-form-status.pm-status-err { color: #a33; }
 
-/* Sell section */
-.pm-sell { padding: 56px 0 72px; text-align: center; }
-.pm-sell p { max-width: 56ch; margin: 0 auto 24px; }
+/* Partners section */
+.pm-partners { padding: 64px 0 72px; background: var(--pm-surface-2); }
+.pm-partners-intro { text-align: center; max-width: 62ch; margin: 0 auto 40px; }
+.pm-partners-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.pm-partner-info h3 { font-size: 1.15rem; }
+.pm-check-list { list-style: none; margin: 0 0 20px; padding: 0; }
+.pm-check-list li { position: relative; padding: 6px 0 6px 26px; color: var(--pm-text-soft); }
+.pm-check-list li::before { content: '✓'; position: absolute; left: 0; color: var(--pm-green); font-weight: 800; }
+.pm-partners-note { font-size: .88rem; color: var(--pm-muted); background: var(--pm-surface); border: 1px solid var(--pm-border); border-radius: var(--pm-radius); padding: 14px 16px; }
+.pm-checkbox-group { flex-wrap: wrap; row-gap: 10px; }
+
+@media (max-width: 860px) {
+  .pm-partners-grid { grid-template-columns: 1fr; }
+}
 
 /* Footer */
 .pm-footer { border-top: 1px solid var(--pm-border); padding: 28px 0 40px; background: var(--pm-surface-2); }
