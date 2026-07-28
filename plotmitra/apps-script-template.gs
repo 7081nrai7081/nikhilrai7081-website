@@ -21,15 +21,19 @@ function doPost(e) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
+var ATTRIBUTION_HEADERS = [
+  'utmSource', 'utmMedium', 'utmCampaign', 'utmTerm', 'utmContent', 'referrer', 'landingPage'
+];
+
 var LEAD_HEADERS = [
   'submittedAt', 'name', 'phone', 'email', 'intent',
   'city', 'plotType', 'budget', 'plotOfInterest', 'message', 'consent'
-];
+].concat(ATTRIBUTION_HEADERS);
 
 var PARTNER_HEADERS = [
   'submittedAt', 'name', 'phone', 'email', 'businessType',
   'areas', 'propertyTypes', 'volume', 'message'
-];
+].concat(ATTRIBUTION_HEADERS);
 
 function headerToKey(h) { return h; }
 

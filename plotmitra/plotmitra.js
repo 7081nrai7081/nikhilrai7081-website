@@ -13,6 +13,34 @@
 var FORM_ENDPOINT = ""; // TODO: paste your Google Apps Script Web App URL here
 
 (function () {
+  // First-touch attribution: capture UTM params (and landing page/referrer)
+  // once per visitor, on whichever page they first land on, and carry it
+  // through to wherever they eventually submit a form.
+  var ATTR_KEY = 'pmAttribution';
+  try {
+    if (!localStorage.getItem(ATTR_KEY)) {
+      var params = new URLSearchParams(window.location.search);
+      var attribution = {
+        utmSource: params.get('utm_source') || '',
+        utmMedium: params.get('utm_medium') || '',
+        utmCampaign: params.get('utm_campaign') || '',
+        utmTerm: params.get('utm_term') || '',
+        utmContent: params.get('utm_content') || '',
+        referrer: document.referrer || '',
+        landingPage: window.location.pathname
+      };
+      localStorage.setItem(ATTR_KEY, JSON.stringify(attribution));
+    }
+  } catch (e) { /* localStorage unavailable (private mode etc.) — attribution just won't be captured */ }
+
+  function getAttribution() {
+    try {
+      return JSON.parse(localStorage.getItem(ATTR_KEY)) || {};
+    } catch (e) {
+      return {};
+    }
+  }
+
   var navToggle = document.getElementById('pm-nav-toggle');
   var nav = document.getElementById('pm-nav');
   if (navToggle && nav) {
@@ -58,6 +86,10 @@ var FORM_ENDPOINT = ""; // TODO: paste your Google Apps Script Web App URL here
       }
     });
     data.submittedAt = new Date().toISOString();
+    var attribution = getAttribution();
+    for (var key in attribution) {
+      if (attribution[key]) data[key] = attribution[key];
+    }
     return data;
   }
 
