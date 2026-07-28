@@ -21,12 +21,12 @@
   --pm-border: rgba(31, 41, 25, .12);
   --pm-text: #1f2919;
   --pm-text-soft: #48533f;
-  --pm-muted: #6b7462;
+  --pm-muted: #5a6151;
 
   --pm-green: #2f5233;
   --pm-green-deep: #1f3a23;
-  --pm-gold: #c98a2c;
-  --pm-gold-deep: #a66f1f;
+  --pm-gold: #a26819;
+  --pm-gold-deep: #8c5817;
 
   --pm-radius: 14px;
   --pm-radius-lg: 20px;
@@ -73,7 +73,7 @@ a { color: var(--pm-green); }
   font-family: inherit;
   transition: transform .2s var(--pm-ease), box-shadow .2s var(--pm-ease);
 }
-.pm-btn:hover { transform: translateY(-1px); box-shadow: 0 12px 24px -12px rgba(166, 111, 31, .5); }
+.pm-btn:hover { transform: translateY(-1px); box-shadow: 0 12px 24px -12px rgba(140, 88, 23, .5); }
 .pm-btn-outline { background: transparent; color: var(--pm-green-deep); border: 1.5px solid var(--pm-border); }
 .pm-btn-outline:hover { border-color: var(--pm-green); }
 .pm-btn-lg { padding: 1em 2em; font-size: 1.05rem; }
