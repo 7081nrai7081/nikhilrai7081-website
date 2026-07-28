@@ -13,6 +13,21 @@
 var FORM_ENDPOINT = ""; // TODO: paste your Google Apps Script Web App URL here
 
 (function () {
+  var navToggle = document.getElementById('pm-nav-toggle');
+  var nav = document.getElementById('pm-nav');
+  if (navToggle && nav) {
+    navToggle.addEventListener('click', function () {
+      var open = nav.classList.toggle('pm-nav-open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    nav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        nav.classList.remove('pm-nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
   var leadForm = document.getElementById('pm-lead-form');
   var partnerForm = document.getElementById('pm-partner-form');
 
