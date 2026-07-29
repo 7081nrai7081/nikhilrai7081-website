@@ -137,6 +137,7 @@ a { color: var(--pm-green); }
 .pm-form-status { text-align: center; margin: 14px 0 0; font-weight: 600; font-size: .92rem; min-height: 1.2em; }
 .pm-form-status.pm-status-ok { color: var(--pm-green); }
 .pm-form-status.pm-status-err { color: #a33; }
+.pm-fallback-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
 
 /* Partners section */
 .pm-partners { padding: 64px 0 72px; background: var(--pm-surface-2); }

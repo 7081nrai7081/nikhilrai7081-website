@@ -1,16 +1,19 @@
 // Plot Mitra — lead + partner form handling.
 //
-// To wire either form up to a Google Sheet:
-//   1. Open the target Google Sheet -> Extensions -> Apps Script.
-//   2. Paste the contents of apps-script-template.gs into Code.gs
-//      (it already routes "lead" vs "partner" submissions to separate tabs).
-//   3. Deploy -> New deployment -> type "Web app" -> execute as "Me",
-//      access "Anyone" -> copy the deployment URL.
-//   4. Paste that URL into FORM_ENDPOINT below.
-// Until FORM_ENDPOINT is set, both forms fall back to opening a
-// pre-filled email instead, so they stay usable in the meantime.
+// Submissions go to the "Plot Mitra — Leads & Partners" Google Sheet via an
+// Apps Script Web App (apps-script-template.gs, deployed from that Sheet's
+// Extensions > Apps Script). It routes "lead" vs "partner" submissions to
+// separate tabs, created automatically on first use. If we ever need
+// per-campaign sheets (e.g. a paid-ads push), the UTM columns already
+// captured below (utmSource/utmCampaign/etc.) are enough to filter one
+// sheet rather than standing up a new one — only fork the sheet if that
+// stops being sufficient.
+// If the Sheet request ever fails, both forms fall back to WhatsApp —
+// mailto: is unreliable on mobile since it needs a configured mail app,
+// and most visitors here are on phones.
 
-var FORM_ENDPOINT = ""; // TODO: paste your Google Apps Script Web App URL here
+var FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbyoiO59iRzCIuulWmQd7jjQeO_NyFcwCRCn50Z4Kswk8BjEOsARclh0cP72y9MNvd4NwQ/exec";
+var WHATSAPP_NUMBER = "919793082706"; // used for the fallback if the Sheet request fails
 
 (function () {
   // First-touch attribution: capture UTM params (and landing page/referrer)
@@ -93,17 +96,37 @@ var FORM_ENDPOINT = ""; // TODO: paste your Google Apps Script Web App URL here
     return data;
   }
 
-  function mailtoFallback(subjectPrefix, data) {
-    var lines = Object.keys(data)
+  function summaryText(data) {
+    return Object.keys(data)
       .filter(function (k) { return k !== 'formType' && k !== 'submittedAt'; })
       .map(function (k) {
         var v = data[k];
         return k + ': ' + (Array.isArray(v) ? v.join(', ') : (v || '-'));
-      });
-    var url = 'mailto:7081nrai7081@gmail.com'
+      })
+      .join('\n');
+  }
+
+  function whatsappUrl(subjectPrefix, data) {
+    var text = subjectPrefix + ' — ' + (data.name || '') + '\n\n' + summaryText(data);
+    return 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(text);
+  }
+
+  function mailtoUrl(subjectPrefix, data) {
+    return 'mailto:7081nrai7081@gmail.com'
       + '?subject=' + encodeURIComponent(subjectPrefix + ' — ' + (data.name || ''))
-      + '&body=' + encodeURIComponent(lines.join('\n'));
-    window.location.href = url;
+      + '&body=' + encodeURIComponent(summaryText(data));
+  }
+
+  function showFallback(el, subjectPrefix, data) {
+    var wa = whatsappUrl(subjectPrefix, data);
+    var mail = mailtoUrl(subjectPrefix, data);
+    el.className = 'pm-form-status pm-status-ok';
+    el.innerHTML = 'Tap below to send your details directly — we’ll get them right away:'
+      + '<span class="pm-fallback-actions">'
+      + '<a class="pm-btn pm-btn-sm" href="' + wa + '" target="_blank" rel="noopener">Send via WhatsApp</a>'
+      + '<a class="pm-btn pm-btn-outline pm-btn-sm" href="' + mail + '">Send via Email</a>'
+      + '</span>';
+    window.open(wa, '_blank');
   }
 
   function wireForm(opts) {
@@ -127,8 +150,7 @@ var FORM_ENDPOINT = ""; // TODO: paste your Google Apps Script Web App URL here
       submitBtn.disabled = true;
 
       if (!FORM_ENDPOINT) {
-        mailtoFallback(opts.subject, data);
-        setStatus(status, 'Opening your email app to send this in — form isn’t connected to Sheets yet.', true);
+        showFallback(status, opts.subject, data);
         submitBtn.disabled = false;
         return;
       }
@@ -144,8 +166,7 @@ var FORM_ENDPOINT = ""; // TODO: paste your Google Apps Script Web App URL here
           form.reset();
         })
         .catch(function () {
-          setStatus(status, 'Something went wrong sending that — try the email option instead.', false);
-          mailtoFallback(opts.subject, data);
+          showFallback(status, opts.subject, data);
         })
         .finally(function () {
           submitBtn.disabled = false;

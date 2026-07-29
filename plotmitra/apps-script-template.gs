@@ -1,10 +1,16 @@
 // Plot Mitra — Google Apps Script Web App template.
-// Not used by the live site directly; copy this into a Sheet's
-// Extensions > Apps Script editor, deploy as a Web App, and paste the
-// deployment URL into FORM_ENDPOINT in plotmitra.js.
+// Kept here for reference/version control only; the live copy is deployed
+// as "Plot Mitra Form Handler" inside the "Plot Mitra — Leads & Partners"
+// Google Sheet (Extensions > Apps Script), whose Web App URL is
+// FORM_ENDPOINT in plotmitra.js. If you change the logic here, paste the
+// update into that Sheet's Apps Script editor too and redeploy (Deploy >
+// Manage deployments > edit > new version) — editing this file alone does
+// not affect the live endpoint.
 //
 // Routes buyer-interest submissions to a "Leads" tab and partner
-// inquiries to a "Partners" tab (created automatically on first use).
+// inquiries to a "Partners" tab (created automatically on first use). If
+// per-campaign sheets are ever needed, prefer filtering this sheet by the
+// UTM columns first — only add a new sheet if that's not enough.
 
 function doPost(e) {
   var data = JSON.parse(e.postData.contents);
