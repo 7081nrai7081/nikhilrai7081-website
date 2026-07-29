@@ -37,7 +37,7 @@
 
   <url>
     <loc>https://nikhilrai7081.com/blog</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://nikhilrai7081.com/blog"/>
@@ -246,7 +246,7 @@
 
   <url>
     <loc>https://nikhilrai7081.com/blog-integration-partnerships</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -334,6 +334,13 @@
   <url>
     <loc>https://nikhilrai7081.com/blog-linkedin-lead-generation</loc>
     <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://nikhilrai7081.com/blog-marketing-automation</loc>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -610,7 +617,7 @@
 
   <url>
     <loc>https://nikhilrai7081.com/topic-automation</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
