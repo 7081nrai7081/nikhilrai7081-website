@@ -19,7 +19,9 @@ function doPost(e) {
 
   var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
   sheet.appendRow(headers.map(function (h) {
-    return data[headerToKey(h)] || '';
+    var v = data[headerToKey(h)];
+    if (Array.isArray(v)) return v.join(', ');
+    return v || '';
   }));
 
   return ContentService
