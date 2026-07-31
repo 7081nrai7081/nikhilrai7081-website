@@ -2,19 +2,6 @@
   "_comment": "Auto-publish queue. The GitHub Action publishes queue[0] three times a week (Mon/Wed/Fri 09:00 UTC), then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt, add assets/images/og-<slug>.svg + rendered .png, and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
   "queue": [
     {
-      "slug": "blog-sales-handoff",
-      "body": "sales-handoff.body.txt",
-      "title": "The Sales-to-Success Handoff: Where Deals Go Cold",
-      "description": "A deal closes and the context that won it usually stays in the closing rep's head. What actually has to transfer to delivery, and how to build a handoff that carries it.",
-      "og_title": "The Sales-to-Success Handoff: Where Deals Go Cold",
-      "og_desc": "Deals rarely die at the handoff because delivery did a bad job. They die because the context that won the deal never made it to the team responsible for keeping it.",
-      "og_alt": "Sales to Success Handoff",
-      "tag": "Operations",
-      "cat": "operations",
-      "read": "7 min",
-      "summary": "A deal closes and the context that won it usually stays in the closing rep's head. What actually has to transfer to delivery, and how to build a handoff that carries it."
-    },
-    {
       "slug": "blog-crm-hygiene",
       "body": "crm-hygiene.body.txt",
       "title": "CRM Hygiene: The Automation Nobody Wants to Own",
