@@ -2,19 +2,6 @@
   "_comment": "Auto-publish queue. The GitHub Action publishes queue[0] three times a week (Mon/Wed/Fri 09:00 UTC), then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt, add assets/images/og-<slug>.svg + rendered .png, and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
   "queue": [
     {
-      "slug": "blog-crm-hygiene",
-      "body": "crm-hygiene.body.txt",
-      "title": "CRM Hygiene: The Automation Nobody Wants to Own",
-      "description": "A messy CRM taxes every system built on top of it, from forecasts to lead scoring to automation. Why prevention at data entry beats quarterly cleanup projects.",
-      "og_title": "CRM Hygiene: The Automation Nobody Wants to Own",
-      "og_desc": "Every automation and forecast built on top of dirty data inherits its mistakes at scale. How to prevent the mess instead of cleaning it up quarterly.",
-      "og_alt": "CRM Hygiene",
-      "tag": "Automation",
-      "cat": "automation",
-      "read": "7 min",
-      "summary": "A messy CRM taxes every system built on top of it, from forecasts to lead scoring to automation. Why prevention at data entry beats quarterly cleanup projects."
-    },
-    {
       "slug": "blog-deal-qualification",
       "body": "deal-qualification.body.txt",
       "title": "Deal Qualification: Saying No Faster",

@@ -37,7 +37,7 @@
 
   <url>
     <loc>https://nikhilrai7081.com/blog</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-08-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://nikhilrai7081.com/blog"/>
@@ -139,6 +139,13 @@
   <url>
     <loc>https://nikhilrai7081.com/blog-content-marketing-strategy-for-b2b</loc>
     <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://nikhilrai7081.com/blog-crm-hygiene</loc>
+    <lastmod>2026-08-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -422,7 +429,7 @@
 
   <url>
     <loc>https://nikhilrai7081.com/blog-sales-handoff</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-08-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -624,7 +631,7 @@
 
   <url>
     <loc>https://nikhilrai7081.com/topic-automation</loc>
-    <lastmod>2026-07-29</lastmod>
+    <lastmod>2026-08-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
