@@ -2,19 +2,6 @@
   "_comment": "Auto-publish queue. The GitHub Action publishes queue[0] three times a week (Mon/Wed/Fri 09:00 UTC), then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt, add assets/images/og-<slug>.svg + rendered .png, and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
   "queue": [
     {
-      "slug": "blog-customer-onboarding",
-      "body": "customer-onboarding.body.txt",
-      "title": "Customer Onboarding: The First 90 Days",
-      "description": "Churn is usually decided in the first 90 days, not at renewal. How to build an onboarding system that gets customers to value fast.",
-      "og_title": "Customer Onboarding: The First 90 Days",
-      "og_desc": "Retention is decided before renewal ever comes up. A repeatable onboarding system that gets customers to real value in the first 90 days.",
-      "og_alt": "Customer Onboarding",
-      "tag": "Operations",
-      "cat": "operations",
-      "read": "6 min",
-      "summary": "Churn is usually decided in the first 90 days, not at renewal. How to build an onboarding system that gets customers to value fast."
-    },
-    {
       "slug": "blog-expansion-revenue",
       "body": "expansion-revenue.body.txt",
       "title": "Expansion Revenue Is Growth You Already Have",
