@@ -1,0 +1,68 @@
+    <div class="cs-block">
+      <p>Business development, growth strategy, corporate development and market development all show up in job titles and strategy decks like they're interchangeable. They're not. Each one answers a different question, and mixing them up is how a company ends up with a "growth strategy" that's really just one BD rep's contact list, or a "business development" hire who's quietly expected to run M&A. Here's what each term actually means, and how they fit together instead of competing.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Business development finds the opportunity</h2>
+      <p>Business development is the search function: finding and validating specific growth opportunities, a partner worth pursuing, a segment worth entering, a channel worth building, and turning them into something the business can act on. It's tactical and opportunity-by-opportunity. See <a href="/blog-business-development">business development as a system</a> for the actual mechanics of running it well. BD doesn't decide the company's overall direction; it works inside whatever direction has already been set.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Growth strategy decides where to point the whole company</h2>
+      <p>Growth strategy is the decision one level up: which of the available paths (new customers, new markets, new products, deeper accounts) the company is actually going to bet resources on this year. It's the reason BD gets pointed at partnerships in one company and at geographic expansion in another, using the same skill set toward a completely different target. Without a growth strategy, business development has no filter, and every opportunity looks equally worth chasing, which is exactly how teams end up scattered across ten half-bets instead of committed to two real ones.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Corporate development is the M&amp;A and structural lever</h2>
+      <p>Corporate development is a narrower, heavier tool inside growth strategy: acquisitions, divestitures, joint ventures and other structural moves that change what the company owns, not just who it sells to. It's expensive, slow and usually reserved for growth strategies that conclude the fastest path to a capability or a market is buying it rather than building it. Confusing corporate development with everyday business development is how small teams end up with a "strategy" that assumes M&amp;A budget nobody actually has.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Market development is one growth strategy, not the whole thing</h2>
+      <p>Market development specifically means taking an existing product into a new market, a new geography, a new industry vertical or a new buyer segment, rather than building something new for the market you're already in. It's one of several growth strategies (alongside product development, market penetration and diversification), and it's the one that most often gets business development and channel <a href="/blog-strategic-partnerships">partnerships</a> pulled in as the execution arm. Naming it correctly matters because "we need a market development strategy" and "we need a new product" call for completely different work.</p>
+      <div class="cs-tags">
+        <span>Business Development</span><span>Growth Strategy</span><span>Corporate Development</span><span>Market Development</span><span>Growth</span>
+      </div>
+    </div>
+
+    <div class="cs-block">
+      <div class="cs-callout"><p>Growth strategy sets the direction. Business development finds and validates the specific opportunities inside that direction. Corporate development is the heavier, structural version reserved for when buying beats building. Market development is just one of several growth strategies, the one aimed at new markets rather than new products. Getting the terms right isn't pedantry; it decides who's responsible for what, and what "success" is even supposed to look like.</p></div>
+    </div>
+
+    <div class="cs-block">
+      <h2>Read next</h2>
+      <div class="cards related">
+        <a class="card" href="/blog-business-development">
+          <span class="tag">Business Development</span>
+          <h3>Business Development Strategy: A System, Not a Rolodex</h3>
+          <p>The disciplined work of finding and creating growth opportunities, run as a repeatable system.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a class="card" href="/blog-growth-operations">
+          <span class="tag">Operations</span>
+          <h3>Growth Operations: The System That Makes Growth Repeatable</h3>
+          <p>Marketing and sales create motion; growth operations makes it repeatable.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a class="card" href="/blog-types-of-strategic-partnerships">
+          <span class="tag">Partnerships</span>
+          <h3>Types of Strategic Partnerships (and How to Choose the Right One)</h3>
+          <p>Channel, technology, content, referral and co-marketing partnerships, and how to choose the right type.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="cs-cta">
+      <h2>Not sure which growth lever to pull?</h2>
+      <p>I help teams tell the difference between a business development problem, a growth strategy problem and a market development problem, and build the system that fits, <a href="/services">see how I work</a>.</p>
+      <a href="https://calendly.com/nikhilrai7081/30min" target="_blank" rel="noopener" class="btn btn-primary">Book a Call
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
