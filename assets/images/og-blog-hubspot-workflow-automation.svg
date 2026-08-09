@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(1120 70) scale(560)">
+      <stop offset="0" stop-color="#c9a227" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#c9a227" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#faf8f3"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <g fill="none" stroke="#14181f" stroke-opacity=".05">
+    <path d="M0 157.5H1200M0 315H1200M0 472.5H1200M300 0V630M600 0V630M900 0V630"/>
+  </g>
+  <rect x="80" y="78" width="84" height="84" rx="18" fill="#faf8f3" stroke="#c9a227" stroke-width="2.5"/>
+  <text x="122" y="123" font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="38" font-weight="800" letter-spacing="-2" fill="#c9a227" text-anchor="middle" dominant-baseline="central">NR</text>
+  <text x="82" y="272" font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="30" font-weight="700" letter-spacing="6" fill="#6b7280">AUTOMATION</text>
+  <g font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="52" font-weight="800" letter-spacing="-2.5">
+    <text x="80" y="356" fill="#14181f">HubSpot Workflow</text>
+    <text x="80" y="432" fill="#14181f"><tspan fill="#c9a227">Automation</tspan></text>
+  </g>
+  <text x="82" y="528" font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="26" font-weight="500" fill="#454c5c">Where to start, and what to skip</text>
+</svg>

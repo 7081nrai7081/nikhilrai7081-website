@@ -26,6 +26,19 @@
       "cat": "growth",
       "read": "6 min",
       "summary": "Business development, growth strategy, corporate development and market development get used interchangeably, but they answer different questions. What each one actually means."
+    },
+    {
+      "slug": "blog-hubspot-workflow-automation",
+      "body": "hubspot-workflow-automation.body.txt",
+      "title": "HubSpot Workflow Automation: Where to Start (and What to Skip)",
+      "description": "HubSpot workflow automation gets built backwards more often than not. The four CRM lead management workflows worth building first, and where automation quietly breaks.",
+      "og_title": "HubSpot Workflow Automation: Where to Start (and What to Skip)",
+      "og_desc": "HubSpot automation workflows are only as good as the lead management logic behind them. Where to start, common failure patterns, and a checklist before you build.",
+      "og_alt": "HubSpot Workflow Automation",
+      "tag": "Automation",
+      "cat": "automation",
+      "read": "5 min",
+      "summary": "HubSpot workflow automation gets built backwards more often than not. The four CRM lead management workflows worth building first, and where automation quietly breaks."
     }
   ]
 }
