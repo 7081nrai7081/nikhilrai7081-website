@@ -26,6 +26,9 @@ Keyword Stats*.csv
 # Internal off-page SEO working doc — local only, not for the public repo / live site
 OFF-PAGE-SEO.md
 
+# Internal outreach pitch drafts — local only, not for the public repo / live site
+OUTREACH-PITCHES.md
+
 # Dry-run preview from scripts/publish_next.py
 _preview.html
 
