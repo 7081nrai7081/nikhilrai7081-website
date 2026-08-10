@@ -2,19 +2,6 @@
   "_comment": "Auto-publish queue. The GitHub Action publishes queue[0] three times a week (Mon/Wed/Fri 09:00 UTC), then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt, add assets/images/og-<slug>.svg + rendered .png, and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
   "queue": [
     {
-      "slug": "blog-expansion-revenue",
-      "body": "expansion-revenue.body.txt",
-      "title": "Expansion Revenue Is Growth You Already Have",
-      "description": "New logos aren't the only growth channel. Why expansion revenue from existing customers compounds faster, and how to build a system that finds it.",
-      "og_title": "Expansion Revenue Is Growth You Already Have",
-      "og_desc": "The fastest growth channel is often sitting inside accounts you've already won. A system for finding and closing expansion revenue on purpose.",
-      "og_alt": "Expansion Revenue",
-      "tag": "Growth",
-      "cat": "growth",
-      "read": "6 min",
-      "summary": "New logos aren't the only growth channel. Why expansion revenue from existing customers compounds faster, and how to build a system that finds it."
-    },
-    {
       "slug": "blog-business-development-vs-growth-strategy",
       "body": "business-development-vs-growth-strategy.body.txt",
       "title": "Business Development vs. Growth Strategy: What's Actually Different",
