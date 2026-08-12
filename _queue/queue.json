@@ -2,19 +2,6 @@
   "_comment": "Auto-publish queue. The GitHub Action publishes queue[0] three times a week (Mon/Wed/Fri 09:00 UTC), then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt, add assets/images/og-<slug>.svg + rendered .png, and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
   "queue": [
     {
-      "slug": "blog-business-development-vs-growth-strategy",
-      "body": "business-development-vs-growth-strategy.body.txt",
-      "title": "Business Development vs. Growth Strategy: What's Actually Different",
-      "description": "Business development, growth strategy, corporate development and market development get used interchangeably, but they answer different questions. What each one actually means.",
-      "og_title": "Business Development vs. Growth Strategy: What's Actually Different",
-      "og_desc": "Business development, growth strategy, corporate development and market development are not the same job. What each term means, and how they fit together.",
-      "og_alt": "Business Development vs Growth Strategy",
-      "tag": "Growth",
-      "cat": "growth",
-      "read": "6 min",
-      "summary": "Business development, growth strategy, corporate development and market development get used interchangeably, but they answer different questions. What each one actually means."
-    },
-    {
       "slug": "blog-hubspot-workflow-automation",
       "body": "hubspot-workflow-automation.body.txt",
       "title": "HubSpot Workflow Automation: Where to Start (and What to Skip)",
