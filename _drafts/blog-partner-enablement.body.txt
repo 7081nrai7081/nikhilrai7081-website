@@ -1,0 +1,75 @@
+<div class="cs-block">
+      <p>The deal is signed. Champagne emoji in Slack, logo added to the partner page, everyone moves on to the next thing. Three months later you check the numbers and the partner has registered zero deals. Nothing is wrong with the partnership on paper. The contract is fine, the incentives are fine. <strong>Nobody just taught their team how to actually sell you.</strong> Signing a partner isn't the finish line. It's the starting line for a completely different job: enablement.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Why partnerships stall right after signing</h2>
+      <p>The person who signed the deal is almost never the person who has to sell it. A partnerships lead champions the agreement internally, gets the legal and commercial terms across the line, and then hands it to a field of reps who were never in the room. Those reps have quotas built around products they already know how to pitch. Yours is a new, unfamiliar line item competing for the same 30 minutes of a sales call, and unfamiliar loses by default.</p>
+      <p>The excitement that got the deal signed fades fast if nothing replaces it. Without a deliberate <a href="/blog-channel-partnerships">enablement</a> push, a partnership doesn't fail loudly. It just quietly never starts.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>What partner enablement actually means</h2>
+      <p>Enablement isn't a PDF one-pager and a kickoff call. It's making it as easy as possible for someone who doesn't work for you to sell your product as confidently as their own, which means removing every point of friction between "I could mention this" and "I actually pitched it."</p>
+      <p>That's a battlecard that fits on one screen, not forty slides. Pricing and commission math a rep can do in their head. A simple way to register a deal so nobody argues over whose lead it was. And a fast lane to a real person on your side when a rep hits a question they can't answer alone.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Build for the partner rep's day, not your brand</h2>
+      <div class="cs-steps">
+        <div class="cs-step"><span class="num">1</span><div><h3>Give them a two-minute pitch, not a deck</h3><p>A rep pitching your product for the fifth time this week needs three sentences they can say from memory, not a slide library they'll never open again.</p></div></div>
+        <div class="cs-step"><span class="num">2</span><div><h3>Answer the actual objections</h3><p>Write down the real doubts prospects raise (price, switching cost, "why not just build it") and give reps the honest answer, not the marketing one.</p></div></div>
+        <div class="cs-step"><span class="num">3</span><div><h3>Build a fast lane to a human</h3><p>One Slack channel or a named point of contact who jumps on a call within the hour beats any help-center article when a rep is mid-deal.</p></div></div>
+        <div class="cs-step"><span class="num">4</span><div><h3>Reward and publicise early wins</h3><p>The first rep who closes a deal through the partnership becomes your best recruiting tool for the rest of their team, but only if everyone hears about it.</p></div></div>
+      </div>
+    </div>
+
+    <div class="cs-block">
+      <h2>Measure activation, not signatures</h2>
+      <p>Most partner programs report the wrong number: partners signed. That's a vanity metric: it tells you how good your <a href="/blog-partnership-agreement-checklist">deal-making</a> is, not whether the partnership produces revenue. Track it like a funnel instead: signed, enabled (completed onboarding), activated (registered a first deal), producing (closed a first deal). Most of the drop-off happens between signed and enabled, and that gap is entirely within your control. It's the enablement work nobody budgeted time for.</p>
+      <div class="cs-tags">
+        <span>Partner Enablement</span><span>Channel Partnerships</span><span>Partner-Led Growth</span><span>Sales Enablement</span><span>Partnerships</span>
+      </div>
+    </div>
+
+    <div class="cs-block">
+      <div class="cs-callout"><p>A signed partnership isn't a result. It's a hypothesis that hasn't been tested yet. The partnerships that actually produce revenue are the ones where somebody did the unglamorous work of making it easy for a partner's team to sell you: a short pitch, honest objection handling, a fast way to reach a real person, and a funnel that tracks activation instead of just counting logos.</p></div>
+    </div>
+
+    <div class="cs-block">
+      <h2>Read next</h2>
+      <div class="cards related">
+        <a class="card" href="/blog-channel-partnerships">
+          <span class="tag">Partnerships</span>
+          <h3>Channel Partnerships: A Playbook for Partner-Led Growth</h3>
+          <p>Someone already sells to your exact buyer. Channel partnerships let you grow through their trust, but only when the partner's win is concrete and selling you is effortless.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a class="card" href="/blog-integration-partnerships">
+          <span class="tag">Partnerships</span>
+          <h3>Integration Partnerships: The Channel That Sells Itself</h3>
+          <p>When your product connects to a partner's, the case for both of you sells itself in the product, not in a slide. How to build integrations that actually produce pipeline.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a class="card" href="/blog-partnership-agreement-checklist">
+          <span class="tag">Partnerships</span>
+          <h3>The Partnership Agreement Checklist: What to Nail Down Before You Sign</h3>
+          <p>Most partnerships fail on the things nobody agreed up front. The goals, ownership, economics and exit terms to settle before you sign.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="cs-cta">
+      <h2>Partners signed but nothing's moving?</h2>
+      <p>I help teams build the partner enablement partners actually use, not the PDF that sits in a folder. See how I work.</p>
+      <a href="https://calendly.com/nikhilrai7081/30min" target="_blank" rel="noopener" class="btn btn-primary">Book a Call
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>

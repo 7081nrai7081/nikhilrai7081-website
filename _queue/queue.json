@@ -1,4 +1,57 @@
 {
   "_comment": "Auto-publish queue. The GitHub Action publishes queue[0] three times a week (Mon/Wed/Fri 09:00 UTC), then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt, add assets/images/og-<slug>.svg + rendered .png, and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
-  "queue": []
+  "queue": [
+    {
+      "slug": "blog-partner-enablement",
+      "title": "Partner Enablement: Turning a Signed Deal Into Revenue",
+      "description": "Signing a partner isn't the finish line. Why partnerships stall right after the contract, and the enablement system that actually gets partners selling.",
+      "og_title": "Partner Enablement: Turning a Signed Deal Into Revenue",
+      "og_desc": "Why partnerships stall right after the contract, and the enablement system that gets partners actually selling.",
+      "og_alt": "Partner Enablement: Turning a Signed Deal Into Revenue",
+      "tag": "Partnerships",
+      "cat": "partnerships",
+      "read": "6 min",
+      "summary": "The deal is signed and nothing happens. Why partnerships stall after the contract, and the enablement system that gets partners actually selling.",
+      "body": "blog-partner-enablement.body.txt"
+    },
+    {
+      "slug": "blog-founder-led-sales",
+      "title": "Founder-Led Sales: When to Do It and When to Hire",
+      "description": "Founder-led sales is a phase, not a strategy. When it's the right move, when it quietly caps growth, and the signals that say it's time to hire.",
+      "og_title": "Founder-Led Sales: When to Do It and When to Hire",
+      "og_desc": "When founder-led sales is right, when it quietly caps growth, and the signals that say it's time to hire.",
+      "og_alt": "Founder-Led Sales: When to Do It and When to Hire",
+      "tag": "Growth",
+      "cat": "growth",
+      "read": "6 min",
+      "summary": "Every founder ends up selling early, and that's fine. The mistake is missing the point where it stops being the right call and starts being the ceiling on growth.",
+      "body": "blog-founder-led-sales.body.txt"
+    },
+    {
+      "slug": "blog-outbound-vs-inbound",
+      "title": "Outbound vs Inbound: Where to Point Your Effort First",
+      "description": "Outbound and inbound aren't rivals. They solve different problems at different speeds. How to know which one deserves your next hour, and how to run both together.",
+      "og_title": "Outbound vs Inbound: Where to Point Your Effort First",
+      "og_desc": "Outbound and inbound solve different problems at different speeds. How to know which one deserves your next hour.",
+      "og_alt": "Outbound vs Inbound: Where to Point Your Effort First",
+      "tag": "Lead Generation",
+      "cat": "leadgen",
+      "read": "6 min",
+      "summary": "Ask five people whether to invest in outbound or inbound and you'll get five confident, opposite answers. The real answer depends on your stage, not your opinion.",
+      "body": "blog-outbound-vs-inbound.body.txt"
+    },
+    {
+      "slug": "blog-churn-analysis",
+      "title": "Churn Analysis: Finding the Real Reason Customers Leave",
+      "description": "The reason on the cancellation form is rarely the real reason. How to run a churn analysis that finds the actual pattern instead of a list of excuses.",
+      "og_title": "Churn Analysis: Finding the Real Reason Customers Leave",
+      "og_desc": "The reason on the cancellation form is rarely the real one. How to find the actual pattern behind churn.",
+      "og_alt": "Churn Analysis: Finding the Real Reason Customers Leave",
+      "tag": "Operations",
+      "cat": "operations",
+      "read": "6 min",
+      "summary": "Too expensive is rarely the real reason. How to run a churn analysis that finds the actual pattern behind why customers leave, instead of a list of excuses.",
+      "body": "blog-churn-analysis.body.txt"
+    }
+  ]
 }

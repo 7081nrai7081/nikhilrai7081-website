@@ -1,0 +1,73 @@
+<div class="cs-block">
+      <p>"Too expensive." That's the reason on most cancellation forms, and it's almost never the real one. It's the easiest, most socially acceptable box to check on the way out the door, not a diagnosis. The actual cause usually happened weeks or months earlier: a rough first week, a support ticket that sat too long, a use case that was never really a fit. Teams that stop at the stated reason keep losing the same type of customer, quarter after quarter, and call it bad luck.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Why the stated reason is rarely the real one</h2>
+      <p>By the time someone fills out an exit survey, they've already decided to leave. The survey just needs an answer that's quick to give and doesn't require explaining a slow-building frustration. "Price" is easy to write down. "Nobody helped me get value in the first two weeks and I gave up" is not, even when it's the truth. If you only ever read the checkbox, you'll keep hearing "price" and keep discounting your way into a worse business instead of fixing what actually drove the decision.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Where to actually look</h2>
+      <div class="cs-steps">
+        <div class="cs-step"><span class="num">1</span><div><h3>Look 60–90 days before the cancellation, not the cancellation itself</h3><p>Most churn is a slow fade in usage, not a sudden decision. The real signal is buried weeks before the exit survey ever gets filled out.</p></div></div>
+        <div class="cs-step"><span class="num">2</span><div><h3>Segment by cohort</h3><p>Break churn down by onboarding month, plan tier and use case. Patterns that are invisible in an aggregate churn rate show up immediately once you split the data.</p></div></div>
+        <div class="cs-step"><span class="num">3</span><div><h3>Cross-reference support tickets and NPS</h3><p>A bad early experience (a slow reply, an unresolved bug) predicts churn months before it happens, long before it shows up as a cancellation.</p></div></div>
+        <div class="cs-step"><span class="num">4</span><div><h3>Talk to a sample of churned customers directly</h3><p>A short call gets you the real story behind the checkbox, something a dropdown menu on an exit form was never going to capture.</p></div></div>
+      </div>
+    </div>
+
+    <div class="cs-block">
+      <h2>Turn the pattern into a fix, not a vague resolution</h2>
+      <p>"Improve the product" isn't a fix. It's a shrug. A real churn analysis points somewhere specific. If churn traces back to weak week-one activation, that's an <a href="/blog-customer-onboarding">onboarding</a> problem, not a pricing one. If it clusters heavily in one segment or use case, that's an <a href="/blog-ideal-customer-profile">ICP</a> problem: you were selling to people who were never going to succeed with the product, no matter how good the app got. The fix is only as good as how specifically you've located the actual break.</p>
+    </div>
+
+    <div class="cs-block">
+      <h2>Churn analysis is a habit, not a postmortem</h2>
+      <p>Running this once, after a bad quarter, tells you what already happened. Running it monthly turns it into an early-warning system. You catch a cohort starting to fade before it fully churns, not after. That's the same logic behind treating <a href="/blog-retention-is-the-growth">retention as growth you already paid for</a>: it only compounds if somebody is actually watching it, not just reporting the number after the damage is done.</p>
+      <div class="cs-tags">
+        <span>Churn Analysis</span><span>Customer Retention</span><span>Customer Success</span><span>Operations</span><span>SaaS Metrics</span>
+      </div>
+    </div>
+
+    <div class="cs-block">
+      <div class="cs-callout"><p>The reason on a cancellation form is a symptom, not a diagnosis. Real churn analysis looks 60–90 days before the exit, segments by cohort instead of trusting the aggregate rate, and cross-references support and usage data to find where the relationship actually broke. Do it as a monthly habit, not a postmortem after a bad quarter, and it stops being a report on what you lost. It becomes a way to see the next fade before it becomes a cancellation.</p></div>
+    </div>
+
+    <div class="cs-block">
+      <h2>Read next</h2>
+      <div class="cards related">
+        <a class="card" href="/blog-retention-is-the-growth">
+          <span class="tag">Growth</span>
+          <h3>Retention Is the Growth You Already Paid For</h3>
+          <p>Acquisition gets the budget, but retention compounds. Why keeping and expanding the customers you already won out-grows chasing new ones, and the habits that make it happen.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a class="card" href="/blog-customer-onboarding">
+          <span class="tag">Operations</span>
+          <h3>Customer Onboarding: The First 90 Days</h3>
+          <p>Churn is usually decided in the first 90 days, not at renewal. How to build an onboarding system that gets customers to value fast.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a class="card" href="/blog-expansion-revenue">
+          <span class="tag">Growth</span>
+          <h3>Expansion Revenue Is Growth You Already Have</h3>
+          <p>New logos aren't the only growth channel. Why expansion revenue from existing customers compounds faster, and how to build a system that finds it.</p>
+          <span class="card-more">Read article
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="cs-cta">
+      <h2>Losing customers and not sure why?</h2>
+      <p>I help teams find the real pattern behind churn and fix the system behind it, not just the symptom on the exit survey. See how I work.</p>
+      <a href="https://calendly.com/nikhilrai7081/30min" target="_blank" rel="noopener" class="btn btn-primary">Book a Call
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
