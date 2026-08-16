@@ -129,10 +129,100 @@ var WHATSAPP_NUMBER = "919793082706"; // used for the fallback if the Sheet requ
     window.open(wa, '_blank');
   }
 
+  // Phone OTP verification (2Factor.in via the Apps Script GET actions).
+  // idPrefix is the phone <input>'s id; the OTP UI elements around it are
+  // expected to follow the convention idPrefix + "-otp-send" / "-otp-row" /
+  // "-otp" / "-otp-verify" / "-otp-status" / "-otp-session" (see index.html).
+  function wirePhoneOtp(idPrefix) {
+    var phoneInput = document.getElementById(idPrefix);
+    if (!phoneInput) return null;
+    var sendBtn = document.getElementById(idPrefix + '-otp-send');
+    var verifyRow = document.getElementById(idPrefix + '-otp-row');
+    var otpInput = document.getElementById(idPrefix + '-otp');
+    var verifyBtn = document.getElementById(idPrefix + '-otp-verify');
+    var statusEl = document.getElementById(idPrefix + '-otp-status');
+    var sessionField = document.getElementById(idPrefix + '-otp-session');
+    if (!sendBtn || !verifyRow || !otpInput || !verifyBtn || !statusEl || !sessionField) return null;
+
+    var verified = false;
+    var lastVerifiedPhone = '';
+
+    function setOtpStatus(msg, ok) {
+      statusEl.textContent = msg;
+      statusEl.className = 'pm-otp-status ' + (ok ? 'pm-status-ok' : 'pm-status-err');
+    }
+
+    function otpFetch(params) {
+      // Plain GET (not the no-cors POST used for the final submit) so the
+      // JSON response body is actually readable — see the note in
+      // apps-script-template.gs on why sendOtp/verifyOtp use doGet.
+      return fetch(FORM_ENDPOINT + '?' + new URLSearchParams(params).toString())
+        .then(function (r) { return r.json(); });
+    }
+
+    function invalidate() {
+      verified = false;
+      sessionField.value = '';
+      verifyRow.hidden = true;
+    }
+
+    phoneInput.addEventListener('input', function () {
+      if (verified && phoneInput.value.trim() !== lastVerifiedPhone) {
+        invalidate();
+        setOtpStatus('', true);
+      }
+    });
+
+    sendBtn.addEventListener('click', function () {
+      var phone = phoneInput.value.trim();
+      if (!/^\d{10}$/.test(phone.replace(/\D/g, ''))) {
+        setOtpStatus('Enter a valid 10-digit mobile number first.', false);
+        return;
+      }
+      invalidate();
+      sendBtn.disabled = true;
+      otpFetch({ action: 'sendOtp', phone: phone })
+        .then(function (res) {
+          if (res.status !== 'ok') { setOtpStatus(res.message || 'Could not send code.', false); return; }
+          sessionField.dataset.sessionId = res.sessionId;
+          verifyRow.hidden = false;
+          otpInput.value = '';
+          otpInput.focus();
+          setOtpStatus('Code sent — enter it below.', true);
+        })
+        .catch(function () { setOtpStatus('Could not send code. Check your connection.', false); })
+        .finally(function () { sendBtn.disabled = false; });
+    });
+
+    verifyBtn.addEventListener('click', function () {
+      var phone = phoneInput.value.trim();
+      var sessionId = sessionField.dataset.sessionId;
+      var otp = otpInput.value.trim();
+      if (!sessionId) { setOtpStatus('Send a code first.', false); return; }
+      if (!/^\d{4,8}$/.test(otp)) { setOtpStatus('Enter the code you received.', false); return; }
+      verifyBtn.disabled = true;
+      otpFetch({ action: 'verifyOtp', phone: phone, sessionId: sessionId, otp: otp })
+        .then(function (res) {
+          if (res.status !== 'ok') { setOtpStatus(res.message || 'Incorrect or expired code.', false); return; }
+          verified = true;
+          lastVerifiedPhone = phone;
+          sessionField.value = sessionId;
+          setOtpStatus('Phone number verified.', true);
+        })
+        .catch(function () { setOtpStatus('Could not verify. Check your connection.', false); })
+        .finally(function () { verifyBtn.disabled = false; });
+    });
+
+    return {
+      isVerified: function () { return verified && phoneInput.value.trim() === lastVerifiedPhone; }
+    };
+  }
+
   function wireForm(opts) {
     var form = opts.form;
     if (!form) return;
     var status = document.getElementById(opts.statusId);
+    var otp = wirePhoneOtp(opts.phoneId);
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -144,6 +234,11 @@ var WHATSAPP_NUMBER = "919793082706"; // used for the fallback if the Sheet requ
           setStatus(status, opts.requiredMsg, false);
           return;
         }
+      }
+
+      if (otp && !otp.isVerified()) {
+        setStatus(status, 'Please verify your phone number before submitting.', false);
+        return;
       }
 
       var submitBtn = form.querySelector('.pm-submit-btn');
@@ -177,6 +272,7 @@ var WHATSAPP_NUMBER = "919793082706"; // used for the fallback if the Sheet requ
   wireForm({
     form: leadForm,
     statusId: 'pm-form-status',
+    phoneId: 'pm-phone',
     required: ['name', 'phone', 'city', 'consent'],
     requiredMsg: 'Please fill in name, phone, city and accept the consent checkbox.',
     subject: 'Plot Mitra interest'
@@ -185,6 +281,7 @@ var WHATSAPP_NUMBER = "919793082706"; // used for the fallback if the Sheet requ
   wireForm({
     form: partnerForm,
     statusId: 'pm-partner-status',
+    phoneId: 'pm-p-phone',
     required: ['name', 'phone', 'businessType'],
     requiredMsg: 'Please fill in name, phone and business type.',
     subject: 'Plot Mitra partner inquiry'

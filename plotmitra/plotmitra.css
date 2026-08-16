@@ -138,6 +138,12 @@ a { color: var(--pm-green); }
 .pm-form-status.pm-status-ok { color: var(--pm-green); }
 .pm-form-status.pm-status-err { color: #a33; }
 .pm-fallback-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+.pm-otp-row { display: flex; gap: 8px; }
+.pm-otp-row input { flex: 1; min-width: 0; }
+.pm-otp-row .pm-btn { flex-shrink: 0; }
+.pm-otp-status { margin: 4px 0 0; font-weight: 600; font-size: .85rem; min-height: 1.1em; }
+.pm-otp-status.pm-status-ok { color: var(--pm-green); }
+.pm-otp-status.pm-status-err { color: #a33; }
 
 /* Partners section */
 .pm-partners { padding: 64px 0 72px; background: var(--pm-surface-2); }

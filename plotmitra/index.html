@@ -29,7 +29,7 @@
 
 <link rel="preload" href="../assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/poppins-800.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="plotmitra.css?v=1">
+<link rel="stylesheet" href="plotmitra.css?v=2">
 
 <script type="application/ld+json">
 {
@@ -236,7 +236,16 @@
 
         <div class="pm-form-row">
           <label for="pm-phone">Phone number *</label>
-          <input type="tel" id="pm-phone" name="phone" required autocomplete="tel" placeholder="10-digit mobile number">
+          <div class="pm-otp-row">
+            <input type="tel" id="pm-phone" name="phone" required autocomplete="tel" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric">
+            <button type="button" class="pm-btn pm-btn-outline pm-btn-sm" id="pm-phone-otp-send">Send code</button>
+          </div>
+          <div class="pm-otp-row" id="pm-phone-otp-row" hidden>
+            <input type="text" id="pm-phone-otp" placeholder="6-digit code" maxlength="6" inputmode="numeric" autocomplete="one-time-code">
+            <button type="button" class="pm-btn pm-btn-outline pm-btn-sm" id="pm-phone-otp-verify">Verify</button>
+          </div>
+          <p class="pm-otp-status" id="pm-phone-otp-status" role="status" aria-live="polite"></p>
+          <input type="hidden" name="otpSessionId" id="pm-phone-otp-session">
         </div>
 
         <div class="pm-form-row">
@@ -344,7 +353,16 @@
 
           <div class="pm-form-row">
             <label for="pm-p-phone">Phone number *</label>
-            <input type="tel" id="pm-p-phone" name="phone" required placeholder="10-digit mobile number">
+            <div class="pm-otp-row">
+              <input type="tel" id="pm-p-phone" name="phone" required placeholder="10-digit mobile number" maxlength="10" inputmode="numeric">
+              <button type="button" class="pm-btn pm-btn-outline pm-btn-sm" id="pm-p-phone-otp-send">Send code</button>
+            </div>
+            <div class="pm-otp-row" id="pm-p-phone-otp-row" hidden>
+              <input type="text" id="pm-p-phone-otp" placeholder="6-digit code" maxlength="6" inputmode="numeric" autocomplete="one-time-code">
+              <button type="button" class="pm-btn pm-btn-outline pm-btn-sm" id="pm-p-phone-otp-verify">Verify</button>
+            </div>
+            <p class="pm-otp-status" id="pm-p-phone-otp-status" role="status" aria-live="polite"></p>
+            <input type="hidden" name="otpSessionId" id="pm-p-phone-otp-session">
           </div>
 
           <div class="pm-form-row">
@@ -455,7 +473,7 @@
   </div>
 </footer>
 
-<script src="plotmitra.js?v=1"></script>
+<script src="plotmitra.js?v=2"></script>
 
 </body>
 </html>
