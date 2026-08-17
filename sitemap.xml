@@ -37,7 +37,7 @@
 
   <url>
     <loc>https://nikhilrai7081.com/blog</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://nikhilrai7081.com/blog"/>
@@ -274,7 +274,7 @@
 
   <url>
     <loc>https://nikhilrai7081.com/blog-hubspot-workflow-automation</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -418,6 +418,13 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://nikhilrai7081.com/es/blog-operations"/>
     <xhtml:link rel="alternate" hreflang="hi" href="https://nikhilrai7081.com/hi/blog-operations"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://nikhilrai7081.com/blog-operations"/>
+  </url>
+
+  <url>
+    <loc>https://nikhilrai7081.com/blog-partner-enablement</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <url>
@@ -694,7 +701,7 @@
 
   <url>
     <loc>https://nikhilrai7081.com/topic-partnerships</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

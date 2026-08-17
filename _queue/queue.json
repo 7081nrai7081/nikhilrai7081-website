@@ -2,19 +2,6 @@
   "_comment": "Auto-publish queue. The GitHub Action publishes queue[0] three times a week (Mon/Wed/Fri 09:00 UTC), then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt, add assets/images/og-<slug>.svg + rendered .png, and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
   "queue": [
     {
-      "slug": "blog-partner-enablement",
-      "title": "Partner Enablement: Turning a Signed Deal Into Revenue",
-      "description": "Signing a partner isn't the finish line. Why partnerships stall right after the contract, and the enablement system that actually gets partners selling.",
-      "og_title": "Partner Enablement: Turning a Signed Deal Into Revenue",
-      "og_desc": "Why partnerships stall right after the contract, and the enablement system that gets partners actually selling.",
-      "og_alt": "Partner Enablement: Turning a Signed Deal Into Revenue",
-      "tag": "Partnerships",
-      "cat": "partnerships",
-      "read": "6 min",
-      "summary": "The deal is signed and nothing happens. Why partnerships stall after the contract, and the enablement system that gets partners actually selling.",
-      "body": "blog-partner-enablement.body.txt"
-    },
-    {
       "slug": "blog-founder-led-sales",
       "title": "Founder-Led Sales: When to Do It and When to Hire",
       "description": "Founder-led sales is a phase, not a strategy. When it's the right move, when it quietly caps growth, and the signals that say it's time to hire.",
