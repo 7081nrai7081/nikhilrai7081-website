@@ -1,28 +1,38 @@
 #!/bin/sh
 # Pre-commit automation (activate once per clone: git config core.hooksPath .githooks)
-#   1. When style.css / main.js change, bump the ?v=N cache-busting version
-#      across every tracked .html file (root + language subfolders).
+#   1. For any staged assets/css/*.css or assets/js/*.js file, bump that
+#      file's own ?v=N cache-busting version across every tracked .html
+#      file that references it (root + language subfolders). Generic over
+#      the asset's basename -- not hardcoded to style.css/main.js -- so a
+#      page-specific script (e.g. free-seo-audit.js) gets cache-busted too
+#      instead of silently serving a stale cached copy after an edit.
 #   2. Always regenerate sitemap.xml from the tracked .html files.
 # Both steps are fail-safe: they never abort the commit.
 
 hookdir=$(dirname "$0")
 
-# --- 1. Cache-bust on asset change ---
+# --- 1. Cache-bust on asset change (per changed asset, not just style.css/main.js) ---
 staged=$(git diff --cached --name-only)
-if printf '%s\n' "$staged" | grep -qE 'assets/(css/style\.css|js/main\.js)$'; then
+changed_assets=$(printf '%s\n' "$staged" | grep -E '^assets/(css|js)/[^/]+\.(css|js)$')
+if [ -n "$changed_assets" ]; then
   htmls=$(git ls-files '*.html')
-  cur=$(printf '%s\n' "$htmls" | tr '\n' '\0' | xargs -0 grep -hoE '(style\.css|main\.js)\?v=[0-9]+' 2>/dev/null \
-        | grep -oE '[0-9]+$' | sort -n | tail -1)
-  [ -z "$cur" ] && cur=1
-  next=$((cur + 1))
-  printf '%s\n' "$htmls" | while IFS= read -r f; do
-    [ -f "$f" ] || continue
-    if grep -qE '(style\.css|main\.js)\?v=[0-9]+' "$f"; then
-      sed -i -E "s/(style\.css\?v=)[0-9]+/\1$next/g; s/(main\.js\?v=)[0-9]+/\1$next/g" "$f"
-      git add "$f"
-    fi
+  printf '%s\n' "$changed_assets" | while IFS= read -r asset; do
+    [ -z "$asset" ] && continue
+    base=$(basename "$asset")
+    esc=$(printf '%s' "$base" | sed 's/\./\\./g')
+    cur=$(printf '%s\n' "$htmls" | tr '\n' '\0' | xargs -0 grep -hoE "${esc}\?v=[0-9]+" 2>/dev/null \
+          | grep -oE '[0-9]+$' | sort -n | tail -1)
+    [ -z "$cur" ] && cur=1
+    next=$((cur + 1))
+    printf '%s\n' "$htmls" | while IFS= read -r f; do
+      [ -f "$f" ] || continue
+      if grep -qE "${esc}\?v=[0-9]+" "$f"; then
+        sed -i -E "s/(${esc}\?v=)[0-9]+/\1$next/g" "$f"
+        git add "$f"
+      fi
+    done
+    echo "pre-commit: bumped $base cache-busting version to v=$next"
   done
-  echo "pre-commit: bumped asset cache-busting version to v=$next"
 fi
 
 # --- 2. Sitemap (always; sees any HTML just re-staged above) ---
