@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Self-hosted fonts, no third-party analytics, no ad-lander, no Meta Pixel/CAPI.
+     This is an informational page about the VYNTRA community, not a conversion
+     lander — see CLAUDE.md. The live community lander is on vyntra.club. -->
+<link rel="preload" href="/assets/fonts/sora-variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
+
+<title>VYNTRA — Lucknow's Social Discovery Community | Nikhil Rai</title>
+<meta name="description" content="VYNTRA is a free social discovery community in Lucknow for music nights, open mics, workshops and meetups — an initiative by Nikhil Rai. What it is, what's happened, and how to join.">
+<meta name="author" content="Nikhil Rai">
+<meta name="theme-color" content="#0c0a1a">
+
+<!-- Open Graph -->
+<meta property="og:title" content="VYNTRA — Lucknow's Social Discovery Community">
+<meta property="og:description" content="A free community for music nights, open mics, workshops and meetups across Lucknow. An initiative by Nikhil Rai.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nikhilrai7081.com/vyntra">
+<meta property="og:site_name" content="VYNTRA">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://nikhilrai7081.com/vyntra">
+<link rel="alternate" hreflang="en" href="https://nikhilrai7081.com/vyntra">
+<link rel="alternate" hreflang="x-default" href="https://nikhilrai7081.com/vyntra">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="shortcut icon" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "VYNTRA",
+  "alternateName": "VYNTRA Club",
+  "url": "https://vyntra.club/community",
+  "description": "VYNTRA is a social discovery community in Lucknow, India, hosting music nights, open mics, creative workshops and social meetups.",
+  "founder": { "@type": "Person", "name": "Nikhil Rai", "url": "https://nikhilrai7081.com" },
+  "areaServed": { "@type": "City", "name": "Lucknow" },
+  "sameAs": ["https://chat.whatsapp.com/HnHOqXxM3YxKIjBvOphTsT", "https://vyntra.club/community"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is VYNTRA?",
+      "acceptedAnswer": { "@type": "Answer", "text": "VYNTRA is a free social discovery community based in Lucknow, India. It brings people together for music nights, open mics, creative workshops, social mixers and other in-person experiences." }
+    },
+    {
+      "@type": "Question",
+      "name": "Who created VYNTRA?",
+      "acceptedAnswer": { "@type": "Answer", "text": "VYNTRA is an independent community initiative by Nikhil Rai, built to give Lucknow more ways to meet people and spend weekends well." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is VYNTRA free to join?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Joining the VYNTRA WhatsApp community is completely free, with no obligation, and members can leave at any time." }
+    },
+    {
+      "@type": "Question",
+      "name": "What events has VYNTRA hosted?",
+      "acceptedAnswer": { "@type": "Answer", "text": "VYNTRA's first in-person event was the VYNTRA Jamming Night, held on 25 July 2026 at Cafe Day Spring in Lucknow — an evening of live music and conversation for the community." }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I join VYNTRA?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Join the free WhatsApp community at chat.whatsapp.com/HnHOqXxM3YxKIjBvOphTsT, or visit vyntra.club/community for the latest updates." }
+    }
+  ]
+}
+</script>
+
+<style>
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('/assets/fonts/inter-variable.woff2') format('woff2'); }
+  @font-face { font-family: 'Sora';  font-style: normal; font-weight: 100 900; font-display: swap; src: url('/assets/fonts/sora-variable.woff2') format('woff2'); }
+
+  :root {
+    --bg: #0c0a1a;
+    --card: rgba(255, 255, 255, 0.04);
+    --card-border: rgba(255, 255, 255, 0.09);
+    --text: #f4f2ff;
+    --muted: #b3acd0;
+    --brand-1: #ff4d8d;
+    --brand-2: #a855f7;
+    --brand-3: #ff9a3c;
+    --grad: linear-gradient(100deg, var(--brand-3), var(--brand-1) 45%, var(--brand-2));
+    --radius: 18px;
+    --maxw: 880px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.6;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  h1, h2, h3 { font-family: 'Sora', sans-serif; line-height: 1.15; letter-spacing: -0.02em; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 22px; }
+  .gradient-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  .topbar { padding: 20px 0; }
+  .topbar a { display: inline-flex; align-items: center; gap: 8px; font-family: 'Sora', sans-serif; font-weight: 600; font-size: 0.92rem; color: var(--muted); }
+  .topbar a:hover { color: var(--text); }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.02rem;
+    padding: 16px 32px; border-radius: 999px; border: none; cursor: pointer;
+    background: var(--grad); color: #1a0a14;
+    box-shadow: 0 14px 40px -10px rgba(255, 77, 141, 0.55);
+  }
+  .btn-ghost {
+    background: transparent; color: var(--text); border: 1px solid var(--card-border);
+    box-shadow: none;
+  }
+
+  .eyebrow {
+    display: inline-block; font-family: 'Sora', sans-serif; font-weight: 700;
+    font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--brand-1); margin-bottom: 16px;
+  }
+  section { padding: 64px 0; position: relative; }
+  .section-title { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; margin-bottom: 14px; }
+  .center { text-align: center; }
+  .center p.section-lead { margin-left: auto; margin-right: auto; }
+  p.section-lead { color: var(--muted); font-size: 1.02rem; max-width: 620px; }
+
+  .hero { padding: 40px 0 72px; text-align: center; }
+  .hero-eyebrow {
+    display: inline-block; font-family: 'Sora', sans-serif; font-weight: 700;
+    font-size: 0.8rem; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--muted); border: 1px solid var(--card-border);
+    padding: 8px 18px; border-radius: 999px; margin-bottom: 26px;
+  }
+  .hero h1 { font-size: clamp(2.6rem, 8vw, 4.2rem); font-weight: 800; margin-bottom: 20px; }
+  .hero p.sub { font-size: clamp(1.02rem, 2.2vw, 1.2rem); color: var(--muted); max-width: 620px; margin: 0 auto 30px; }
+  .hero .btn { margin-bottom: 12px; }
+  .hero .note { color: var(--muted); font-size: 0.9rem; }
+
+  .grid { display: grid; gap: 18px; margin-top: 40px; }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .card {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: var(--radius); padding: 26px 22px; text-align: left;
+  }
+  .card .icon { font-size: 1.9rem; margin-bottom: 12px; display: block; }
+  .card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
+  .card p { color: var(--muted); font-size: 0.94rem; }
+
+  .perks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 36px; text-align: left; }
+  .perk {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 12px; padding: 14px 16px; font-size: 0.94rem;
+  }
+  .perk .check { color: var(--brand-1); font-weight: 800; }
+
+  .event-card {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: var(--radius); padding: 26px; text-align: left; margin-top: 36px;
+  }
+  .event-card .tag {
+    display: inline-block; font-family: 'Sora', sans-serif; font-weight: 700;
+    font-size: 0.78rem; letter-spacing: 0.04em; color: var(--brand-1);
+    background: rgba(255, 77, 141, 0.12); padding: 5px 12px; border-radius: 999px;
+    margin-bottom: 12px;
+  }
+  .event-card h3 { font-size: 1.25rem; margin-bottom: 6px; }
+  .event-card .meta { color: var(--muted); font-size: 0.92rem; margin-bottom: 10px; }
+  .event-card p:last-child { color: var(--muted); }
+
+  .faq { text-align: left; margin-top: 36px; display: grid; gap: 12px; }
+  .faq-item {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 12px; padding: 18px 20px;
+  }
+  .faq-item summary {
+    font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1rem;
+    cursor: pointer; list-style: none;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: '+'; float: right; font-size: 1.2rem; color: var(--brand-1); }
+  .faq-item[open] summary::after { content: '\2212'; }
+  .faq-item p { color: var(--muted); margin-top: 10px; font-size: 0.94rem; }
+
+  .final { text-align: center; }
+  .final .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+
+  footer { padding: 48px 0; text-align: center; border-top: 1px solid var(--card-border); margin-top: 20px; }
+  footer .footer-logo { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 1.3rem; letter-spacing: 0.04em; margin-bottom: 10px; }
+  footer p { color: var(--muted); max-width: 480px; margin: 0 auto 14px; font-size: 0.92rem; }
+  footer .footer-tags { color: var(--muted); font-size: 0.82rem; letter-spacing: 0.05em; margin-bottom: 18px; }
+  footer .by { font-size: 0.85rem; color: var(--muted); }
+  footer .by a { color: var(--text); font-weight: 600; }
+
+  @media (max-width: 760px) {
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .perks { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="topbar wrap">
+  <a href="/">
+    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Nikhil Rai
+  </a>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="hero-eyebrow">Lucknow's Social Discovery Community</span>
+    <h1>Meet <span class="gradient-text">VYNTRA.</span></h1>
+    <p class="sub">A free community for music nights, open mics, workshops and meetups — built to give Lucknow better weekends and a reason to meet new people.</p>
+    <a class="btn" href="https://chat.whatsapp.com/HnHOqXxM3YxKIjBvOphTsT" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.039zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+      Join Free on WhatsApp
+    </a>
+    <p class="note">Free to join · no obligation · leave anytime</p>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <div class="wrap center">
+    <span class="eyebrow">What It Is</span>
+    <h2 class="section-title">A community, not a company.</h2>
+    <p class="section-lead">VYNTRA is an independent community initiative by <a href="/" style="color:var(--text);font-weight:600;text-decoration:underline;">Nikhil Rai</a>, built around one idea: Lucknow deserves more ways to meet people and spend weekends well. It's free, informal, and organised through a WhatsApp group rather than an app or a subscription.</p>
+    <div class="grid grid-4">
+      <div class="card">
+        <span class="icon">🎸</span>
+        <h3>Music Events</h3>
+        <p>Live jamming sessions, open mics, acoustic nights and community music experiences.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🎨</span>
+        <h3>Creative Workshops</h3>
+        <p>Photography, art, content creation, storytelling and hands-on learning.</p>
+      </div>
+      <div class="card">
+        <span class="icon">☕</span>
+        <h3>Social Meetups</h3>
+        <p>Meeting like-minded people in relaxed, welcoming settings across the city.</p>
+      </div>
+      <div class="card">
+        <span class="icon">✨</span>
+        <h3>Unique Experiences</h3>
+        <p>Sundowners, mixers, community nights and one-off experiences as they come up.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap center">
+    <span class="eyebrow">Inside the Community</span>
+    <h2 class="section-title">What members get.</h2>
+    <div class="perks">
+      <div class="perk"><span class="check">✓</span> Event updates as they're planned</div>
+      <div class="perk"><span class="check">✓</span> Early access to tickets</div>
+      <div class="perk"><span class="check">✓</span> Community-only invitations</div>
+      <div class="perk"><span class="check">✓</span> A way to meet new people</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap center">
+    <span class="eyebrow">What's Happened</span>
+    <h2 class="section-title">VYNTRA's first event.</h2>
+    <div class="event-card">
+      <span class="tag">✔ Completed</span>
+      <h3>VYNTRA Jamming Night</h3>
+      <p class="meta">25 July 2026 · Cafe Day Spring, Lucknow</p>
+      <p>VYNTRA's first in-person gathering — an evening of live music and conversation, and the community's proof of concept. More events are planned; community members hear about them first.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap center">
+    <span class="eyebrow">Questions</span>
+    <h2 class="section-title">Good to know.</h2>
+    <div class="faq">
+      <details class="faq-item">
+        <summary>What is VYNTRA?</summary>
+        <p>A free social discovery community based in Lucknow, India, for music nights, open mics, creative workshops and social meetups.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Who created VYNTRA?</summary>
+        <p>It's an independent community initiative by Nikhil Rai, built to give Lucknow more ways to meet people and spend weekends well.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is it free to join?</summary>
+        <p>Yes — joining the WhatsApp community is completely free, with no obligation, and you can leave at any time.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Where can I find the latest events?</summary>
+        <p>Inside the WhatsApp community, or at <a href="https://vyntra.club/community" target="_blank" rel="noopener" style="color:var(--text);font-weight:600;text-decoration:underline;">vyntra.club/community</a>.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2 class="section-title">Want in?</h2>
+    <p class="section-lead" style="margin:0 auto;">Join the free WhatsApp community for event updates, early ticket access and a reason to leave the house this weekend.</p>
+    <div class="actions">
+      <a class="btn" href="https://chat.whatsapp.com/HnHOqXxM3YxKIjBvOphTsT" target="_blank" rel="noopener">Join Free on WhatsApp</a>
+      <a class="btn btn-ghost" href="https://vyntra.club/community" target="_blank" rel="noopener">Visit vyntra.club</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-logo gradient-text">VYNTRA</div>
+    <p>A community of meaningful experiences, creative gatherings and authentic connections in Lucknow.</p>
+    <div class="footer-tags">MUSIC · MEETUPS · WORKSHOPS · EXPERIENCES</div>
+    <p class="by">An initiative by <a href="/">Nikhil Rai</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
