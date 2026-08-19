@@ -2,19 +2,6 @@
   "_comment": "Auto-publish queue. The GitHub Action publishes queue[0] three times a week (Mon/Wed/Fri 09:00 UTC), then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt, add assets/images/og-<slug>.svg + rendered .png, and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
   "queue": [
     {
-      "slug": "blog-founder-led-sales",
-      "title": "Founder-Led Sales: When to Do It and When to Hire",
-      "description": "Founder-led sales is a phase, not a strategy. When it's the right move, when it quietly caps growth, and the signals that say it's time to hire.",
-      "og_title": "Founder-Led Sales: When to Do It and When to Hire",
-      "og_desc": "When founder-led sales is right, when it quietly caps growth, and the signals that say it's time to hire.",
-      "og_alt": "Founder-Led Sales: When to Do It and When to Hire",
-      "tag": "Growth",
-      "cat": "growth",
-      "read": "6 min",
-      "summary": "Every founder ends up selling early, and that's fine. The mistake is missing the point where it stops being the right call and starts being the ceiling on growth.",
-      "body": "blog-founder-led-sales.body.txt"
-    },
-    {
       "slug": "blog-outbound-vs-inbound",
       "title": "Outbound vs Inbound: Where to Point Your Effort First",
       "description": "Outbound and inbound aren't rivals. They solve different problems at different speeds. How to know which one deserves your next hour, and how to run both together.",
