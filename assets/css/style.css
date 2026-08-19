@@ -1998,8 +1998,14 @@ a.card:hover .card-media img { transform: scale(1.06); }
 .audit-score-ring span { position: relative; font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 1.4rem; }
 .audit-score-copy h2 { margin: 0 0 4px; font-size: 1.1rem; }
 .audit-score-copy p { margin: 0; color: var(--muted); font-size: .88rem; word-break: break-all; }
+.audit-checks-run { margin-top: 4px !important; font-size: .8rem !important; }
 
-.audit-findings { list-style: none; margin: 0 0 32px; padding: 0; display: grid; gap: 10px; }
+.audit-findings { margin: 0 0 32px; display: grid; gap: 26px; }
+.audit-category h3 {
+  margin: 0 0 12px; font-size: .82rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .05em; color: var(--muted);
+}
+.audit-category-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .audit-finding {
   display: flex; align-items: flex-start; gap: 12px;
   padding: 14px 16px; border-radius: var(--radius); border: 1px solid var(--border);

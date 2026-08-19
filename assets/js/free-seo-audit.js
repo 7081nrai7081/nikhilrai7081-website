@@ -25,7 +25,12 @@
   var ringEl = document.getElementById('audit-score-ring');
   var scoreNumEl = document.getElementById('audit-score-num');
   var scoreUrlEl = document.getElementById('audit-score-url');
+  var checksRunEl = document.getElementById('audit-checks-run');
   var findingsEl = document.getElementById('audit-findings');
+
+  // Display order for category groups -- most-actionable-first, matching
+  // how most SEO audit tools sequence a report.
+  var CATEGORY_ORDER = ['Technical', 'On-Page', 'Content', 'Structured Data', 'Social', 'Security'];
 
   function setStatus(kind, msg) {
     if (!status) return;
@@ -39,30 +44,60 @@
     return '#dc2626';
   }
 
+  function buildFindingItem(f) {
+    var item = document.createElement('li');
+    item.className = 'audit-finding sev-' + f.severity;
+    var sev = document.createElement('span');
+    sev.className = 'sev';
+    sev.textContent = f.severity;
+    var msg = document.createElement('span');
+    msg.textContent = f.message;
+    item.appendChild(sev);
+    item.appendChild(msg);
+    return item;
+  }
+
   function renderResults(data) {
     scoreNumEl.textContent = data.score;
     scoreUrlEl.textContent = data.url;
     ringEl.style.setProperty('--audit-score', data.score);
     ringEl.style.setProperty('--audit-ring-color', ringColorFor(data.score));
+    if (checksRunEl && data.checksRun) {
+      checksRunEl.textContent = data.checksRun + ' checks run across Technical, On-Page, Content, Structured Data, Social & Security';
+    }
 
     findingsEl.innerHTML = '';
     if (!data.findings.length) {
-      var li = document.createElement('li');
-      li.className = 'audit-finding sev-info';
-      li.innerHTML = '<span class="sev">Nice</span><span>No issues found by this check set. That still doesn’t cover Core Web Vitals, backlinks, or content strategy — book a call for the full picture.</span>';
-      findingsEl.appendChild(li);
+      var group = document.createElement('div');
+      group.className = 'audit-category';
+      var list = document.createElement('ul');
+      list.className = 'audit-category-list';
+      list.appendChild(buildFindingItem({ severity: 'info', message: 'No issues found by this check set. That still doesn’t cover Core Web Vitals, backlinks, or content strategy — book a call for the full picture.' }));
+      group.appendChild(list);
+      findingsEl.appendChild(group);
     } else {
+      var byCategory = {};
       data.findings.forEach(function (f) {
-        var item = document.createElement('li');
-        item.className = 'audit-finding sev-' + f.severity;
-        var sev = document.createElement('span');
-        sev.className = 'sev';
-        sev.textContent = f.severity;
-        var msg = document.createElement('span');
-        msg.textContent = f.message;
-        item.appendChild(sev);
-        item.appendChild(msg);
-        findingsEl.appendChild(item);
+        var cat = f.category || 'Other';
+        (byCategory[cat] = byCategory[cat] || []).push(f);
+      });
+      var categories = Object.keys(byCategory).sort(function (a, b) {
+        var ia = CATEGORY_ORDER.indexOf(a), ib = CATEGORY_ORDER.indexOf(b);
+        if (ia === -1) ia = CATEGORY_ORDER.length;
+        if (ib === -1) ib = CATEGORY_ORDER.length;
+        return ia - ib;
+      });
+      categories.forEach(function (cat) {
+        var group = document.createElement('div');
+        group.className = 'audit-category';
+        var h3 = document.createElement('h3');
+        h3.textContent = cat + ' (' + byCategory[cat].length + ')';
+        var list = document.createElement('ul');
+        list.className = 'audit-category-list';
+        byCategory[cat].forEach(function (f) { list.appendChild(buildFindingItem(f)); });
+        group.appendChild(h3);
+        group.appendChild(list);
+        findingsEl.appendChild(group);
       });
     }
 
