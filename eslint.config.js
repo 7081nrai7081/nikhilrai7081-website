@@ -40,6 +40,7 @@ export default [
         Request: 'readonly',
         Headers: 'readonly',
         URL: 'readonly',
+        URLSearchParams: 'readonly',
         AbortController: 'readonly',
         setTimeout: 'readonly',
         clearTimeout: 'readonly',

@@ -52,8 +52,11 @@ try{if(localStorage.getItem('cookie_consent')==='granted'){gtag('consent','updat
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/poppins-800.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/style.css?v=47">
+<link rel="stylesheet" href="assets/css/style.css?v=48">
 <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+
+<!-- Turnstile (bot check for the audit form below) -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <script type="application/ld+json">
 {
@@ -159,6 +162,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span>I agree to be contacted about this audit. See the <a href="/privacy" target="_blank" rel="noopener">privacy policy</a>.</span>
       </label>
 
+      <div class="cf-turnstile audit-turnstile" data-sitekey="0x4AAAAAAEWGjF3fYZJs5Zhn"></div>
+
       <button type="submit" class="btn btn-primary audit-submit">Run My Free Audit
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
@@ -177,6 +182,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <p class="audit-checks-run" id="audit-checks-run"></p>
         </div>
       </div>
+      <div class="audit-priorities" id="audit-priorities" hidden></div>
       <div class="audit-findings" id="audit-findings"></div>
 
       <div class="cs-cta audit-cta reveal">
@@ -216,7 +222,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </footer>
 
 <script src="assets/js/main.js?v=47"></script>
-<script src="assets/js/free-seo-audit.js?v=2"></script>
+<script src="assets/js/free-seo-audit.js?v=3"></script>
 
 </body>
 </html>

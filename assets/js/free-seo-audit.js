@@ -26,6 +26,7 @@
   var scoreNumEl = document.getElementById('audit-score-num');
   var scoreUrlEl = document.getElementById('audit-score-url');
   var checksRunEl = document.getElementById('audit-checks-run');
+  var prioritiesEl = document.getElementById('audit-priorities');
   var findingsEl = document.getElementById('audit-findings');
 
   // Display order for category groups -- most-actionable-first, matching
@@ -64,6 +65,24 @@
     ringEl.style.setProperty('--audit-ring-color', ringColorFor(data.score));
     if (checksRunEl && data.checksRun) {
       checksRunEl.textContent = data.checksRun + ' checks run across Technical, On-Page, Content, Structured Data, Social & Security';
+    }
+
+    var topPriorities = data.findings.filter(function (f) {
+      return f.severity === 'critical' || f.severity === 'high';
+    }).slice(0, 3);
+    if (topPriorities.length) {
+      prioritiesEl.innerHTML = '<h3>Fix these first</h3>';
+      var pList = document.createElement('ol');
+      topPriorities.forEach(function (f) {
+        var li = document.createElement('li');
+        li.textContent = f.message;
+        pList.appendChild(li);
+      });
+      prioritiesEl.appendChild(pList);
+      prioritiesEl.hidden = false;
+    } else {
+      prioritiesEl.hidden = true;
+      prioritiesEl.innerHTML = '';
     }
 
     findingsEl.innerHTML = '';
@@ -118,13 +137,20 @@
       return;
     }
 
+    var formData = Object.fromEntries(new FormData(form));
+    // Turnstile auto-injects this hidden input once its check completes
+    // (the widget lives inside this <form>, see free-seo-audit.html).
+    var turnstileToken = formData['cf-turnstile-response'];
+    if (!turnstileToken) {
+      setStatus('err', 'Verifying you’re human — give it a second and try again.');
+      return;
+    }
+
     var btn = form.querySelector('button[type="submit"]');
     var label = btn ? btn.innerHTML : '';
     if (btn) { btn.disabled = true; btn.textContent = 'Auditing…'; }
     setStatus('', 'Capturing your details and running the audit — this takes a few seconds…');
     resultsEl.hidden = true;
-
-    var formData = Object.fromEntries(new FormData(form));
 
     // 1. Lead capture (best-effort -- don't block the audit on this).
     fetch('https://api.web3forms.com/submit', {
@@ -140,11 +166,12 @@
       var res = await fetch('/api/audit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: url })
+        body: JSON.stringify({ url: url, turnstileToken: turnstileToken })
       });
       var data = await res.json();
       if (!data.ok) {
         setStatus('err', data.error || 'Something went wrong running that audit.');
+        if (window.turnstile) { try { window.turnstile.reset(); } catch (e) { /* widget not ready */ } }
         return;
       }
       setStatus('ok', 'Done — here’s what I found.');

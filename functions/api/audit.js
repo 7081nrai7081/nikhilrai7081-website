@@ -20,9 +20,17 @@
 //   - 8s fetch timeout; response body capped at 3MB while streaming
 //     (doesn't rely on a possibly-absent/false Content-Length header).
 //   - Only text/html responses are analyzed.
+//   - Cloudflare Turnstile (env.TURNSTILE_SECRET_KEY) verifies the visitor
+//     is human before any audit runs.
+//   - Per-IP rate limiting via Workers KV (env.AUDIT_KV, binding created
+//     2026-08-19): max REQUESTS_PER_HOUR audits/hour/IP, fixed hourly
+//     window. Both checks fail OPEN (allow the request) if their env
+//     binding is missing, so a misconfigured deploy degrades gracefully
+//     instead of taking the whole tool down.
 
 const MAX_BYTES = 3 * 1024 * 1024;
 const FETCH_TIMEOUT_MS = 8000;
+const REQUESTS_PER_HOUR = 8;
 // Keep in sync with the number of distinct checks in collectFindings() +
 // applySiteLevelFindings() below -- shown to the visitor as a credibility
 // signal, so it must stay an honest count, not a marketing number.
@@ -31,9 +39,10 @@ const BLOCKED_HOST_RE =
   /(^|\.)(localhost|local)$|^0\.0\.0\.0$|^127\.|^10\.|^192\.168\.|^169\.254\.|^172\.(1[6-9]|2\d|3[01])\.|^\[?::1\]?$|^\[?fc[0-9a-f]{2}:|^\[?fe80:/i;
 
 export async function onRequestPost(context) {
+  const { request, env } = context;
   let body;
   try {
-    body = await context.request.json();
+    body = await request.json();
   } catch {
     return json({ ok: false, error: "Invalid request." }, 400);
   }
@@ -41,6 +50,21 @@ export async function onRequestPost(context) {
   const targetUrl = validateUrl(body && body.url);
   if (!targetUrl) {
     return json({ ok: false, error: "Enter a valid http(s) website URL." }, 400);
+  }
+
+  const ip = request.headers.get("cf-connecting-ip") || "";
+
+  const withinLimit = await checkRateLimit(env, ip);
+  if (!withinLimit) {
+    return json(
+      { ok: false, error: `You've hit the free-audit limit for now (max ${REQUESTS_PER_HOUR} per hour). Try again later, or book a call for a full manual review.` },
+      429
+    );
+  }
+
+  const humanVerified = await verifyTurnstile(env, body && body.turnstileToken, ip);
+  if (!humanVerified) {
+    return json({ ok: false, error: "Bot verification failed. Please reload the page and try again." }, 403);
   }
 
   let res;
@@ -121,6 +145,51 @@ async function checkExists(url) {
 // Anything other than POST -> explicit 405 instead of a silent 404.
 export async function onRequestGet() {
   return json({ ok: false, error: "Use POST." }, 405);
+}
+
+// Fixed-hourly-window per-IP counter in KV. Not perfectly atomic under
+// concurrent requests from the same IP in the same window (KV read-then-write
+// isn't transactional), but that's an acceptable approximation for an abuse
+// deterrent, not a billing-grade limiter.
+async function checkRateLimit(env, ip) {
+  if (!env.AUDIT_KV || !ip) return true; // fail open if unbound or IP unknown
+  const bucket = Math.floor(Date.now() / 3600000);
+  const key = `rl:${ip}:${bucket}`;
+  let count = 0;
+  try {
+    const current = await env.AUDIT_KV.get(key);
+    count = current ? parseInt(current, 10) || 0 : 0;
+  } catch {
+    return true; // KV read failed -- don't block real visitors over it
+  }
+  if (count >= REQUESTS_PER_HOUR) return false;
+  try {
+    // A little over an hour so a request right at the window edge doesn't
+    // expire mid-check.
+    await env.AUDIT_KV.put(key, String(count + 1), { expirationTtl: 3900 });
+  } catch {
+    /* best-effort -- if the write fails, worst case is a slightly under-strict limit */
+  }
+  return true;
+}
+
+async function verifyTurnstile(env, token, ip) {
+  if (!env.TURNSTILE_SECRET_KEY) return true; // fail open if unconfigured
+  if (!token || typeof token !== "string") return false;
+  const form = new URLSearchParams();
+  form.set("secret", env.TURNSTILE_SECRET_KEY);
+  form.set("response", token);
+  if (ip) form.set("remoteip", ip);
+  try {
+    const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      body: form,
+    });
+    const data = await res.json();
+    return data && data.success === true;
+  } catch {
+    return false;
+  }
 }
 
 function validateUrl(raw) {

@@ -1977,6 +1977,7 @@ a.card:hover .card-media img { transform: scale(1.06); }
 }
 .audit-consent input { margin-top: 3px; flex-shrink: 0; }
 .audit-consent a { color: var(--brand); }
+.audit-turnstile { margin: 4px 0 18px; }
 .audit-submit { width: 100%; justify-content: center; }
 .audit-fineprint { margin-top: 14px; font-size: .78rem; color: var(--muted); text-align: center; }
 
@@ -1999,6 +2000,13 @@ a.card:hover .card-media img { transform: scale(1.06); }
 .audit-score-copy h2 { margin: 0 0 4px; font-size: 1.1rem; }
 .audit-score-copy p { margin: 0; color: var(--muted); font-size: .88rem; word-break: break-all; }
 .audit-checks-run { margin-top: 4px !important; font-size: .8rem !important; }
+
+.audit-priorities {
+  margin: 0 0 28px; padding: 20px 24px; border-radius: var(--radius-lg);
+  background: rgba(220, 38, 38, .06); border: 1px solid rgba(220, 38, 38, .18);
+}
+.audit-priorities h3 { margin: 0 0 10px; font-size: .95rem; color: #dc2626; }
+.audit-priorities ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: .92rem; }
 
 .audit-findings { margin: 0 0 32px; display: grid; gap: 26px; }
 .audit-category h3 {
