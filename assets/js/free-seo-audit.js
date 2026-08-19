@@ -23,15 +23,21 @@
   var status = document.getElementById('audit-status');
   var resultsEl = document.getElementById('audit-results');
   var ringEl = document.getElementById('audit-score-ring');
+  var gradeEl = document.getElementById('audit-score-grade');
   var scoreNumEl = document.getElementById('audit-score-num');
+  var scoreLabelEl = document.getElementById('audit-score-label');
   var scoreUrlEl = document.getElementById('audit-score-url');
   var checksRunEl = document.getElementById('audit-checks-run');
+  var categoryScoresEl = document.getElementById('audit-category-scores');
+  var radarEl = document.getElementById('audit-radar');
+  var basicsEl = document.getElementById('audit-basics');
   var prioritiesEl = document.getElementById('audit-priorities');
   var findingsEl = document.getElementById('audit-findings');
 
   // Display order for category groups -- most-actionable-first, matching
   // how most SEO audit tools sequence a report.
   var CATEGORY_ORDER = ['Technical', 'On-Page', 'Content', 'Structured Data', 'Social', 'Security'];
+  var CATEGORY_SHORT = { 'Technical': 'Technical', 'On-Page': 'On-Page', 'Content': 'Content', 'Structured Data': 'Schema', 'Social': 'Social', 'Security': 'Security' };
 
   function setStatus(kind, msg) {
     if (!status) return;
@@ -43,6 +49,14 @@
     if (score >= 80) return '#16a34a';
     if (score >= 50) return '#ca8a04';
     return '#dc2626';
+  }
+
+  function scoreLabelFor(score) {
+    if (score >= 90) return 'Excellent — this page is in great shape';
+    if (score >= 80) return 'This page is good';
+    if (score >= 70) return 'This page is okay, but could be better';
+    if (score >= 50) return 'This page needs work';
+    return 'This page needs significant work';
   }
 
   function buildFindingItem(f) {
@@ -58,14 +72,118 @@
     return item;
   }
 
+  function renderCategoryScores(categoryScores) {
+    categoryScoresEl.innerHTML = '';
+    CATEGORY_ORDER.forEach(function (cat) {
+      var score = categoryScores && (cat in categoryScores) ? categoryScores[cat] : 100;
+      var item = document.createElement('div');
+      item.className = 'audit-cat-score';
+      var ring = document.createElement('div');
+      ring.className = 'audit-cat-ring';
+      ring.style.setProperty('--audit-score', score);
+      ring.style.setProperty('--audit-ring-color', ringColorFor(score));
+      var grade = document.createElement('span');
+      grade.textContent = letterGrade(score);
+      ring.appendChild(grade);
+      var label = document.createElement('span');
+      label.className = 'audit-cat-label';
+      label.textContent = cat;
+      item.appendChild(ring);
+      item.appendChild(label);
+      categoryScoresEl.appendChild(item);
+    });
+  }
+
+  function letterGrade(score) {
+    if (score >= 97) return 'A+';
+    if (score >= 93) return 'A';
+    if (score >= 90) return 'A-';
+    if (score >= 87) return 'B+';
+    if (score >= 83) return 'B';
+    if (score >= 80) return 'B-';
+    if (score >= 77) return 'C+';
+    if (score >= 73) return 'C';
+    if (score >= 70) return 'C-';
+    if (score >= 60) return 'D';
+    return 'F';
+  }
+
+  function renderRadar(categoryScores) {
+    var cx = 140, cy = 120, maxR = 88;
+    var n = CATEGORY_ORDER.length;
+    var angleFor = function (i) { return -Math.PI / 2 + i * (2 * Math.PI / n); };
+    var pointAt = function (i, r) {
+      var a = angleFor(i);
+      return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+    };
+    var svg = '';
+    // Background grid rings at 25/50/75/100%.
+    [0.25, 0.5, 0.75, 1].forEach(function (pct) {
+      var pts = [];
+      for (var i = 0; i < n; i++) pts.push(pointAt(i, maxR * pct).join(','));
+      svg += '<polygon points="' + pts.join(' ') + '" fill="none" stroke="var(--border)" stroke-width="1"/>';
+    });
+    // Axis lines.
+    for (var i = 0; i < n; i++) {
+      var p = pointAt(i, maxR);
+      svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + p[0] + '" y2="' + p[1] + '" stroke="var(--border)" stroke-width="1"/>';
+    }
+    // Data polygon.
+    var dataPts = CATEGORY_ORDER.map(function (cat, i) {
+      var score = categoryScores && (cat in categoryScores) ? categoryScores[cat] : 100;
+      return pointAt(i, maxR * (score / 100));
+    });
+    svg += '<polygon points="' + dataPts.map(function (p) { return p.join(','); }).join(' ') + '" fill="rgba(201,162,39,.28)" stroke="#c9a227" stroke-width="2"/>';
+    dataPts.forEach(function (p) {
+      svg += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3" fill="#c9a227"/>';
+    });
+    // Labels, nudged outward from each axis point.
+    CATEGORY_ORDER.forEach(function (cat, i) {
+      var p = pointAt(i, maxR + 22);
+      var anchor = Math.abs(p[0] - cx) < 4 ? 'middle' : (p[0] > cx ? 'start' : 'end');
+      svg += '<text x="' + p[0] + '" y="' + p[1] + '" text-anchor="' + anchor + '" dominant-baseline="middle" font-size="11" fill="var(--muted)" font-family="Inter, sans-serif">' + CATEGORY_SHORT[cat] + '</text>';
+    });
+    radarEl.innerHTML = svg;
+  }
+
+  function basicRow(label, value) {
+    var row = document.createElement('div');
+    row.className = 'audit-basic-row';
+    var l = document.createElement('span');
+    l.className = 'audit-basic-label';
+    l.textContent = label;
+    var v = document.createElement('span');
+    v.className = 'audit-basic-value';
+    v.textContent = value;
+    row.appendChild(l);
+    row.appendChild(v);
+    return row;
+  }
+
+  function renderBasics(extracted) {
+    basicsEl.innerHTML = '<h3>What we found on the page</h3>';
+    if (!extracted) { basicsEl.hidden = true; return; }
+    basicsEl.hidden = false;
+    basicsEl.appendChild(basicRow('Title tag', extracted.title ? '"' + extracted.title + '" (' + extracted.title.length + ' chars)' : 'Not found'));
+    basicsEl.appendChild(basicRow('Meta description', extracted.description ? '"' + extracted.description + '" (' + extracted.description.length + ' chars)' : 'Not found'));
+    basicsEl.appendChild(basicRow('Word count', String(extracted.wordCount)));
+    basicsEl.appendChild(basicRow('Images found', String(extracted.imageCount)));
+    basicsEl.appendChild(basicRow('H1 headings', String(extracted.h1Count)));
+  }
+
   function renderResults(data) {
-    scoreNumEl.textContent = data.score;
+    gradeEl.textContent = data.grade || letterGrade(data.score);
+    scoreNumEl.textContent = data.score + '/100';
+    scoreLabelEl.textContent = scoreLabelFor(data.score);
     scoreUrlEl.textContent = data.url;
     ringEl.style.setProperty('--audit-score', data.score);
     ringEl.style.setProperty('--audit-ring-color', ringColorFor(data.score));
     if (checksRunEl && data.checksRun) {
       checksRunEl.textContent = data.checksRun + ' checks run across Technical, On-Page, Content, Structured Data, Social & Security';
     }
+    renderCategoryScores(data.categoryScores);
+    renderRadar(data.categoryScores);
+    renderBasics(data.extracted);
 
     var topPriorities = data.findings.filter(function (f) {
       return f.severity === 'critical' || f.severity === 'high';

@@ -114,6 +114,8 @@ export async function onRequestPost(context) {
 
   applySiteLevelFindings(result.findings, { isHttps, hstsPresent, robotsOk, sitemapOk, responseMs });
   result.score = recomputeScore(result.findings);
+  result.grade = letterGrade(result.score);
+  result.categoryScores = computeCategoryScores(result.findings);
 
   return json({ ok: true, url: targetUrl, checksRun: TOTAL_CHECKS, ...result });
 }
@@ -335,7 +337,16 @@ async function auditHtml(res) {
     }
   }
 
-  return { findings: collectFindings(state) };
+  return {
+    findings: collectFindings(state),
+    extracted: {
+      title: state.title.trim(),
+      description: (state.meta["description"] || "").trim(),
+      h1Count: state.h1Count,
+      wordCount: state.bodyWords,
+      imageCount: state.imgTotal,
+    },
+  };
 }
 
 // Categories match the grouping convention used across most SEO audit
@@ -422,11 +433,42 @@ function applySiteLevelFindings(findings, { isHttps, hstsPresent, robotsOk, site
   }
 }
 
+const SEVERITY_WEIGHT = { critical: 25, high: 15, medium: 8, low: 3, info: 0 };
+// Fixed set so every category always appears in the response (as a clean
+// 100) even when it has zero findings -- the frontend renders one ring per
+// entry here, and a category silently missing would look like a bug, not
+// a compliment.
+const CATEGORIES = ["Technical", "On-Page", "Content", "Structured Data", "Social", "Security"];
+
 function computeScore(findings) {
-  const weight = { critical: 25, high: 15, medium: 8, low: 3, info: 0 };
   let score = 100;
-  for (const f of findings) score -= weight[f.severity] || 0;
+  for (const f of findings) score -= SEVERITY_WEIGHT[f.severity] || 0;
   return Math.max(0, Math.min(100, score));
+}
+
+function computeCategoryScores(findings) {
+  const scores = {};
+  for (const cat of CATEGORIES) scores[cat] = 100;
+  for (const f of findings) {
+    const cat = f.category || "Other";
+    if (!(cat in scores)) scores[cat] = 100;
+    scores[cat] = Math.max(0, scores[cat] - (SEVERITY_WEIGHT[f.severity] || 0));
+  }
+  return scores;
+}
+
+function letterGrade(score) {
+  if (score >= 97) return "A+";
+  if (score >= 93) return "A";
+  if (score >= 90) return "A-";
+  if (score >= 87) return "B+";
+  if (score >= 83) return "B";
+  if (score >= 80) return "B-";
+  if (score >= 77) return "C+";
+  if (score >= 73) return "C";
+  if (score >= 70) return "C-";
+  if (score >= 60) return "D";
+  return "F";
 }
 
 function recomputeScore(findings) {
