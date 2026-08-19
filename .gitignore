@@ -35,3 +35,7 @@ _preview.html
 # ChatGPT review notes & GSC performance exports — internal, not for public repo
 chatgpttodo.txt
 *.zip
+
+# Local SEO audit reports (scripts/seo_audit.py) — internal working output,
+# not for the public repo / live site
+_seo-reports/
