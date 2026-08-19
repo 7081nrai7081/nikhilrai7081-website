@@ -1,0 +1,9 @@
+{
+  "base_url": "https://nikhilrai7081.com",
+  "exclude_dirs": ["_drafts", "_queue", "assets", "scripts", "screenshots"],
+  "exclude_files": ["blog-template.html", "_preview.html"],
+  "known_intentional_noindex": {
+    "plotmitra/index.html": "noindex,follow since commit 7af9f21 (2026-07-28) -- Plot Mitra soft-launch, not yet meant to be indexed",
+    "plotmitra/privacy.html": "noindex,follow since commit 7af9f21 (2026-07-28) -- same as plotmitra/index.html"
+  }
+}
