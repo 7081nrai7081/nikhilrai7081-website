@@ -45,6 +45,10 @@ const FETCH_TIMEOUT_MS = 8000;
 const REQUESTS_PER_HOUR = 8;
 const BLOCKED_HOST_RE =
   /(^|\.)(localhost|local)$|^0\.0\.0\.0$|^127\.|^10\.|^192\.168\.|^169\.254\.|^172\.(1[6-9]|2\d|3[01])\.|^\[?::1\]?$|^\[?fc[0-9a-f]{2}:|^\[?fe80:/i;
+// Sole/full link text that tells a reader nothing about where the link
+// goes -- flagged, not penalized much (severity is "low"), since it's a
+// style nit rather than a functional problem.
+const GENERIC_ANCHOR_TEXTS = new Set(["click here", "here", "this link", "read more", "more", "link"]);
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -109,14 +113,23 @@ export async function onRequestPost(context) {
     frameProtection: res.headers.has("x-frame-options") || /frame-ancestors/i.test(res.headers.get("content-security-policy") || ""),
     referrerPolicy: res.headers.has("referrer-policy"),
   };
+  const hasCacheControl = res.headers.has("cache-control");
+  // No "is this response gzip/brotli compressed" check: Workers' fetch()
+  // transparently decompresses the body and strips Content-Encoding from
+  // the Response we see, even for origins that verifiably do compress
+  // (confirmed against real sites via curl -H "Accept-Encoding: gzip, br"
+  // vs what this Function saw -- always empty). A check that always fails
+  // regardless of the truth is worse than no check; don't re-add this
+  // without a way to see the real header.
 
   // Cheap, parallel, best-effort checks against the same origin -- each one
   // is wrapped so a timeout/404/network hiccup on either just means "not
   // found", not a failed audit.
   const origin = new URL(finalUrl).origin;
-  const [robots, sitemap] = await Promise.all([
+  const [robots, sitemap, hasDoctype] = await Promise.all([
     checkRobots(origin),
     checkSitemap(origin),
+    peekDoctype(res.clone()),
   ]);
 
   let state;
@@ -142,6 +155,8 @@ export async function onRequestPost(context) {
     responseMs,
     faviconFallbackOk,
     canonical: buildCanonicalInfo(state.canonical, finalUrl),
+    hasCacheControl,
+    hasDoctype,
   };
 
   const results = CHECKS.map((c) => {
@@ -288,6 +303,24 @@ function robotsDisallowsAll(text) {
   return sawWildcardGroup && hasRootDisallow && !hasOverridingAllow;
 }
 
+// Reads just enough of a (cloned) response body to tell whether the page
+// declares an HTML5 doctype. HTMLRewriter has no doctype event, so this
+// peeks the raw stream directly instead. Cheap: stops after the first
+// chunk, well before any real content.
+async function peekDoctype(clonedRes) {
+  try {
+    if (!clonedRes.body) return false;
+    const reader = clonedRes.body.getReader();
+    const { value } = await reader.read();
+    reader.cancel().catch(() => {});
+    if (!value) return false;
+    const prefix = new TextDecoder().decode(value.slice(0, 100));
+    return /^\s*<!doctype\s+html/i.test(prefix);
+  } catch {
+    return false;
+  }
+}
+
 async function checkSitemap(origin) {
   const text = await fetchTextSmall(origin + "/sitemap.xml");
   if (text === null) return { exists: false, looksValid: false };
@@ -392,13 +425,36 @@ function json(obj, status = 200) {
   });
 }
 
+const NAMED_ENTITIES = {
+  amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ",
+  mdash: "—", ndash: "–", rsquo: "’", lsquo: "‘",
+  rdquo: "”", ldquo: "“", hellip: "…",
+};
+// HTMLRewriter hands back attribute values as raw source bytes -- it does
+// NOT decode HTML entities the way a browser's DOM parser does. Without
+// this, a title/description written with &#39; or &rsquo; in the source
+// (common; some CMSes always encode apostrophes) shows up literally in the
+// report instead of as the punctuation it represents.
+function decodeEntities(str) {
+  if (!str) return str;
+  return str.replace(/&(#x?[0-9a-fA-F]+|[a-zA-Z]+);/g, (whole, ent) => {
+    if (ent[0] === "#") {
+      const code = ent[1] === "x" || ent[1] === "X" ? parseInt(ent.slice(2), 16) : parseInt(ent.slice(1), 10);
+      return Number.isFinite(code) ? String.fromCodePoint(code) : whole;
+    }
+    return ent in NAMED_ENTITIES ? NAMED_ENTITIES[ent] : whole;
+  });
+}
+
 // Streams and parses the page once with HTMLRewriter, collecting the raw
 // signals every check in the CHECKS registry below reads from. Pure
 // extraction only -- no pass/fail judgment happens here.
 async function parseHtml(res, { isHttps, origin, finalUrl }) {
   const state = {
     title: "",
+    titleCount: 0,
     meta: {},
+    metaDescriptionCount: 0,
     hasCharset: false,
     canonical: null,
     h1Count: 0,
@@ -406,15 +462,22 @@ async function parseHtml(res, { isHttps, origin, finalUrl }) {
     lang: null,
     imgTotal: 0,
     imgMissingAlt: 0,
+    imgMissingDimensions: 0,
     hasFaviconLink: false,
     mixedContentCount: 0,
     internalLinks: 0,
     externalLinks: 0,
+    genericAnchorTextCount: 0,
+    hiddenLinksCount: 0,
+    hreflangTags: [],
     ldjsonBlocks: [],
     bodyWords: 0,
     looksLikeSPA: false,
+    domElementCount: 0,
+    renderBlockingScripts: 0,
   };
   let currentLdBuf = null;
+  let currentAnchorText = null;
   const isHttpUrl = (v) => typeof v === "string" && /^http:\/\//i.test(v);
 
   const rewriter = new HTMLRewriter()
@@ -423,9 +486,17 @@ async function parseHtml(res, { isHttps, origin, finalUrl }) {
         state.lang = el.getAttribute("lang");
       },
     })
-    .on("title", {
+    // Scoped to "head title", not bare "title" -- inline SVG icons commonly
+    // carry their own <title> elements for accessibility (e.g. GitHub's
+    // icon set), and those aren't the document title. Matching bare "title"
+    // was corrupting both the extracted title and the title-length/
+    // duplicate-title checks on any page using accessible SVG icons.
+    .on("head title", {
+      element() {
+        state.titleCount++;
+      },
       text(t) {
-        state.title += t.text;
+        state.title += decodeEntities(t.text);
       },
     })
     .on("meta", {
@@ -433,7 +504,8 @@ async function parseHtml(res, { isHttps, origin, finalUrl }) {
         if (el.getAttribute("charset") !== null) state.hasCharset = true;
         if ((el.getAttribute("http-equiv") || "").toLowerCase() === "content-type") state.hasCharset = true;
         const key = (el.getAttribute("name") || el.getAttribute("property") || "").toLowerCase();
-        if (key) state.meta[key] = el.getAttribute("content") || "";
+        if (key === "description") state.metaDescriptionCount++;
+        if (key) state.meta[key] = decodeEntities(el.getAttribute("content") || "");
       },
     })
     .on("link", {
@@ -442,6 +514,20 @@ async function parseHtml(res, { isHttps, origin, finalUrl }) {
         if (rel === "canonical") state.canonical = el.getAttribute("href");
         if (rel.includes("icon")) state.hasFaviconLink = true;
         if (rel === "stylesheet" && isHttps && isHttpUrl(el.getAttribute("href"))) state.mixedContentCount++;
+        if (rel === "alternate") {
+          const hreflang = el.getAttribute("hreflang");
+          if (hreflang) state.hreflangTags.push({ hreflang, href: el.getAttribute("href") });
+        }
+      },
+    })
+    .on("head script[src]", {
+      element(el) {
+        if (!el.hasAttribute("async") && !el.hasAttribute("defer")) state.renderBlockingScripts++;
+      },
+    })
+    .on("*", {
+      element() {
+        state.domElementCount++;
       },
     })
     .on("h1", {
@@ -458,6 +544,7 @@ async function parseHtml(res, { isHttps, origin, finalUrl }) {
       element(el) {
         state.imgTotal++;
         if (el.getAttribute("alt") === null) state.imgMissingAlt++;
+        if (!el.getAttribute("width") || !el.getAttribute("height")) state.imgMissingDimensions++;
         if (isHttps && isHttpUrl(el.getAttribute("src"))) state.mixedContentCount++;
       },
     })
@@ -468,6 +555,20 @@ async function parseHtml(res, { isHttps, origin, finalUrl }) {
     })
     .on("a", {
       element(el) {
+        const style = (el.getAttribute("style") || "").toLowerCase();
+        const isHiddenStyle = /display\s*:\s*none/.test(style) || /visibility\s*:\s*hidden/.test(style);
+        currentAnchorText = "";
+        el.onEndTag(() => {
+          if (currentAnchorText !== null) {
+            const text = currentAnchorText.trim().toLowerCase();
+            if (text) {
+              if (isHiddenStyle) state.hiddenLinksCount++;
+              if (GENERIC_ANCHOR_TEXTS.has(text)) state.genericAnchorTextCount++;
+            }
+            currentAnchorText = null;
+          }
+        });
+
         const href = el.getAttribute("href");
         if (!href) return;
         if (/^(mailto|tel|javascript):/i.test(href)) return;
@@ -479,6 +580,9 @@ async function parseHtml(res, { isHttps, origin, finalUrl }) {
         } catch {
           /* unparseable href -- ignore rather than miscount */
         }
+      },
+      text(t) {
+        if (currentAnchorText !== null) currentAnchorText += t.text;
       },
     })
     .on('div[id="root"], div[id="app"], div[id="__next"], div[id="__nuxt"]', {
@@ -874,6 +978,139 @@ const CHECKS = [
       if (ctx.state.hasFaviconLink || ctx.faviconFallbackOk) return pass();
       return fail("info", 'No favicon found (no <link rel="icon"> in the HTML and /favicon.ico is missing) -- minor polish item for browser tabs, bookmarks and search result branding.');
     },
+  },
+  {
+    id: "doctype",
+    category: "Technical",
+    label: "HTML5 doctype declared",
+    run: (ctx) => (ctx.hasDoctype ? pass() : fail("low", "No <!DOCTYPE html> declaration found -- without it, browsers can fall back to quirks mode and render the page inconsistently.")),
+  },
+  {
+    id: "unique-title",
+    category: "Technical",
+    label: "Only one <title> tag",
+    run: (ctx) => {
+      if (ctx.state.titleCount === 0) return na();
+      return ctx.state.titleCount > 1
+        ? fail("medium", `${ctx.state.titleCount} <title> tags found -- there should be exactly one; extras can confuse which title search engines use.`)
+        : pass();
+    },
+  },
+  {
+    id: "unique-meta-description",
+    category: "Technical",
+    label: "Only one meta description tag",
+    run: (ctx) => {
+      if (ctx.state.metaDescriptionCount === 0) return na();
+      return ctx.state.metaDescriptionCount > 1
+        ? fail("low", `${ctx.state.metaDescriptionCount} meta description tags found -- there should be exactly one; search engines will only use one of them anyway.`)
+        : pass();
+    },
+  },
+  {
+    id: "og-type",
+    category: "Social",
+    label: "og:type present",
+    run: (ctx) => ("og:type" in ctx.state.meta ? pass() : fail("info", "Missing og:type -- helps social platforms classify this page (e.g. \"website\" or \"article\").")),
+  },
+  {
+    id: "og-url",
+    category: "Social",
+    label: "og:url present",
+    run: (ctx) => ("og:url" in ctx.state.meta ? pass() : fail("info", "Missing og:url -- tells social platforms the canonical URL to credit when this page is shared.")),
+  },
+  {
+    id: "viewport-zoom",
+    category: "Technical",
+    label: "Viewport allows pinch-to-zoom",
+    run: (ctx) => {
+      if (!("viewport" in ctx.state.meta)) return na();
+      const v = (ctx.state.meta.viewport || "").toLowerCase();
+      return /user-scalable\s*=\s*no|maximum-scale\s*=\s*1(\.0)?\b/.test(v)
+        ? fail("low", "Viewport meta tag disables pinch-to-zoom (user-scalable=no or maximum-scale=1) -- an accessibility problem for users who need to zoom in.")
+        : pass();
+    },
+  },
+  {
+    id: "url-length",
+    category: "Technical",
+    label: "URL length is reasonable",
+    run: (ctx) =>
+      ctx.finalUrl.length > 115
+        ? fail("low", `This URL is ${ctx.finalUrl.length} characters -- long URLs can get truncated in search results and are harder to share cleanly.`)
+        : pass(),
+  },
+  {
+    id: "cache-control",
+    category: "Technical",
+    label: "Cache-Control header present",
+    run: (ctx) => (ctx.hasCacheControl ? pass() : fail("info", "No Cache-Control header on this page -- without one, browsers and CDNs fall back to their own heuristics for how long to cache it.")),
+  },
+  {
+    id: "render-blocking-scripts",
+    category: "Technical",
+    label: "No render-blocking scripts in <head>",
+    run: (ctx) =>
+      ctx.state.renderBlockingScripts === 0
+        ? pass()
+        : fail("low", `${ctx.state.renderBlockingScripts} script(s) in <head> load without async or defer -- they block the page from rendering until each one downloads and runs.`),
+  },
+  {
+    id: "dom-size",
+    category: "Technical",
+    label: "DOM size is reasonable",
+    run: (ctx) =>
+      ctx.state.domElementCount > 3000
+        ? fail("low", `Large DOM: about ${ctx.state.domElementCount} HTML elements on this page -- very large DOMs slow down rendering and JavaScript execution.`)
+        : pass(),
+  },
+  {
+    id: "hreflang-self-reference",
+    category: "Technical",
+    label: "hreflang tags include a self-reference",
+    run: (ctx) => {
+      if (ctx.state.hreflangTags.length === 0) return na();
+      const normalize = (u) => u.replace(/\/$/, "");
+      const hasSelf = ctx.state.hreflangTags.some((h) => {
+        try {
+          return normalize(new URL(h.href, ctx.finalUrl).toString()) === normalize(ctx.finalUrl);
+        } catch {
+          return false;
+        }
+      });
+      return hasSelf
+        ? pass()
+        : fail("low", "hreflang tags are present but none of them reference this exact page -- each language/region version should include a self-referencing hreflang entry.");
+    },
+  },
+  {
+    id: "image-dimensions",
+    category: "Content",
+    label: "Images specify width and height",
+    run: (ctx) => {
+      if (ctx.state.imgTotal === 0) return na();
+      return ctx.state.imgMissingDimensions > 0
+        ? fail("info", `${ctx.state.imgMissingDimensions} of ${ctx.state.imgTotal} image(s) are missing width/height attributes -- without them, the browser can't reserve space in advance and the page can jump as images load.`)
+        : pass();
+    },
+  },
+  {
+    id: "descriptive-link-text",
+    category: "On-Page",
+    label: "Links use descriptive text",
+    run: (ctx) =>
+      ctx.state.genericAnchorTextCount === 0
+        ? pass()
+        : fail("low", `${ctx.state.genericAnchorTextCount} link(s) use generic text like "click here" or "read more" as their entire link text -- descriptive link text helps both users and search engines understand where a link goes.`),
+  },
+  {
+    id: "hidden-links",
+    category: "Security",
+    label: "No hidden/cloaked links",
+    run: (ctx) =>
+      ctx.state.hiddenLinksCount === 0
+        ? pass()
+        : fail("medium", `${ctx.state.hiddenLinksCount} link(s) found styled with display:none or visibility:hidden while still containing text -- this is a common spam/cloaking pattern search engines penalize, even if done unintentionally.`),
   },
 ];
 
