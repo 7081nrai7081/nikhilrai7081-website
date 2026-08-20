@@ -39,3 +39,9 @@ chatgpttodo.txt
 # Local SEO audit reports (scripts/seo_audit.py) — internal working output,
 # not for the public repo / live site
 _seo-reports/
+
+# Local secrets for `wrangler pages dev` (e.g. PAGESPEED_API_KEY) — never commit
+.dev.vars
+
+# wrangler's local dev cache/state
+.wrangler/

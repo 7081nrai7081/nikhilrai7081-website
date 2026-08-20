@@ -36,6 +36,9 @@
   var checklistToggleEl = document.getElementById('audit-checklist-toggle');
   var checklistToggleCountEl = document.getElementById('audit-checklist-toggle-count');
   var checklistEl = document.getElementById('audit-checklist');
+  var perfEl = document.getElementById('audit-performance');
+  var perfBodyEl = document.getElementById('audit-perf-body');
+  var keywordReportEl = document.getElementById('audit-keyword-report');
 
   // Display order for category groups -- most-actionable-first, matching
   // how most SEO audit tools sequence a report.
@@ -255,6 +258,148 @@
     });
   }
 
+  function buildKwItem(label, present) {
+    return buildChecklistItem({ status: present ? 'pass' : 'fail', severity: 'info', label: label, message: null });
+  }
+
+  function renderKeywordReport(report) {
+    if (!keywordReportEl) return;
+    keywordReportEl.innerHTML = '';
+    if (!report) { keywordReportEl.hidden = true; return; }
+    keywordReportEl.hidden = false;
+
+    var h3 = document.createElement('h3');
+    h3.appendChild(document.createTextNode('Keyword Optimization: '));
+    var term = document.createElement('span');
+    term.className = 'audit-kw-term';
+    term.textContent = '"' + report.keyword + '"';
+    h3.appendChild(term);
+    keywordReportEl.appendChild(h3);
+
+    var list = document.createElement('ul');
+    list.className = 'audit-check-list';
+    list.appendChild(buildKwItem('Keyword in title tag', report.inTitle));
+    list.appendChild(buildKwItem('Keyword in H1 heading', report.inH1));
+    list.appendChild(buildKwItem('Keyword in meta description', report.inMetaDescription));
+    list.appendChild(buildKwItem('Keyword in URL', report.inUrl));
+    list.appendChild(buildKwItem('Keyword in first ~150 words', report.inFirstParagraph));
+    keywordReportEl.appendChild(list);
+
+    var note = '';
+    if (report.occurrences === 0) note = ' — not found in the visible body text at all.';
+    else if (report.density > 3) note = ' — that’s on the high side; over-repeating a keyword can read as stuffing to search engines.';
+    var density = document.createElement('p');
+    density.className = 'audit-kw-density';
+    density.textContent = report.occurrences + ' occurrence(s) across ' + report.totalWords + ' words (' + report.density + '% density)' + note;
+    keywordReportEl.appendChild(density);
+  }
+
+  function perfColorFor(score) {
+    if (score === null || score === undefined) return 'var(--muted)';
+    if (score >= 90) return '#16a34a';
+    if (score >= 50) return '#ca8a04';
+    return '#dc2626';
+  }
+
+  function perfMetricRow(name, labText, fieldEntry) {
+    var li = document.createElement('li');
+    var l = document.createElement('span');
+    l.className = 'audit-perf-metric-label';
+    l.textContent = name;
+    var v = document.createElement('span');
+    v.textContent = labText || '—';
+    if (fieldEntry) {
+      var badge = document.createElement('span');
+      badge.className = 'audit-perf-field-badge';
+      badge.textContent = 'Real users';
+      v.appendChild(badge);
+    }
+    li.appendChild(l);
+    li.appendChild(v);
+    return li;
+  }
+
+  function buildPerfCol(label, result) {
+    var col = document.createElement('div');
+    col.className = 'audit-perf-col';
+
+    var head = document.createElement('div');
+    head.className = 'audit-perf-col-head';
+
+    var scoreVal = result && typeof result.score === 'number' ? result.score : null;
+    var scoreEl = document.createElement('div');
+    scoreEl.className = 'audit-perf-score';
+    scoreEl.style.setProperty('--audit-perf-score', String(scoreVal === null ? 0 : scoreVal));
+    scoreEl.style.setProperty('--audit-perf-color', perfColorFor(scoreVal));
+    var scoreInner = document.createElement('span');
+    scoreInner.textContent = scoreVal === null ? '—' : String(scoreVal);
+    scoreEl.appendChild(scoreInner);
+
+    var labelEl = document.createElement('div');
+    labelEl.className = 'audit-perf-col-label';
+    labelEl.textContent = label;
+
+    head.appendChild(scoreEl);
+    head.appendChild(labelEl);
+    col.appendChild(head);
+
+    if (!result) {
+      var unavailable = document.createElement('p');
+      unavailable.className = 'audit-perf-error';
+      unavailable.textContent = 'Not available for this page right now.';
+      col.appendChild(unavailable);
+      return col;
+    }
+
+    var lab = result.lab || {};
+    var field = result.field || {};
+    var metrics = document.createElement('ul');
+    metrics.className = 'audit-perf-metrics';
+    metrics.appendChild(perfMetricRow('LCP', lab.lcp, field.lcp));
+    metrics.appendChild(perfMetricRow('CLS', lab.cls, field.cls));
+    metrics.appendChild(perfMetricRow('Total Blocking Time', lab.tbt, null));
+    metrics.appendChild(perfMetricRow('First Contentful Paint', lab.fcp, null));
+    metrics.appendChild(perfMetricRow('Speed Index', lab.speedIndex, null));
+    col.appendChild(metrics);
+    return col;
+  }
+
+  function renderPerformance(perf) {
+    if (!perfBodyEl) return;
+    perfBodyEl.innerHTML = '';
+    var cols = document.createElement('div');
+    cols.className = 'audit-perf-cols';
+    cols.appendChild(buildPerfCol('Mobile', perf.mobile));
+    cols.appendChild(buildPerfCol('Desktop', perf.desktop));
+    perfBodyEl.appendChild(cols);
+  }
+
+  function hidePerf() {
+    if (perfEl) perfEl.hidden = true;
+  }
+
+  async function fetchPerformance(url) {
+    if (!perfEl || !perfBodyEl) return;
+    perfEl.hidden = false;
+    perfBodyEl.innerHTML = '<p class="audit-perf-loading">Running a live PageSpeed Insights check (Google’s own Lighthouse test) — this can take up to 30 seconds…</p>';
+    try {
+      var res = await fetch('/api/pagespeed', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url })
+      });
+      var data = await res.json();
+      if (!data.ok) {
+        if (data.unconfigured) { hidePerf(); return; }
+        perfBodyEl.innerHTML = '<p class="audit-perf-error">' + (data.error || 'Performance check unavailable right now.') + '</p>';
+        return;
+      }
+      renderPerformance(data);
+    } catch (err) {
+      perfBodyEl.innerHTML = '<p class="audit-perf-error">Performance check unavailable right now.</p>';
+    }
+  }
+
   function renderResults(data) {
     gradeEl.textContent = data.grade || letterGrade(data.score);
     scoreNumEl.textContent = data.score + '/100';
@@ -269,6 +414,7 @@
     renderRadar(data.categoryScores);
     renderBasics(data.extracted);
     renderChecklist(data.checklist);
+    renderKeywordReport(data.keywordReport);
 
     var topPriorities = data.findings.filter(function (f) {
       return f.severity === 'critical' || f.severity === 'high';
@@ -366,10 +512,11 @@
 
     // 2. The actual audit.
     try {
+      var keyword = formData.keyword ? String(formData.keyword).trim() : '';
       var res = await fetch('/api/audit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: url, turnstileToken: turnstileToken })
+        body: JSON.stringify({ url: url, turnstileToken: turnstileToken, keyword: keyword || undefined })
       });
       var data = await res.json();
       if (!data.ok) {
@@ -380,6 +527,10 @@
       setStatus('ok', 'Done — here’s what I found.');
       track('free_audit_completed', { audit_url: url, audit_score: data.score });
       renderResults(data);
+      // Fire-and-forget: fills in the Performance section once Google's
+      // Lighthouse run finishes, without holding up the rest of the report
+      // or re-disabling the submit button.
+      fetchPerformance(data.url);
     } catch (err) {
       setStatus('err', 'Network error while running the audit. Please try again.');
     } finally {

@@ -52,7 +52,7 @@ try{if(localStorage.getItem('cookie_consent')==='granted'){gtag('consent','updat
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/poppins-800.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/style.css?v=50">
+<link rel="stylesheet" href="assets/css/style.css?v=51">
 <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
 
 <!-- Turnstile (bot check for the audit form below) -->
@@ -142,6 +142,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <label for="au-url">Your website URL</label>
         <input id="au-url" type="url" name="url" required placeholder="https://example.com" autocomplete="url" inputmode="url">
       </div>
+      <div class="field">
+        <label for="au-keyword">Target keyword <span class="field-optional">(optional)</span></label>
+        <input id="au-keyword" type="text" name="keyword" placeholder="e.g. business development strategy" maxlength="80" autocomplete="off">
+      </div>
       <div class="audit-field-row">
         <div class="field">
           <label for="au-name">Name</label>
@@ -168,7 +172,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
       <p class="form-status" id="audit-status" role="status" aria-live="polite"></p>
-      <p class="audit-fineprint">50 checks across Technical, On-Page, Content, Structured Data, Social &amp; Security. Audits the page you enter — not your whole site — and isn't a substitute for real Core Web Vitals or Search Console data.</p>
+      <p class="audit-fineprint">50 checks across Technical, On-Page, Content, Structured Data, Social &amp; Security, plus real Core Web Vitals from Google PageSpeed Insights. Audits the page you enter — not your whole site — and isn't a substitute for Search Console data or a full site crawl.</p>
     </form>
 
     <div class="audit-results" id="audit-results" hidden aria-live="polite">
@@ -191,7 +195,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
 
+      <div class="audit-performance" id="audit-performance" hidden>
+        <h3>Performance <span class="audit-perf-source">(real data via Google PageSpeed Insights)</span></h3>
+        <div class="audit-perf-body" id="audit-perf-body"></div>
+      </div>
+
       <div class="audit-basics" id="audit-basics"></div>
+
+      <div class="audit-keyword-report" id="audit-keyword-report" hidden></div>
 
       <div class="audit-priorities" id="audit-priorities" hidden></div>
       <div class="audit-findings" id="audit-findings"></div>
@@ -240,7 +251,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </footer>
 
 <script src="assets/js/main.js?v=47"></script>
-<script src="assets/js/free-seo-audit.js?v=6"></script>
+<script src="assets/js/free-seo-audit.js?v=7"></script>
 
 </body>
 </html>

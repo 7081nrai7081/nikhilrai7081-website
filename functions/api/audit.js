@@ -63,6 +63,7 @@ export async function onRequestPost(context) {
   if (!targetUrl) {
     return json({ ok: false, error: "Enter a valid http(s) website URL." }, 400);
   }
+  const keyword = sanitizeKeyword(body && body.keyword);
 
   const ip = request.headers.get("cf-connecting-ip") || "";
 
@@ -134,7 +135,7 @@ export async function onRequestPost(context) {
 
   let state;
   try {
-    state = await parseHtml(res, { isHttps, origin, finalUrl });
+    state = await parseHtml(res, { isHttps, origin, finalUrl, keyword });
   } catch {
     return json({ ok: false, error: "Audit failed while reading that page." }, 500);
   }
@@ -190,6 +191,7 @@ export async function onRequestPost(context) {
     score,
     grade: letterGrade(score),
     categoryScores,
+    keywordReport: state.keywordReport || null,
     extracted: {
       title: state.title.trim(),
       description: (state.meta["description"] || "").trim(),
@@ -393,6 +395,19 @@ function validateUrl(raw) {
   return u.toString();
 }
 
+// Optional target-keyword field for the on-page keyword-optimization
+// report -- trimmed, newlines stripped, capped well short of anything a
+// real keyword phrase would need.
+function sanitizeKeyword(raw) {
+  if (!raw || typeof raw !== "string") return null;
+  const cleaned = raw.trim().replace(/[\r\n\t]+/g, " ").replace(/\s+/g, " ").slice(0, 80);
+  return cleaned || null;
+}
+
+function escapeRegex(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 async function fetchWithTimeout(url, ms) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), ms);
@@ -449,10 +464,11 @@ function decodeEntities(str) {
 // Streams and parses the page once with HTMLRewriter, collecting the raw
 // signals every check in the CHECKS registry below reads from. Pure
 // extraction only -- no pass/fail judgment happens here.
-async function parseHtml(res, { isHttps, origin, finalUrl }) {
+async function parseHtml(res, { isHttps, origin, finalUrl, keyword }) {
   const state = {
     title: "",
     titleCount: 0,
+    h1Text: "",
     meta: {},
     metaDescriptionCount: 0,
     hasCharset: false,
@@ -475,10 +491,14 @@ async function parseHtml(res, { isHttps, origin, finalUrl }) {
     looksLikeSPA: false,
     domElementCount: 0,
     renderBlockingScripts: 0,
+    keywordOccurrences: 0,
+    firstBodyText: "",
   };
   let currentLdBuf = null;
   let currentAnchorText = null;
   const isHttpUrl = (v) => typeof v === "string" && /^http:\/\//i.test(v);
+  const kwRegex = keyword ? new RegExp(escapeRegex(keyword), "gi") : null;
+  const FIRST_TEXT_CAP = 800;
 
   const rewriter = new HTMLRewriter()
     .on("html", {
@@ -533,6 +553,9 @@ async function parseHtml(res, { isHttps, origin, finalUrl }) {
     .on("h1", {
       element() {
         state.h1Count++;
+      },
+      text(t) {
+        state.h1Text += t.text;
       },
     })
     .on("h2", {
@@ -608,6 +631,13 @@ async function parseHtml(res, { isHttps, origin, finalUrl }) {
       text(t) {
         const words = t.text.match(/\S+/g);
         if (words) state.bodyWords += words.length;
+        if (kwRegex) {
+          const matches = t.text.match(kwRegex);
+          if (matches) state.keywordOccurrences += matches.length;
+        }
+        if (keyword && state.firstBodyText.length < FIRST_TEXT_CAP) {
+          state.firstBodyText += t.text;
+        }
       },
     });
 
@@ -630,6 +660,24 @@ async function parseHtml(res, { isHttps, origin, finalUrl }) {
     } catch {
       /* already released via cancel() */
     }
+  }
+
+  if (keyword) {
+    const kwLower = keyword.toLowerCase();
+    const kwHyphenated = kwLower.replace(/\s+/g, "-");
+    const kwJoined = kwLower.replace(/\s+/g, "");
+    const urlLower = finalUrl.toLowerCase();
+    state.keywordReport = {
+      keyword,
+      inTitle: state.title.toLowerCase().includes(kwLower),
+      inH1: state.h1Text.toLowerCase().includes(kwLower),
+      inMetaDescription: (state.meta.description || "").toLowerCase().includes(kwLower),
+      inUrl: urlLower.includes(kwHyphenated) || urlLower.includes(kwJoined) || urlLower.includes(kwLower),
+      inFirstParagraph: state.firstBodyText.toLowerCase().includes(kwLower),
+      occurrences: state.keywordOccurrences,
+      totalWords: state.bodyWords,
+      density: state.bodyWords > 0 ? Math.round((state.keywordOccurrences / state.bodyWords) * 10000) / 100 : 0,
+    };
   }
 
   return state;
