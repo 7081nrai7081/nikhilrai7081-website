@@ -29,15 +29,20 @@
 //     window. Both checks fail OPEN (allow the request) if their env
 //     binding is missing, so a misconfigured deploy degrades gracefully
 //     instead of taking the whole tool down.
+//
+// Checks: every distinct thing this tool evaluates is one entry in the
+// CHECKS registry near the bottom of this file -- each returns pass/fail/
+// n-a against a shared `ctx` built from the page fetch + parse below. That
+// single registry is the source of truth for both the score (only "fail"
+// rows count) AND the full pass/fail checklist returned to the frontend,
+// so the two can never drift out of sync. checksRun in the response is
+// CHECKS.length, not a hand-maintained number -- if you add/remove a check,
+// also update the "N checks" line in free-seo-audit.html (that one static
+// line is the only place left to update by hand).
 
 const MAX_BYTES = 3 * 1024 * 1024;
 const FETCH_TIMEOUT_MS = 8000;
 const REQUESTS_PER_HOUR = 8;
-// Keep in sync with the number of distinct checks in collectFindings() +
-// applySiteLevelFindings() + the standalone favicon/canonical checks below
-// -- shown to the visitor as a credibility signal, so it must stay an
-// honest count, not a marketing number.
-const TOTAL_CHECKS = 36;
 const BLOCKED_HOST_RE =
   /(^|\.)(localhost|local)$|^0\.0\.0\.0$|^127\.|^10\.|^192\.168\.|^169\.254\.|^172\.(1[6-9]|2\d|3[01])\.|^\[?::1\]?$|^\[?fc[0-9a-f]{2}:|^\[?fe80:/i;
 
@@ -114,33 +119,83 @@ export async function onRequestPost(context) {
     checkSitemap(origin),
   ]);
 
-  let result;
+  let state;
   try {
-    result = await auditHtml(res, { origin, finalUrl, isHttps });
+    state = await parseHtml(res, { isHttps, origin, finalUrl });
   } catch {
     return json({ ok: false, error: "Audit failed while reading that page." }, 500);
   }
 
   // Favicon is checked last and only if the page didn't already declare one
   // -- avoids a wasted extra fetch on the (common) case where it's linked.
-  if (!result.hasFaviconLink) {
-    const faviconOk = await checkExists(origin + "/favicon.ico");
-    if (!faviconOk) {
-      result.findings.push({
-        severity: "info",
-        category: "Technical",
-        message: "No favicon found (no <link rel=\"icon\"> in the HTML and /favicon.ico is missing) -- minor polish item for browser tabs, bookmarks and search result branding.",
-      });
-    }
+  const faviconFallbackOk = state.hasFaviconLink ? null : await checkExists(origin + "/favicon.ico");
+
+  const ctx = {
+    state,
+    finalUrl,
+    origin,
+    isHttps,
+    hstsPresent,
+    headerFlags,
+    robots,
+    sitemap,
+    responseMs,
+    faviconFallbackOk,
+    canonical: buildCanonicalInfo(state.canonical, finalUrl),
+  };
+
+  const results = CHECKS.map((c) => {
+    const r = c.run(ctx);
+    return { id: c.id, category: c.category, label: c.label, status: r.status, severity: r.severity || null, message: r.message || null };
+  });
+
+  const findings = results
+    .filter((r) => r.status === "fail")
+    .map((r) => ({ severity: r.severity, category: r.category, message: r.message }))
+    .sort((a, b) => SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity]);
+
+  const checklist = results.map((r) => ({
+    id: r.id,
+    category: r.category,
+    label: r.label,
+    status: r.status,
+    severity: r.severity,
+    message: r.message,
+  }));
+
+  const score = computeScore(findings);
+  const categoryScores = computeCategoryScores(findings);
+
+  return json({
+    ok: true,
+    url: targetUrl,
+    checksRun: CHECKS.length,
+    findings,
+    checklist,
+    score,
+    grade: letterGrade(score),
+    categoryScores,
+    extracted: {
+      title: state.title.trim(),
+      description: (state.meta["description"] || "").trim(),
+      h1Count: state.h1Count,
+      wordCount: state.bodyWords,
+      imageCount: state.imgTotal,
+      internalLinks: state.internalLinks,
+      externalLinks: state.externalLinks,
+    },
+  });
+}
+
+function buildCanonicalInfo(canonicalHref, finalUrl) {
+  if (!canonicalHref) return { present: false };
+  try {
+    const resolved = new URL(canonicalHref, finalUrl).toString();
+    const normalize = (u) => u.replace(/\/$/, "");
+    return { present: true, resolved, matches: normalize(resolved) === normalize(finalUrl) };
+  } catch {
+    return { present: true, unparseable: true };
   }
-
-  applySiteLevelFindings(result.findings, { isHttps, hstsPresent, headerFlags, robots, sitemap, responseMs });
-  result.score = recomputeScore(result.findings);
-  result.grade = letterGrade(result.score);
-  result.categoryScores = computeCategoryScores(result.findings);
-
-  delete result.hasFaviconLink;
-  return json({ ok: true, url: targetUrl, checksRun: TOTAL_CHECKS, ...result });
 }
 
 // HEAD-first existence check for a same-origin file; falls back to GET for
@@ -337,7 +392,10 @@ function json(obj, status = 200) {
   });
 }
 
-async function auditHtml(res, { origin, finalUrl, isHttps }) {
+// Streams and parses the page once with HTMLRewriter, collecting the raw
+// signals every check in the CHECKS registry below reads from. Pure
+// extraction only -- no pass/fail judgment happens here.
+async function parseHtml(res, { isHttps, origin, finalUrl }) {
   const state = {
     title: "",
     meta: {},
@@ -383,7 +441,7 @@ async function auditHtml(res, { origin, finalUrl, isHttps }) {
         const rel = (el.getAttribute("rel") || "").toLowerCase();
         if (rel === "canonical") state.canonical = el.getAttribute("href");
         if (rel.includes("icon")) state.hasFaviconLink = true;
-        if (rel === "stylesheet" && isHttpUrl(el.getAttribute("href")) && isHttps) state.mixedContentCount++;
+        if (rel === "stylesheet" && isHttps && isHttpUrl(el.getAttribute("href"))) state.mixedContentCount++;
       },
     })
     .on("h1", {
@@ -470,152 +528,357 @@ async function auditHtml(res, { origin, finalUrl, isHttps }) {
     }
   }
 
-  const findings = collectFindings(state);
+  return state;
+}
 
-  if (state.canonical) {
-    try {
-      const resolvedCanonical = new URL(state.canonical, finalUrl).toString();
-      const normalize = (u) => u.replace(/\/$/, "");
-      if (normalize(resolvedCanonical) !== normalize(finalUrl)) {
-        findings.push({
-          severity: "medium",
-          category: "Technical",
-          message: `Canonical tag points to a different URL (${resolvedCanonical}) than the page itself -- make sure that's intentional (e.g. consolidating a known duplicate), not a mistake that tells Google to ignore this page.`,
-        });
-      }
-    } catch {
-      findings.push({ severity: "low", category: "Technical", message: "Canonical tag has an unparseable href value." });
-    }
-  }
+// ---------------------------------------------------------------------
+// Check registry -- single source of truth for both scoring and the full
+// pass/fail checklist. Categories match the grouping convention used
+// across most SEO audit tools (SEOptimer, Sitechecker, etc): Technical,
+// On-Page, Content, Social, Structured Data, Security -- so this reads as
+// a familiar audit report, not a flat dev-tool lint list.
+//
+// Each check's run(ctx) returns one of:
+//   { status: "pass" }
+//   { status: "fail", severity, message }
+//   { status: "na" }   -- doesn't apply given this page (e.g. can't judge
+//                          title length when there's no title at all).
+//                          Never affects the score either way.
+// ---------------------------------------------------------------------
 
-  return {
-    findings,
-    hasFaviconLink: state.hasFaviconLink,
-    extracted: {
-      title: state.title.trim(),
-      description: (state.meta["description"] || "").trim(),
-      h1Count: state.h1Count,
-      wordCount: state.bodyWords,
-      imageCount: state.imgTotal,
-      internalLinks: state.internalLinks,
-      externalLinks: state.externalLinks,
+const pass = () => ({ status: "pass" });
+const fail = (severity, message) => ({ status: "fail", severity, message });
+const na = () => ({ status: "na" });
+
+const CHECKS = [
+  {
+    id: "server-rendered",
+    category: "Content",
+    label: "Content is server-rendered, not JS-only",
+    run: (ctx) =>
+      ctx.state.looksLikeSPA && ctx.state.bodyWords < 50
+        ? fail(
+            "info",
+            "This looks like a JavaScript-rendered app (React/Vue/Next/Nuxt-style root element with very little text in the raw HTML). This audit only reads the HTML as served, not what JavaScript renders afterward -- some findings below (especially thin content) may not reflect what a user or Google actually sees."
+          )
+        : pass(),
+  },
+  {
+    id: "title-present",
+    category: "On-Page",
+    label: "Title tag present",
+    run: (ctx) => (ctx.state.title.trim() ? pass() : fail("critical", "Missing <title> tag.")),
+  },
+  {
+    id: "title-length",
+    category: "On-Page",
+    label: "Title tag length (under ~60 characters)",
+    run: (ctx) => {
+      const title = ctx.state.title.trim();
+      if (!title) return na();
+      return title.length > 65
+        ? fail("low", `Title is ${title.length} characters (keep it under ~60 so it doesn't get cut off in search results).`)
+        : pass();
     },
-  };
-}
-
-// Categories match the grouping convention used across most SEO audit
-// tools (SEOptimer, Sitechecker, etc): Technical, On-Page, Content, Social,
-// Structured Data, Security -- so this reads as a familiar audit report,
-// not a flat dev-tool lint list.
-function collectFindings(state) {
-  const findings = [];
-  const flag = (severity, category, message) => findings.push({ severity, category, message });
-
-  if (state.looksLikeSPA && state.bodyWords < 50) {
-    flag(
-      "info",
-      "Content",
-      "This looks like a JavaScript-rendered app (React/Vue/Next/Nuxt-style root element with very little text in the raw HTML). This audit only reads the HTML as served, not what JavaScript renders afterward -- some findings below (especially thin content) may not reflect what a user or Google actually sees."
-    );
-  }
-
-  const title = state.title.trim();
-  if (!title) flag("critical", "On-Page", "Missing <title> tag.");
-  else if (title.length > 65) flag("low", "On-Page", `Title is ${title.length} characters (keep it under ~60 so it doesn't get cut off in search results).`);
-
-  const desc = (state.meta["description"] || "").trim();
-  if (!desc) flag("high", "On-Page", "Missing meta description.");
-  else if (desc.length < 70 || desc.length > 170) flag("low", "On-Page", `Meta description is ${desc.length} characters (ideal range is 70-160).`);
-
-  const robots = (state.meta["robots"] || "").toLowerCase();
-  if (robots.includes("noindex")) flag("critical", "Technical", "This page is set to noindex -- Google will not show it in search results.");
-
-  if (!state.canonical) flag("medium", "Technical", "No canonical tag found.");
-
-  if (state.h1Count === 0) flag("high", "On-Page", "No <h1> heading found on the page.");
-  else if (state.h1Count > 1) flag("medium", "On-Page", `${state.h1Count} <h1> tags found (a page should have exactly one).`);
-
-  if (state.bodyWords > 300 && state.h2Count === 0) {
-    flag("low", "On-Page", "No <h2> subheadings found despite substantial content -- subheadings help both readability and how search engines parse page structure.");
-  }
-
-  if (state.internalLinks === 0) {
-    flag("medium", "On-Page", "No internal links found on this page -- internal linking helps search engines discover and rank the rest of your site.");
-  }
-
-  if (!state.lang) flag("low", "Technical", "Missing lang attribute on <html>.");
-
-  if (!state.hasCharset) flag("low", "Technical", "No character encoding declared (missing <meta charset>) -- can cause text rendering issues in some browsers.");
-
-  if (!("viewport" in state.meta)) flag("medium", "Technical", "Missing viewport meta tag -- can hurt mobile usability and rankings.");
-
-  for (const key of ["og:title", "og:description", "og:image"]) {
-    if (!(key in state.meta)) flag("low", "Social", `Missing ${key} -- affects how this page looks when shared on social media.`);
-  }
-  if (!("twitter:card" in state.meta)) flag("low", "Social", "Missing twitter:card tag.");
-
-  if (state.ldjsonBlocks.length === 0) {
-    flag("info", "Structured Data", "No structured data (JSON-LD / Schema.org) found -- adding it can unlock rich search results.");
-  } else {
-    for (const block of state.ldjsonBlocks) {
-      try {
-        JSON.parse(block);
-      } catch {
-        flag("high", "Structured Data", "Invalid JSON-LD structured data found -- Google will ignore it as written.");
+  },
+  {
+    id: "meta-description-present",
+    category: "On-Page",
+    label: "Meta description present",
+    run: (ctx) => ((ctx.state.meta["description"] || "").trim() ? pass() : fail("high", "Missing meta description.")),
+  },
+  {
+    id: "meta-description-length",
+    category: "On-Page",
+    label: "Meta description length (70-160 characters)",
+    run: (ctx) => {
+      const desc = (ctx.state.meta["description"] || "").trim();
+      if (!desc) return na();
+      return desc.length < 70 || desc.length > 170
+        ? fail("low", `Meta description is ${desc.length} characters (ideal range is 70-160).`)
+        : pass();
+    },
+  },
+  {
+    id: "indexable",
+    category: "Technical",
+    label: "Page is indexable (no noindex)",
+    run: (ctx) =>
+      (ctx.state.meta["robots"] || "").toLowerCase().includes("noindex")
+        ? fail("critical", "This page is set to noindex -- Google will not show it in search results.")
+        : pass(),
+  },
+  {
+    id: "canonical-present",
+    category: "Technical",
+    label: "Canonical tag present",
+    run: (ctx) => (ctx.canonical.present ? pass() : fail("medium", "No canonical tag found.")),
+  },
+  {
+    id: "canonical-matches",
+    category: "Technical",
+    label: "Canonical tag matches page URL",
+    run: (ctx) => {
+      if (!ctx.canonical.present) return na();
+      if (ctx.canonical.unparseable) return fail("low", "Canonical tag has an unparseable href value.");
+      return ctx.canonical.matches
+        ? pass()
+        : fail(
+            "medium",
+            `Canonical tag points to a different URL (${ctx.canonical.resolved}) than the page itself -- make sure that's intentional (e.g. consolidating a known duplicate), not a mistake that tells Google to ignore this page.`
+          );
+    },
+  },
+  {
+    id: "h1-present",
+    category: "On-Page",
+    label: "Has at least one <h1>",
+    run: (ctx) => (ctx.state.h1Count === 0 ? fail("high", "No <h1> heading found on the page.") : pass()),
+  },
+  {
+    id: "h1-single",
+    category: "On-Page",
+    label: "Exactly one <h1>",
+    run: (ctx) => {
+      if (ctx.state.h1Count === 0) return na();
+      return ctx.state.h1Count > 1
+        ? fail("medium", `${ctx.state.h1Count} <h1> tags found (a page should have exactly one).`)
+        : pass();
+    },
+  },
+  {
+    id: "h2-structure",
+    category: "On-Page",
+    label: "Uses <h2> subheadings on longer content",
+    run: (ctx) => {
+      if (ctx.state.bodyWords <= 300) return na();
+      return ctx.state.h2Count === 0
+        ? fail("low", "No <h2> subheadings found despite substantial content -- subheadings help both readability and how search engines parse page structure.")
+        : pass();
+    },
+  },
+  {
+    id: "internal-links",
+    category: "On-Page",
+    label: "Has internal links",
+    run: (ctx) =>
+      ctx.state.internalLinks === 0
+        ? fail("medium", "No internal links found on this page -- internal linking helps search engines discover and rank the rest of your site.")
+        : pass(),
+  },
+  {
+    id: "lang-attribute",
+    category: "Technical",
+    label: "<html lang> attribute present",
+    run: (ctx) => (ctx.state.lang ? pass() : fail("low", "Missing lang attribute on <html>.")),
+  },
+  {
+    id: "charset",
+    category: "Technical",
+    label: "Character encoding declared",
+    run: (ctx) => (ctx.state.hasCharset ? pass() : fail("low", "No character encoding declared (missing <meta charset>) -- can cause text rendering issues in some browsers.")),
+  },
+  {
+    id: "viewport",
+    category: "Technical",
+    label: "Viewport meta tag present",
+    run: (ctx) => ("viewport" in ctx.state.meta ? pass() : fail("medium", "Missing viewport meta tag -- can hurt mobile usability and rankings.")),
+  },
+  {
+    id: "og-title",
+    category: "Social",
+    label: "og:title present",
+    run: (ctx) => ("og:title" in ctx.state.meta ? pass() : fail("low", "Missing og:title -- affects how this page looks when shared on social media.")),
+  },
+  {
+    id: "og-description",
+    category: "Social",
+    label: "og:description present",
+    run: (ctx) => ("og:description" in ctx.state.meta ? pass() : fail("low", "Missing og:description -- affects how this page looks when shared on social media.")),
+  },
+  {
+    id: "og-image",
+    category: "Social",
+    label: "og:image present",
+    run: (ctx) => ("og:image" in ctx.state.meta ? pass() : fail("low", "Missing og:image -- affects how this page looks when shared on social media.")),
+  },
+  {
+    id: "twitter-card",
+    category: "Social",
+    label: "twitter:card present",
+    run: (ctx) => ("twitter:card" in ctx.state.meta ? pass() : fail("low", "Missing twitter:card tag.")),
+  },
+  {
+    id: "structured-data-present",
+    category: "Structured Data",
+    label: "Structured data (JSON-LD) present",
+    run: (ctx) =>
+      ctx.state.ldjsonBlocks.length === 0
+        ? fail("info", "No structured data (JSON-LD / Schema.org) found -- adding it can unlock rich search results.")
+        : pass(),
+  },
+  {
+    id: "structured-data-valid",
+    category: "Structured Data",
+    label: "Structured data is valid JSON",
+    run: (ctx) => {
+      if (ctx.state.ldjsonBlocks.length === 0) return na();
+      const allValid = ctx.state.ldjsonBlocks.every((block) => {
+        try {
+          JSON.parse(block);
+          return true;
+        } catch {
+          return false;
+        }
+      });
+      return allValid ? pass() : fail("high", "Invalid JSON-LD structured data found -- Google will ignore it as written.");
+    },
+  },
+  {
+    id: "image-alt-text",
+    category: "Content",
+    label: "Images have alt text",
+    run: (ctx) => {
+      if (ctx.state.imgTotal === 0) return na();
+      return ctx.state.imgMissingAlt > 0
+        ? fail("medium", `${ctx.state.imgMissingAlt} of ${ctx.state.imgTotal} image(s) have no alt attribute.`)
+        : pass();
+    },
+  },
+  {
+    id: "content-length",
+    category: "Content",
+    label: "Content length (at least ~150 words)",
+    run: (ctx) =>
+      ctx.state.bodyWords < 150 ? fail("low", `Thin content: only about ${ctx.state.bodyWords} words of visible text on the page.`) : pass(),
+  },
+  {
+    id: "mixed-content",
+    category: "Security",
+    label: "No mixed content on HTTPS page",
+    run: (ctx) => {
+      if (!ctx.isHttps) return na();
+      return ctx.state.mixedContentCount > 0
+        ? fail("high", `${ctx.state.mixedContentCount} resource(s) load over plain HTTP on an HTTPS page (mixed content) -- browsers may block them or show a "not fully secure" warning.`)
+        : pass();
+    },
+  },
+  {
+    id: "https",
+    category: "Security",
+    label: "Served over HTTPS",
+    run: (ctx) => (ctx.isHttps ? pass() : fail("critical", "This page is served over HTTP, not HTTPS -- browsers flag it as insecure and it's a known ranking factor.")),
+  },
+  {
+    id: "hsts",
+    category: "Security",
+    label: "HSTS header present",
+    run: (ctx) => {
+      if (!ctx.isHttps) return na();
+      return ctx.hstsPresent ? pass() : fail("info", "No Strict-Transport-Security (HSTS) header -- a minor hardening step once HTTPS is already in place.");
+    },
+  },
+  {
+    id: "csp",
+    category: "Security",
+    label: "Content-Security-Policy header present",
+    run: (ctx) => (ctx.headerFlags.csp ? pass() : fail("info", "No Content-Security-Policy header -- helps prevent XSS and other injection attacks. Optional but good practice.")),
+  },
+  {
+    id: "x-content-type-options",
+    category: "Security",
+    label: "X-Content-Type-Options header present",
+    run: (ctx) =>
+      ctx.headerFlags.xContentTypeOptions
+        ? pass()
+        : fail("low", "Missing X-Content-Type-Options: nosniff header -- stops browsers from MIME-sniffing responses in a way that can be exploited."),
+  },
+  {
+    id: "frame-protection",
+    category: "Security",
+    label: "Clickjacking protection present",
+    run: (ctx) =>
+      ctx.headerFlags.frameProtection
+        ? pass()
+        : fail("low", "No clickjacking protection (X-Frame-Options or frame-ancestors) -- without it, this page can be embedded in a hidden iframe on another site."),
+  },
+  {
+    id: "referrer-policy",
+    category: "Security",
+    label: "Referrer-Policy header present",
+    run: (ctx) =>
+      ctx.headerFlags.referrerPolicy
+        ? pass()
+        : fail("info", "No Referrer-Policy header -- without one, the browser default may leak full URLs to third-party sites your page links to."),
+  },
+  {
+    id: "robots-txt-present",
+    category: "Technical",
+    label: "robots.txt present",
+    run: (ctx) => (ctx.robots.exists ? pass() : fail("medium", "No robots.txt found at the site root -- search engines rely on it for crawl guidance.")),
+  },
+  {
+    id: "robots-txt-not-blocking",
+    category: "Technical",
+    label: "robots.txt doesn't block the whole site",
+    run: (ctx) => {
+      if (!ctx.robots.exists) return na();
+      return ctx.robots.disallowsAll
+        ? fail(
+            "critical",
+            'robots.txt blocks all search engines from crawling the entire site ("User-agent: *" / "Disallow: /") -- if that\'s not intentional, it\'s the single biggest thing keeping this site out of search results.'
+          )
+        : pass();
+    },
+  },
+  {
+    id: "sitemap-present",
+    category: "Technical",
+    label: "sitemap.xml present",
+    run: (ctx) =>
+      ctx.sitemap.exists
+        ? pass()
+        : fail("low", "No sitemap.xml found at the site root (it may be referenced elsewhere, e.g. from robots.txt, but the common default location returned nothing)."),
+  },
+  {
+    id: "sitemap-valid",
+    category: "Technical",
+    label: "sitemap.xml is valid XML",
+    run: (ctx) => {
+      if (!ctx.sitemap.exists) return na();
+      return ctx.sitemap.looksValid
+        ? pass()
+        : fail("medium", "sitemap.xml exists but doesn't look like valid XML (no <urlset> / <sitemapindex> / XML declaration found) -- search engines may not be able to parse it.");
+    },
+  },
+  {
+    id: "response-time",
+    category: "Technical",
+    label: "Fast server response time",
+    run: (ctx) => {
+      const secs = (ctx.responseMs / 1000).toFixed(1);
+      if (ctx.responseMs > 2500) {
+        return fail("medium", `The server took about ${secs}s to respond -- slow server response time hurts both SEO and user experience. (Measured from our server, not a real visitor's connection -- treat as a rough signal, not Core Web Vitals.)`);
       }
-    }
-  }
-
-  if (state.imgTotal > 0 && state.imgMissingAlt > 0) {
-    flag("medium", "Content", `${state.imgMissingAlt} of ${state.imgTotal} image(s) have no alt attribute.`);
-  }
-
-  if (state.bodyWords < 150) flag("low", "Content", `Thin content: only about ${state.bodyWords} words of visible text on the page.`);
-
-  if (state.mixedContentCount > 0) {
-    flag("high", "Security", `${state.mixedContentCount} resource(s) load over plain HTTP on an HTTPS page (mixed content) -- browsers may block them or show a "not fully secure" warning.`);
-  }
-
-  return findings;
-}
-
-// Checks that don't need the parsed page -- HTTPS, security headers,
-// robots.txt/sitemap.xml presence and content, response time. Appends into
-// the same findings array collectFindings() produced.
-function applySiteLevelFindings(findings, { isHttps, hstsPresent, headerFlags, robots, sitemap, responseMs }) {
-  const flag = (severity, category, message) => findings.push({ severity, category, message });
-
-  if (!isHttps) {
-    flag("critical", "Security", "This page is served over HTTP, not HTTPS -- browsers flag it as insecure and it's a known ranking factor.");
-  } else if (!hstsPresent) {
-    flag("info", "Security", "No Strict-Transport-Security (HSTS) header -- a minor hardening step once HTTPS is already in place.");
-  }
-
-  if (!headerFlags.csp) flag("info", "Security", "No Content-Security-Policy header -- helps prevent XSS and other injection attacks. Optional but good practice.");
-  if (!headerFlags.xContentTypeOptions) flag("low", "Security", "Missing X-Content-Type-Options: nosniff header -- stops browsers from MIME-sniffing responses in a way that can be exploited.");
-  if (!headerFlags.frameProtection) flag("low", "Security", "No clickjacking protection (X-Frame-Options or frame-ancestors) -- without it, this page can be embedded in a hidden iframe on another site.");
-  if (!headerFlags.referrerPolicy) flag("info", "Security", "No Referrer-Policy header -- without one, the browser default may leak full URLs to third-party sites your page links to.");
-
-  if (!robots.exists) {
-    flag("medium", "Technical", "No robots.txt found at the site root -- search engines rely on it for crawl guidance.");
-  } else if (robots.disallowsAll) {
-    flag("critical", "Technical", "robots.txt blocks all search engines from crawling the entire site (\"User-agent: *\" / \"Disallow: /\") -- if that's not intentional, it's the single biggest thing keeping this site out of search results.");
-  }
-
-  if (!sitemap.exists) {
-    flag("low", "Technical", "No sitemap.xml found at the site root (it may be referenced elsewhere, e.g. from robots.txt, but the common default location returned nothing).");
-  } else if (!sitemap.looksValid) {
-    flag("medium", "Technical", "sitemap.xml exists but doesn't look like valid XML (no <urlset> / <sitemapindex> / XML declaration found) -- search engines may not be able to parse it.");
-  }
-
-  if (responseMs > 2500) {
-    flag("medium", "Technical", `The server took about ${(responseMs / 1000).toFixed(1)}s to respond -- slow server response time hurts both SEO and user experience. (Measured from our server, not a real visitor's connection -- treat as a rough signal, not Core Web Vitals.)`);
-  } else if (responseMs > 1200) {
-    flag("low", "Technical", `The server took about ${(responseMs / 1000).toFixed(1)}s to respond -- worth a look, though this is a rough server-to-server measurement, not real-user timing.`);
-  }
-}
+      if (ctx.responseMs > 1200) {
+        return fail("low", `The server took about ${secs}s to respond -- worth a look, though this is a rough server-to-server measurement, not real-user timing.`);
+      }
+      return pass();
+    },
+  },
+  {
+    id: "favicon",
+    category: "Technical",
+    label: "Favicon present",
+    run: (ctx) => {
+      if (ctx.state.hasFaviconLink || ctx.faviconFallbackOk) return pass();
+      return fail("info", 'No favicon found (no <link rel="icon"> in the HTML and /favicon.ico is missing) -- minor polish item for browser tabs, bookmarks and search result branding.');
+    },
+  },
+];
 
 const SEVERITY_WEIGHT = { critical: 25, high: 15, medium: 8, low: 3, info: 0 };
+const SEVERITY_ORDER = { critical: 0, high: 1, medium: 2, low: 3, info: 4 };
 // Fixed set so every category always appears in the response (as a clean
 // 100) even when it has zero findings -- the frontend renders one ring per
 // entry here, and a category silently missing would look like a bug, not
@@ -651,10 +914,4 @@ function letterGrade(score) {
   if (score >= 70) return "C-";
   if (score >= 60) return "D";
   return "F";
-}
-
-function recomputeScore(findings) {
-  const order = { critical: 0, high: 1, medium: 2, low: 3, info: 4 };
-  findings.sort((a, b) => order[a.severity] - order[b.severity]);
-  return computeScore(findings);
 }

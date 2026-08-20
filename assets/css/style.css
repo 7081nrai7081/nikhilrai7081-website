@@ -2064,4 +2064,39 @@ a.card:hover .card-media img { transform: scale(1.06); }
 .audit-finding.sev-medium .sev { background: rgba(202, 138, 4, .14); color: #ca8a04; }
 .audit-finding.sev-low .sev { background: rgba(37, 99, 235, .12); color: #2563eb; }
 .audit-finding.sev-info .sev { background: var(--surface-2); color: var(--muted); }
+.audit-checklist-toggle {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; margin: 0 0 28px; padding: 13px 20px; border-radius: var(--radius);
+  border: 1px solid var(--border); background: var(--surface); color: var(--text);
+  font-family: inherit; font-size: .88rem; font-weight: 600; cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.audit-checklist-toggle:hover { background: var(--surface-2); border-color: var(--brand); }
+.audit-checklist-toggle .chev { transition: transform .2s; flex-shrink: 0; }
+.audit-checklist-toggle.is-open .chev { transform: rotate(180deg); }
+
+.audit-checklist { margin: 0 0 32px; display: grid; gap: 26px; }
+.audit-checklist[hidden] { display: none; }
+.audit-check-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.audit-check {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 11px 16px; border-radius: var(--radius); border: 1px solid var(--border);
+  background: var(--surface); font-size: .88rem; line-height: 1.5;
+}
+.audit-check-status {
+  flex-shrink: 0; font-size: .66rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+  padding: 3px 8px; border-radius: 999px; margin-top: 1px; min-width: 40px; text-align: center;
+}
+.audit-check.status-pass .audit-check-status { background: rgba(22, 163, 74, .13); color: #16a34a; }
+.audit-check.status-na .audit-check-status { background: var(--surface-2); color: var(--muted); }
+.audit-check.status-fail.sev-critical .audit-check-status { background: rgba(220, 38, 38, .12); color: #dc2626; }
+.audit-check.status-fail.sev-high .audit-check-status { background: rgba(234, 88, 12, .12); color: #ea580c; }
+.audit-check.status-fail.sev-medium .audit-check-status { background: rgba(202, 138, 4, .14); color: #ca8a04; }
+.audit-check.status-fail.sev-low .audit-check-status { background: rgba(37, 99, 235, .12); color: #2563eb; }
+.audit-check.status-fail.sev-info .audit-check-status { background: var(--surface-2); color: var(--muted); }
+.audit-check-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.audit-check-label { font-weight: 600; }
+.audit-check.status-na .audit-check-label { color: var(--muted); font-weight: 500; }
+.audit-check-msg { color: var(--muted); font-size: .85rem; }
+
 .audit-cta { margin-top: 8px; }

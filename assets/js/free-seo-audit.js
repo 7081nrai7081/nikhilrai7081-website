@@ -33,6 +33,9 @@
   var basicsEl = document.getElementById('audit-basics');
   var prioritiesEl = document.getElementById('audit-priorities');
   var findingsEl = document.getElementById('audit-findings');
+  var checklistToggleEl = document.getElementById('audit-checklist-toggle');
+  var checklistToggleCountEl = document.getElementById('audit-checklist-toggle-count');
+  var checklistEl = document.getElementById('audit-checklist');
 
   // Display order for category groups -- most-actionable-first, matching
   // how most SEO audit tools sequence a report.
@@ -174,6 +177,84 @@
     }
   }
 
+  var STATUS_LABEL = { pass: 'Pass', fail: 'Fail', na: 'N/A' };
+
+  function buildChecklistItem(c) {
+    var item = document.createElement('li');
+    item.className = 'audit-check status-' + c.status + (c.status === 'fail' ? ' sev-' + c.severity : '');
+    var badge = document.createElement('span');
+    badge.className = 'audit-check-status';
+    badge.textContent = STATUS_LABEL[c.status] || c.status;
+    var body = document.createElement('div');
+    body.className = 'audit-check-body';
+    var label = document.createElement('span');
+    label.className = 'audit-check-label';
+    label.textContent = c.label;
+    body.appendChild(label);
+    if (c.status === 'fail' && c.message) {
+      var msg = document.createElement('span');
+      msg.className = 'audit-check-msg';
+      msg.textContent = c.message;
+      body.appendChild(msg);
+    }
+    item.appendChild(badge);
+    item.appendChild(body);
+    return item;
+  }
+
+  function renderChecklist(checklist) {
+    if (!checklistEl || !checklistToggleEl) return;
+    checklistEl.innerHTML = '';
+    if (!checklist || !checklist.length) {
+      checklistToggleEl.hidden = true;
+      return;
+    }
+    checklistToggleEl.hidden = false;
+    if (checklistToggleCountEl) checklistToggleCountEl.textContent = checklist.length;
+    checklistEl.hidden = true;
+    checklistToggleEl.setAttribute('aria-expanded', 'false');
+    checklistToggleEl.classList.remove('is-open');
+
+    var byCategory = {};
+    checklist.forEach(function (c) {
+      var cat = c.category || 'Other';
+      (byCategory[cat] = byCategory[cat] || []).push(c);
+    });
+    var categories = Object.keys(byCategory).sort(function (a, b) {
+      var ia = CATEGORY_ORDER.indexOf(a), ib = CATEGORY_ORDER.indexOf(b);
+      if (ia === -1) ia = CATEGORY_ORDER.length;
+      if (ib === -1) ib = CATEGORY_ORDER.length;
+      return ia - ib;
+    });
+    categories.forEach(function (cat) {
+      var items = byCategory[cat];
+      var passCount = items.filter(function (c) { return c.status === 'pass'; }).length;
+      var group = document.createElement('div');
+      group.className = 'audit-category';
+      var h3 = document.createElement('h3');
+      h3.textContent = cat + ' (' + passCount + '/' + items.length + ' passed)';
+      var list = document.createElement('ul');
+      list.className = 'audit-check-list';
+      items.forEach(function (c) { list.appendChild(buildChecklistItem(c)); });
+      group.appendChild(h3);
+      group.appendChild(list);
+      checklistEl.appendChild(group);
+    });
+  }
+
+  if (checklistToggleEl && checklistEl) {
+    checklistToggleEl.addEventListener('click', function () {
+      var open = checklistEl.hidden;
+      checklistEl.hidden = !open;
+      checklistToggleEl.setAttribute('aria-expanded', String(open));
+      checklistToggleEl.classList.toggle('is-open', open);
+      if (open) {
+        track('free_audit_checklist_opened', {});
+        checklistEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  }
+
   function renderResults(data) {
     gradeEl.textContent = data.grade || letterGrade(data.score);
     scoreNumEl.textContent = data.score + '/100';
@@ -187,6 +268,7 @@
     renderCategoryScores(data.categoryScores);
     renderRadar(data.categoryScores);
     renderBasics(data.extracted);
+    renderChecklist(data.checklist);
 
     var topPriorities = data.findings.filter(function (f) {
       return f.severity === 'critical' || f.severity === 'high';
