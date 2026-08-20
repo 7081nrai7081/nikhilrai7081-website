@@ -169,6 +169,9 @@
     basicsEl.appendChild(basicRow('Word count', String(extracted.wordCount)));
     basicsEl.appendChild(basicRow('Images found', String(extracted.imageCount)));
     basicsEl.appendChild(basicRow('H1 headings', String(extracted.h1Count)));
+    if (typeof extracted.internalLinks === 'number') {
+      basicsEl.appendChild(basicRow('Internal / external links', extracted.internalLinks + ' / ' + extracted.externalLinks));
+    }
   }
 
   function renderResults(data) {

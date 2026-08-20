@@ -5,7 +5,8 @@
 // cross-origin HTML (CORS) -- a Function on this same domain can. This is
 // the first server-side code added since the VYNTRA Pixel/CAPI removal
 // (2026-07-02); unlike that, this makes no third-party ad-tracking calls,
-// stores nothing, and only ever fetches the single URL the visitor typed.
+// stores nothing, and only ever fetches the single URL the visitor typed
+// (plus its own /robots.txt, /sitemap.xml and /favicon.ico, same origin).
 //
 // Lead capture (name/email/phone) is NOT handled here -- the page posts
 // that directly to Web3Forms client-side, same as the existing #contact
@@ -16,7 +17,8 @@
 //   - http(s) only, no credentials-in-URL, blocklist of private/loopback/
 //     link-local hostnames checked both before the fetch AND again on the
 //     final URL after redirects (a redirect chain could otherwise land on
-//     an internal address -- classic SSRF-via-redirect).
+//     an internal address -- classic SSRF-via-redirect). Same guard applies
+//     to the same-origin robots.txt/sitemap.xml/favicon fetches.
 //   - 8s fetch timeout; response body capped at 3MB while streaming
 //     (doesn't rely on a possibly-absent/false Content-Length header).
 //   - Only text/html responses are analyzed.
@@ -32,9 +34,10 @@ const MAX_BYTES = 3 * 1024 * 1024;
 const FETCH_TIMEOUT_MS = 8000;
 const REQUESTS_PER_HOUR = 8;
 // Keep in sync with the number of distinct checks in collectFindings() +
-// applySiteLevelFindings() below -- shown to the visitor as a credibility
-// signal, so it must stay an honest count, not a marketing number.
-const TOTAL_CHECKS = 24;
+// applySiteLevelFindings() + the standalone favicon/canonical checks below
+// -- shown to the visitor as a credibility signal, so it must stay an
+// honest count, not a marketing number.
+const TOTAL_CHECKS = 36;
 const BLOCKED_HOST_RE =
   /(^|\.)(localhost|local)$|^0\.0\.0\.0$|^127\.|^10\.|^192\.168\.|^169\.254\.|^172\.(1[6-9]|2\d|3[01])\.|^\[?::1\]?$|^\[?fc[0-9a-f]{2}:|^\[?fe80:/i;
 
@@ -95,28 +98,48 @@ export async function onRequestPost(context) {
   const finalUrl = res.url || targetUrl;
   const isHttps = new URL(finalUrl).protocol === "https:";
   const hstsPresent = res.headers.has("strict-transport-security");
+  const headerFlags = {
+    csp: res.headers.has("content-security-policy"),
+    xContentTypeOptions: (res.headers.get("x-content-type-options") || "").toLowerCase().includes("nosniff"),
+    frameProtection: res.headers.has("x-frame-options") || /frame-ancestors/i.test(res.headers.get("content-security-policy") || ""),
+    referrerPolicy: res.headers.has("referrer-policy"),
+  };
 
   // Cheap, parallel, best-effort checks against the same origin -- each one
   // is wrapped so a timeout/404/network hiccup on either just means "not
   // found", not a failed audit.
   const origin = new URL(finalUrl).origin;
-  const [robotsOk, sitemapOk] = await Promise.all([
-    checkExists(origin + "/robots.txt"),
-    checkExists(origin + "/sitemap.xml"),
+  const [robots, sitemap] = await Promise.all([
+    checkRobots(origin),
+    checkSitemap(origin),
   ]);
 
   let result;
   try {
-    result = await auditHtml(res);
+    result = await auditHtml(res, { origin, finalUrl, isHttps });
   } catch {
     return json({ ok: false, error: "Audit failed while reading that page." }, 500);
   }
 
-  applySiteLevelFindings(result.findings, { isHttps, hstsPresent, robotsOk, sitemapOk, responseMs });
+  // Favicon is checked last and only if the page didn't already declare one
+  // -- avoids a wasted extra fetch on the (common) case where it's linked.
+  if (!result.hasFaviconLink) {
+    const faviconOk = await checkExists(origin + "/favicon.ico");
+    if (!faviconOk) {
+      result.findings.push({
+        severity: "info",
+        category: "Technical",
+        message: "No favicon found (no <link rel=\"icon\"> in the HTML and /favicon.ico is missing) -- minor polish item for browser tabs, bookmarks and search result branding.",
+      });
+    }
+  }
+
+  applySiteLevelFindings(result.findings, { isHttps, hstsPresent, headerFlags, robots, sitemap, responseMs });
   result.score = recomputeScore(result.findings);
   result.grade = letterGrade(result.score);
   result.categoryScores = computeCategoryScores(result.findings);
 
+  delete result.hasFaviconLink;
   return json({ ok: true, url: targetUrl, checksRun: TOTAL_CHECKS, ...result });
 }
 
@@ -142,6 +165,80 @@ async function checkExists(url) {
     }
   }
   return false;
+}
+
+// Small GET-and-read-as-text helper, capped and timeboxed, for the two
+// same-origin files (robots.txt, sitemap.xml) where we need actual content,
+// not just a status code.
+async function fetchTextSmall(url, maxBytes = 51200, timeoutMs = 3000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { method: "GET", redirect: "follow", signal: controller.signal });
+    const finalHost = new URL(res.url || url).hostname;
+    if (BLOCKED_HOST_RE.test(finalHost)) return null; // SSRF-via-redirect guard
+    if (!res.ok || !res.body) return null;
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let text = "";
+    let bytes = 0;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      bytes += value.length;
+      text += decoder.decode(value, { stream: true });
+      if (bytes > maxBytes) {
+        await reader.cancel().catch(() => {});
+        break;
+      }
+    }
+    return text;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function checkRobots(origin) {
+  const text = await fetchTextSmall(origin + "/robots.txt");
+  if (text === null) return { exists: false, disallowsAll: false };
+  return { exists: true, disallowsAll: robotsDisallowsAll(text) };
+}
+
+// Parses robots.txt well enough to catch the common, high-impact mistake:
+// a "User-agent: *" group that blocks the entire site with "Disallow: /"
+// and no overriding "Allow:". Not a full spec-compliant parser -- good
+// enough as a lint check, not a crawler.
+function robotsDisallowsAll(text) {
+  const lines = text.split(/\r?\n/).map((l) => l.replace(/#.*/, "").trim()).filter(Boolean);
+  let inWildcardGroup = false;
+  let sawWildcardGroup = false;
+  let hasRootDisallow = false;
+  let hasOverridingAllow = false;
+  for (const line of lines) {
+    const m = line.match(/^([a-zA-Z-]+)\s*:\s*(.*)$/);
+    if (!m) continue;
+    const field = m[1].toLowerCase();
+    const value = m[2].trim();
+    if (field === "user-agent") {
+      inWildcardGroup = value === "*";
+      if (inWildcardGroup) sawWildcardGroup = true;
+      continue;
+    }
+    if (!inWildcardGroup) continue;
+    if (field === "disallow" && value === "/") hasRootDisallow = true;
+    if (field === "allow" && (value === "/" || value === "")) hasOverridingAllow = true;
+  }
+  return sawWildcardGroup && hasRootDisallow && !hasOverridingAllow;
+}
+
+async function checkSitemap(origin) {
+  const text = await fetchTextSmall(origin + "/sitemap.xml");
+  if (text === null) return { exists: false, looksValid: false };
+  const head = text.slice(0, 300).toLowerCase();
+  const looksValid = head.includes("<urlset") || head.includes("<sitemapindex") || head.includes("<?xml");
+  return { exists: true, looksValid };
 }
 
 // Anything other than POST -> explicit 405 instead of a silent 404.
@@ -240,20 +337,27 @@ function json(obj, status = 200) {
   });
 }
 
-async function auditHtml(res) {
+async function auditHtml(res, { origin, finalUrl, isHttps }) {
   const state = {
     title: "",
     meta: {},
+    hasCharset: false,
     canonical: null,
     h1Count: 0,
+    h2Count: 0,
     lang: null,
     imgTotal: 0,
     imgMissingAlt: 0,
+    hasFaviconLink: false,
+    mixedContentCount: 0,
+    internalLinks: 0,
+    externalLinks: 0,
     ldjsonBlocks: [],
     bodyWords: 0,
     looksLikeSPA: false,
   };
   let currentLdBuf = null;
+  const isHttpUrl = (v) => typeof v === "string" && /^http:\/\//i.test(v);
 
   const rewriter = new HTMLRewriter()
     .on("html", {
@@ -268,15 +372,18 @@ async function auditHtml(res) {
     })
     .on("meta", {
       element(el) {
+        if (el.getAttribute("charset") !== null) state.hasCharset = true;
+        if ((el.getAttribute("http-equiv") || "").toLowerCase() === "content-type") state.hasCharset = true;
         const key = (el.getAttribute("name") || el.getAttribute("property") || "").toLowerCase();
         if (key) state.meta[key] = el.getAttribute("content") || "";
       },
     })
     .on("link", {
       element(el) {
-        if ((el.getAttribute("rel") || "").toLowerCase() === "canonical") {
-          state.canonical = el.getAttribute("href");
-        }
+        const rel = (el.getAttribute("rel") || "").toLowerCase();
+        if (rel === "canonical") state.canonical = el.getAttribute("href");
+        if (rel.includes("icon")) state.hasFaviconLink = true;
+        if (rel === "stylesheet" && isHttpUrl(el.getAttribute("href")) && isHttps) state.mixedContentCount++;
       },
     })
     .on("h1", {
@@ -284,10 +391,36 @@ async function auditHtml(res) {
         state.h1Count++;
       },
     })
+    .on("h2", {
+      element() {
+        state.h2Count++;
+      },
+    })
     .on("img", {
       element(el) {
         state.imgTotal++;
         if (el.getAttribute("alt") === null) state.imgMissingAlt++;
+        if (isHttps && isHttpUrl(el.getAttribute("src"))) state.mixedContentCount++;
+      },
+    })
+    .on("script, iframe, source", {
+      element(el) {
+        if (isHttps && isHttpUrl(el.getAttribute("src"))) state.mixedContentCount++;
+      },
+    })
+    .on("a", {
+      element(el) {
+        const href = el.getAttribute("href");
+        if (!href) return;
+        if (/^(mailto|tel|javascript):/i.test(href)) return;
+        try {
+          const resolved = new URL(href, finalUrl);
+          if (resolved.protocol !== "http:" && resolved.protocol !== "https:") return;
+          if (resolved.origin === origin) state.internalLinks++;
+          else state.externalLinks++;
+        } catch {
+          /* unparseable href -- ignore rather than miscount */
+        }
       },
     })
     .on('div[id="root"], div[id="app"], div[id="__next"], div[id="__nuxt"]', {
@@ -337,14 +470,35 @@ async function auditHtml(res) {
     }
   }
 
+  const findings = collectFindings(state);
+
+  if (state.canonical) {
+    try {
+      const resolvedCanonical = new URL(state.canonical, finalUrl).toString();
+      const normalize = (u) => u.replace(/\/$/, "");
+      if (normalize(resolvedCanonical) !== normalize(finalUrl)) {
+        findings.push({
+          severity: "medium",
+          category: "Technical",
+          message: `Canonical tag points to a different URL (${resolvedCanonical}) than the page itself -- make sure that's intentional (e.g. consolidating a known duplicate), not a mistake that tells Google to ignore this page.`,
+        });
+      }
+    } catch {
+      findings.push({ severity: "low", category: "Technical", message: "Canonical tag has an unparseable href value." });
+    }
+  }
+
   return {
-    findings: collectFindings(state),
+    findings,
+    hasFaviconLink: state.hasFaviconLink,
     extracted: {
       title: state.title.trim(),
       description: (state.meta["description"] || "").trim(),
       h1Count: state.h1Count,
       wordCount: state.bodyWords,
       imageCount: state.imgTotal,
+      internalLinks: state.internalLinks,
+      externalLinks: state.externalLinks,
     },
   };
 }
@@ -381,7 +535,17 @@ function collectFindings(state) {
   if (state.h1Count === 0) flag("high", "On-Page", "No <h1> heading found on the page.");
   else if (state.h1Count > 1) flag("medium", "On-Page", `${state.h1Count} <h1> tags found (a page should have exactly one).`);
 
+  if (state.bodyWords > 300 && state.h2Count === 0) {
+    flag("low", "On-Page", "No <h2> subheadings found despite substantial content -- subheadings help both readability and how search engines parse page structure.");
+  }
+
+  if (state.internalLinks === 0) {
+    flag("medium", "On-Page", "No internal links found on this page -- internal linking helps search engines discover and rank the rest of your site.");
+  }
+
   if (!state.lang) flag("low", "Technical", "Missing lang attribute on <html>.");
+
+  if (!state.hasCharset) flag("low", "Technical", "No character encoding declared (missing <meta charset>) -- can cause text rendering issues in some browsers.");
 
   if (!("viewport" in state.meta)) flag("medium", "Technical", "Missing viewport meta tag -- can hurt mobile usability and rankings.");
 
@@ -408,13 +572,17 @@ function collectFindings(state) {
 
   if (state.bodyWords < 150) flag("low", "Content", `Thin content: only about ${state.bodyWords} words of visible text on the page.`);
 
+  if (state.mixedContentCount > 0) {
+    flag("high", "Security", `${state.mixedContentCount} resource(s) load over plain HTTP on an HTTPS page (mixed content) -- browsers may block them or show a "not fully secure" warning.`);
+  }
+
   return findings;
 }
 
 // Checks that don't need the parsed page -- HTTPS, security headers,
-// robots.txt/sitemap.xml presence, response time. Appends into the same
-// findings array collectFindings() produced.
-function applySiteLevelFindings(findings, { isHttps, hstsPresent, robotsOk, sitemapOk, responseMs }) {
+// robots.txt/sitemap.xml presence and content, response time. Appends into
+// the same findings array collectFindings() produced.
+function applySiteLevelFindings(findings, { isHttps, hstsPresent, headerFlags, robots, sitemap, responseMs }) {
   const flag = (severity, category, message) => findings.push({ severity, category, message });
 
   if (!isHttps) {
@@ -423,8 +591,22 @@ function applySiteLevelFindings(findings, { isHttps, hstsPresent, robotsOk, site
     flag("info", "Security", "No Strict-Transport-Security (HSTS) header -- a minor hardening step once HTTPS is already in place.");
   }
 
-  if (!robotsOk) flag("medium", "Technical", "No robots.txt found at the site root -- search engines rely on it for crawl guidance.");
-  if (!sitemapOk) flag("low", "Technical", "No sitemap.xml found at the site root (it may be referenced elsewhere, e.g. from robots.txt, but the common default location returned nothing).");
+  if (!headerFlags.csp) flag("info", "Security", "No Content-Security-Policy header -- helps prevent XSS and other injection attacks. Optional but good practice.");
+  if (!headerFlags.xContentTypeOptions) flag("low", "Security", "Missing X-Content-Type-Options: nosniff header -- stops browsers from MIME-sniffing responses in a way that can be exploited.");
+  if (!headerFlags.frameProtection) flag("low", "Security", "No clickjacking protection (X-Frame-Options or frame-ancestors) -- without it, this page can be embedded in a hidden iframe on another site.");
+  if (!headerFlags.referrerPolicy) flag("info", "Security", "No Referrer-Policy header -- without one, the browser default may leak full URLs to third-party sites your page links to.");
+
+  if (!robots.exists) {
+    flag("medium", "Technical", "No robots.txt found at the site root -- search engines rely on it for crawl guidance.");
+  } else if (robots.disallowsAll) {
+    flag("critical", "Technical", "robots.txt blocks all search engines from crawling the entire site (\"User-agent: *\" / \"Disallow: /\") -- if that's not intentional, it's the single biggest thing keeping this site out of search results.");
+  }
+
+  if (!sitemap.exists) {
+    flag("low", "Technical", "No sitemap.xml found at the site root (it may be referenced elsewhere, e.g. from robots.txt, but the common default location returned nothing).");
+  } else if (!sitemap.looksValid) {
+    flag("medium", "Technical", "sitemap.xml exists but doesn't look like valid XML (no <urlset> / <sitemapindex> / XML declaration found) -- search engines may not be able to parse it.");
+  }
 
   if (responseMs > 2500) {
     flag("medium", "Technical", `The server took about ${(responseMs / 1000).toFixed(1)}s to respond -- slow server response time hurts both SEO and user experience. (Measured from our server, not a real visitor's connection -- treat as a rough signal, not Core Web Vitals.)`);
