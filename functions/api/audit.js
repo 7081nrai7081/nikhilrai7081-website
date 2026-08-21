@@ -42,7 +42,11 @@
 
 const MAX_BYTES = 3 * 1024 * 1024;
 const FETCH_TIMEOUT_MS = 8000;
-const REQUESTS_PER_HOUR = 8;
+// TEMPORARY 2026-08-21: bumped 8 -> 20 to give room to verify the tool
+// works after the "Network error" fix (commit 5611d0a) without retries
+// eating the whole budget. Revert to 8 once confirmed working -- see
+// [[free-seo-audit-tool]] memory for the standing reason it's 8 normally.
+const REQUESTS_PER_HOUR = 20;
 const BLOCKED_HOST_RE =
   /(^|\.)(localhost|local)$|^0\.0\.0\.0$|^127\.|^10\.|^192\.168\.|^169\.254\.|^172\.(1[6-9]|2\d|3[01])\.|^\[?::1\]?$|^\[?fc[0-9a-f]{2}:|^\[?fe80:/i;
 // Sole/full link text that tells a reader nothing about where the link

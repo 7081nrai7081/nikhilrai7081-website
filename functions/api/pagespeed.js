@@ -24,7 +24,9 @@
 // invoked from the UI after a real audit already completed, so it isn't
 // a standalone open door the way /api/audit is.
 
-const REQUESTS_PER_HOUR = 8;
+// TEMPORARY 2026-08-21: bumped 8 -> 20, same reason/revert plan as
+// functions/api/audit.js.
+const REQUESTS_PER_HOUR = 20;
 const FETCH_TIMEOUT_MS = 25000; // PSI's own Lighthouse run can be slow
 const BLOCKED_HOST_RE =
   /(^|\.)(localhost|local)$|^0\.0\.0\.0$|^127\.|^10\.|^192\.168\.|^169\.254\.|^172\.(1[6-9]|2\d|3[01])\.|^\[?::1\]?$|^\[?fc[0-9a-f]{2}:|^\[?fe80:/i;
