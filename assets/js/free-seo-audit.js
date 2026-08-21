@@ -510,17 +510,41 @@
       track('free_audit_lead_captured', { audit_url: url });
     }).catch(function () { /* lead capture is best-effort; the audit still runs */ });
 
-    // 2. The actual audit.
+    // 2. The actual audit. Split into two try/catches so a genuine
+    // network failure (fetch rejects -- offline, DNS, an extension
+    // blocking the request) and a bad/non-JSON response (Cloudflare
+    // returning an HTML error or challenge page instead of our Function's
+    // JSON, a WAF block, an unexpected 5xx) are told apart and reported
+    // with real detail -- both used to collapse into one generic "Network
+    // error" message with nothing to diagnose from.
     try {
       var keyword = formData.keyword ? String(formData.keyword).trim() : '';
-      var res = await fetch('/api/audit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: url, turnstileToken: turnstileToken, keyword: keyword || undefined })
-      });
-      var data = await res.json();
+      var res;
+      try {
+        res = await fetch('/api/audit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: url, turnstileToken: turnstileToken, keyword: keyword || undefined })
+        });
+      } catch (networkErr) {
+        setStatus('err', 'Couldn’t reach the audit service — check your connection (or a browser extension may be blocking the request) and try again.');
+        track('free_audit_network_error', { audit_url: url, error: String((networkErr && networkErr.message) || networkErr) });
+        return;
+      }
+
+      var rawText = await res.text();
+      var data;
+      try {
+        data = JSON.parse(rawText);
+      } catch (parseErr) {
+        setStatus('err', 'The audit service returned an unexpected response (HTTP ' + res.status + '). Please try again in a moment.');
+        track('free_audit_bad_response', { audit_url: url, status: res.status, snippet: rawText.slice(0, 200) });
+        return;
+      }
+
       if (!data.ok) {
         setStatus('err', data.error || 'Something went wrong running that audit.');
+        track('free_audit_failed', { audit_url: url, status: res.status, error: data.error || '' });
         if (window.turnstile) { try { window.turnstile.reset(); } catch (e) { /* widget not ready */ } }
         return;
       }
@@ -532,7 +556,8 @@
       // or re-disabling the submit button.
       fetchPerformance(data.url);
     } catch (err) {
-      setStatus('err', 'Network error while running the audit. Please try again.');
+      setStatus('err', 'Something went wrong running that audit. Please try again.');
+      track('free_audit_unexpected_error', { audit_url: url, error: String((err && err.message) || err) });
     } finally {
       if (btn) { btn.disabled = false; btn.innerHTML = label; }
     }
