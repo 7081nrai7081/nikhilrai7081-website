@@ -54,7 +54,27 @@ const BLOCKED_HOST_RE =
 // style nit rather than a functional problem.
 const GENERIC_ANCHOR_TEXTS = new Set(["click here", "here", "this link", "read more", "more", "link"]);
 
+// Thin wrapper: this Function analyzes arbitrary, unpredictable
+// third-party HTML, so no amount of local try/catch can guarantee every
+// edge case is anticipated. Without this outer catch, ANY unhandled
+// exception anywhere in handleAudit() -- not just the ones explicitly
+// caught below -- crashes the whole Function, and Cloudflare's platform
+// then returns its own bare 502 with a non-JSON body instead of our
+// graceful error response. That's exactly the failure a real user hit in
+// production (2026-08-21): a specific uncaught throw (res.clone() on a
+// disturbed stream, since fixed below) surfaced as an opaque 502 with no
+// way to diagnose it client-side. This is the general-purpose fix so the
+// NEXT unanticipated crash, whatever it turns out to be, degrades to a
+// normal error message instead of repeating that same opaque failure.
 export async function onRequestPost(context) {
+  try {
+    return await handleAudit(context);
+  } catch {
+    return json({ ok: false, error: "Audit failed unexpectedly. Please try again." }, 500);
+  }
+}
+
+async function handleAudit(context) {
   const { request, env } = context;
   let body;
   try {
@@ -131,11 +151,24 @@ export async function onRequestPost(context) {
   // is wrapped so a timeout/404/network hiccup on either just means "not
   // found", not a failed audit.
   const origin = new URL(finalUrl).origin;
-  const [robots, sitemap, hasDoctype] = await Promise.all([
+  const [robots, sitemap] = await Promise.all([
     checkRobots(origin),
     checkSitemap(origin),
-    peekDoctype(res.clone()),
   ]);
+  // res.clone() is a separate, unprotected try -- unlike checkRobots/
+  // checkSitemap (which catch their own errors internally), clone() can
+  // throw synchronously (a "disturbed"/locked body stream, seen in
+  // practice for some origins that reset the connection oddly) and that
+  // throw was previously uncaught, crashing the whole Function with an
+  // unhandled-exception 502 instead of a graceful JSON error. Doctype
+  // detection is minor enough to just skip on failure, same fail-open
+  // philosophy as every other best-effort check here.
+  let hasDoctype = false;
+  try {
+    hasDoctype = await peekDoctype(res.clone());
+  } catch {
+    hasDoctype = false;
+  }
 
   let state;
   try {

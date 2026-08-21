@@ -31,7 +31,18 @@ const FETCH_TIMEOUT_MS = 25000; // PSI's own Lighthouse run can be slow
 const BLOCKED_HOST_RE =
   /(^|\.)(localhost|local)$|^0\.0\.0\.0$|^127\.|^10\.|^192\.168\.|^169\.254\.|^172\.(1[6-9]|2\d|3[01])\.|^\[?::1\]?$|^\[?fc[0-9a-f]{2}:|^\[?fe80:/i;
 
+// Same reasoning as the wrapper in functions/api/audit.js: an unhandled
+// exception anywhere below would otherwise crash the Function and
+// surface as an opaque platform 502 instead of a graceful JSON error.
 export async function onRequestPost(context) {
+  try {
+    return await handlePagespeed(context);
+  } catch {
+    return json({ ok: false, error: "Performance check failed unexpectedly. Please try again." }, 500);
+  }
+}
+
+async function handlePagespeed(context) {
   const { request, env } = context;
   let body;
   try {
