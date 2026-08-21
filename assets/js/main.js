@@ -16,6 +16,22 @@
     window.dataLayer.push(Object.assign({ event: event }, params || {}));
   }
 
+  /* ---------- Site Leads Google Sheet (best-effort, parallel to Web3Forms) ----------
+   * Separate Apps Script Web App from Plot Mitra's own form-to-Sheet setup
+   * (Plot Mitra is a distinct business, kept in its own Sheet). Every form
+   * submission on the main site is sent here IN ADDITION TO Web3Forms, not
+   * instead of it -- Web3Forms still gives the instant email notification;
+   * this just also persists the data somewhere queryable long-term. Never
+   * blocks or fails the actual form UX: fire-and-forget, errors swallowed.
+   */
+  var SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz7v-xOs-Og5MPXxbnFpJAm0PcI7ZZkx02Bys5zm_70C_tRq9XXjNy-rvDVHmLyyzSjHw/exec';
+  function postToSheet(formType, fields) {
+    var payload = Object.assign({ formType: formType, submittedAt: new Date().toISOString(), pageUrl: location.href }, fields);
+    try {
+      fetch(SHEET_ENDPOINT, { method: 'POST', body: JSON.stringify(payload) }).catch(function () {});
+    } catch (e) { /* best-effort only */ }
+  }
+
   /* ---------- Theme toggle ---------- */
   const themeToggle = doc.getElementById('theme-toggle');
   const iconMoon = doc.querySelector('.icon-moon');
@@ -211,6 +227,8 @@
         });
         const data = await res.json();
         if (data.success) {
+          const fd = new FormData(form);
+          postToSheet('contact', { name: fd.get('name'), email: fd.get('email'), message: fd.get('message') });
           form.reset();
           track('contact_form_submit', { form_location: 'contact_section' });
           setStatus('ok', 'Thanks — your message has been sent. I’ll be in touch soon.');
@@ -249,7 +267,12 @@
           body: JSON.stringify(Object.fromEntries(new FormData(nf)))
         });
         const data = await res.json();
-        if (data.success) { nf.reset(); set('ok', 'You’re on the list — thank you!'); track('newsletter_signup', {}); }
+        if (data.success) {
+          postToSheet('newsletter', { email: new FormData(nf).get('email') });
+          nf.reset();
+          set('ok', 'You’re on the list — thank you!');
+          track('newsletter_signup', {});
+        }
         else set('err', data.message || 'Something went wrong. Please try again.');
       } catch (err) {
         set('err', 'Network error. Please try again.');

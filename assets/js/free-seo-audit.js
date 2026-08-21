@@ -510,6 +510,21 @@
       track('free_audit_lead_captured', { audit_url: url });
     }).catch(function () { /* lead capture is best-effort; the audit still runs */ });
 
+    // 1b. Same lead, also persisted to the site's Sheet (separate endpoint
+    // from Plot Mitra's own Sheet -- see assets/js/main.js for the same
+    // pattern used on the Newsletter/Contact forms). Independent of the
+    // Web3Forms call above; never blocks or fails the audit.
+    fetch('https://script.google.com/macros/s/AKfycbz7v-xOs-Og5MPXxbnFpJAm0PcI7ZZkx02Bys5zm_70C_tRq9XXjNy-rvDVHmLyyzSjHw/exec', {
+      method: 'POST',
+      body: JSON.stringify({
+        formType: 'seo-audit-lead',
+        submittedAt: new Date().toISOString(),
+        name: formData.name, email: formData.email, phone: formData.phone,
+        url: url, keyword: formData.keyword || '',
+        pageUrl: location.href
+      })
+    }).catch(function () {});
+
     // 2. The actual audit. Split into two try/catches so a genuine
     // network failure (fetch rejects -- offline, DNS, an extension
     // blocking the request) and a bad/non-JSON response (Cloudflare
