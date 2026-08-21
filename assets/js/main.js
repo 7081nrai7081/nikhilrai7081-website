@@ -345,9 +345,12 @@
     cta.setAttribute('aria-label', 'Join the VYNTRA community on WhatsApp');
     cta.innerHTML =
       '<a class="vyntra-cta__link" href="' + WA_URL + '" target="_blank" rel="noopener noreferrer">' +
-        '<img class="vyntra-cta__img" src="/assets/images/vyntra_jamming_night_lucknow.png" ' +
-          'alt="VYNTRA Jamming Night, Lucknow — a Saturday of live music, voices and conversations. Tap to join the community." ' +
-          'width="1448" height="1086" loading="lazy" decoding="async">' +
+        '<picture>' +
+          '<source srcset="/assets/images/vyntra_jamming_night_lucknow.webp" type="image/webp">' +
+          '<img class="vyntra-cta__img" src="/assets/images/vyntra_jamming_night_lucknow.jpg" ' +
+            'alt="VYNTRA Jamming Night, Lucknow — a Saturday of live music, voices and conversations. Tap to join the community." ' +
+            'width="1044" height="782" loading="lazy" decoding="async">' +
+        '</picture>' +
         '<span class="vyntra-cta__label">Tap to join the community &rarr;</span>' +
       '</a>' +
       '<button type="button" class="vyntra-cta__close" aria-label="Dismiss banner">&times;</button>';
