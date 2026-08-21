@@ -2,19 +2,6 @@
   "_comment": "Auto-publish queue. The GitHub Action publishes queue[0] three times a week (Mon/Wed/Fri 09:00 UTC), then removes it. Newest-intended-first is NOT required; order = publish order (top publishes first). To add a post: write _drafts/<slug>.body.txt, add assets/images/og-<slug>.svg + rendered .png, and prepend/append an entry here. Fields: slug, title, description, og_title, og_desc, og_alt, tag (visible), cat (filter key: partnerships|growth|leadgen|operations|automation), read, summary (listing card).",
   "queue": [
     {
-      "slug": "blog-free-seo-audit-explained",
-      "title": "What a Free SEO Audit Won't Tell You",
-      "description": "Automated SEO audit tools are fast and honest about the mechanical layer, titles, meta tags, schema, but they can't judge search intent, content quality, or strategy. Here's how to actually use a free audit score.",
-      "og_title": "What a Free SEO Audit Won't Tell You",
-      "og_desc": "Automated audits are great at the mechanical layer and blind to search intent, content quality and strategy. How to actually use the score.",
-      "og_alt": "What a Free SEO Audit Won't Tell You",
-      "tag": "SEO",
-      "cat": "growth",
-      "read": "5 min",
-      "summary": "A free SEO audit is a fast, honest first pass, not a strategy. It's very good at telling you what's broken and useless at telling you what to build next.",
-      "body": "blog-free-seo-audit-explained.body.txt"
-    },
-    {
       "slug": "blog-outbound-vs-inbound",
       "title": "Outbound vs Inbound: Where to Point Your Effort First",
       "description": "Outbound and inbound aren't rivals. They solve different problems at different speeds. How to know which one deserves your next hour, and how to run both together.",
