@@ -45,5 +45,3 @@ _seo-reports/
 
 # wrangler's local dev cache/state
 .wrangler/
-__pycache__/
-*.pyc
