@@ -17,15 +17,15 @@ DOMAIN = "https://nikhilrai7081.com"
 # cat key -> (url slug, display name, meta description)
 CATS = {
     "partnerships": ("topic-partnerships", "Partnerships",
-        "Articles on strategic partnerships, business development and building alliances that actually drive growth — by Nikhil Rai."),
+ "Articles on strategic partnerships, business development and building alliances that actually drive growth, by Nikhil Rai."),
     "growth": ("topic-growth", "Growth",
-        "Articles on growth strategy, positioning, retention, distribution and go-to-market — practical growth systems by Nikhil Rai."),
+ "Articles on growth strategy, positioning, retention, distribution and go-to-market, practical growth systems by Nikhil Rai."),
     "leadgen": ("topic-lead-generation", "Lead Generation",
-        "Articles on B2B lead generation strategy, cold outreach, demand generation and building predictable pipeline — by Nikhil Rai."),
+ "Articles on B2B lead generation strategy, cold outreach, demand generation and building predictable pipeline, by Nikhil Rai."),
     "operations": ("topic-operations", "Operations",
-        "Articles on business and growth operations — the systems, process and reporting behind teams that execute predictably. By Nikhil Rai."),
+ "Articles on business and growth operations, the systems, process and reporting behind teams that execute predictably. By Nikhil Rai."),
     "automation": ("topic-automation", "Automation",
-        "Articles on business automation — what to automate first, how much to spend, and building systems that buy back time. By Nikhil Rai."),
+ "Articles on business automation: what to automate first, how much to spend, and building systems that buy back time. By Nikhil Rai."),
 }
 
 def rd(p): return io.open(os.path.join(ROOT, p), encoding="utf-8").read()
@@ -74,11 +74,11 @@ try{if(localStorage.getItem('cookie_consent')==='granted'){gtag('consent','updat
 </script>
 <!-- End deferred third-party -->
 
-<title>@@NAME@@ Articles — Nikhil Rai</title>
+<title>@@NAME@@ Articles · Nikhil Rai</title>
 <meta name="description" content="@@DESC@@">
 <meta name="theme-color" content="#ffffff">
 
-<meta property="og:title" content="@@NAME@@ Articles — Nikhil Rai">
+<meta property="og:title" content="@@NAME@@ Articles, Nikhil Rai">
 <meta property="og:description" content="@@DESC@@">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Nikhil Rai">
@@ -91,7 +91,7 @@ try{if(localStorage.getItem('cookie_consent')==='granted'){gtag('consent','updat
 <meta name="twitter:image" content="@@DOMAIN@@/assets/images/og-image.png">
 
 <link rel="canonical" href="@@DOMAIN@@/@@SLUG@@">
-<link rel="alternate" type="application/rss+xml" title="Nikhil Rai — Blog" href="@@DOMAIN@@/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="Nikhil Rai, Blog" href="@@DOMAIN@@/feed.xml">
 <link rel="alternate" hreflang="en" href="@@DOMAIN@@/@@SLUG@@">
 <link rel="alternate" hreflang="x-default" href="@@DOMAIN@@/@@SLUG@@">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -110,7 +110,7 @@ try{if(localStorage.getItem('cookie_consent')==='granted'){gtag('consent','updat
   "name":"@@NAME@@ Articles",
   "url":"@@DOMAIN@@/@@SLUG@@",
   "description":"@@DESC@@",
-  "isPartOf":{"@type":"Blog","name":"Nikhil Rai — Blog","url":"@@DOMAIN@@/blog"},
+ "isPartOf":{"@type":"Blog","name":"Nikhil Rai: Blog","url":"@@DOMAIN@@/blog"},
   "author":{"@type":"Person","name":"Nikhil Rai","url":"@@DOMAIN@@"}
 }
 </script>

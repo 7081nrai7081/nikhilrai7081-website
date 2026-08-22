@@ -1,5 +1,5 @@
 /* =====================================================
-   NIKHIL RAI — PORTFOLIO
+ NIKHIL RAI, PORTFOLIO
    Interactions: theme, menu, scroll progress,
    reveal-on-scroll, active nav, header state
    ===================================================== */
@@ -51,7 +51,7 @@
   }
 
   // Initial theme: saved preference, else always the light agency look.
-  // (Don't auto-follow the OS — the brand design is light by default.)
+ // (Don't auto-follow the OS, the brand design is light by default.)
   let stored = null;
   try { stored = localStorage.getItem('theme'); } catch (e) {}
   if (stored !== 'dark' && stored !== 'light') stored = 'light';
@@ -104,7 +104,7 @@
   const progress = doc.getElementById('progress');
   let ticking = false;
 
-  /* Back-to-top button — built in JS so every page gets it without markup edits.
+ /* Back-to-top button, built in JS so every page gets it without markup edits.
      Placed bottom-LEFT to stay clear of the bottom-right WhatsApp community card. */
   const toTop = doc.createElement('button');
   toTop.type = 'button';
@@ -210,7 +210,7 @@
 
       const key = keyField ? keyField.value.trim() : '';
       if (!key || key === 'YOUR_ACCESS_KEY_HERE') {
-        setStatus('err', 'Form isn’t configured yet — add your free Web3Forms access key in the HTML.');
+ setStatus('err', 'Form isn’t configured yet, add your free Web3Forms access key in the HTML.');
         return;
       }
 
@@ -231,7 +231,7 @@
           postToSheet('contact', { name: fd.get('name'), email: fd.get('email'), message: fd.get('message') });
           form.reset();
           track('contact_form_submit', { form_location: 'contact_section' });
-          setStatus('ok', 'Thanks — your message has been sent. I’ll be in touch soon.');
+ setStatus('ok', 'Thanks, your message has been sent. I’ll be in touch soon.');
         } else {
           setStatus('err', data.message || 'Something went wrong. Please email me directly instead.');
         }
@@ -270,7 +270,7 @@
         if (data.success) {
           postToSheet('newsletter', { email: new FormData(nf).get('email') });
           nf.reset();
-          set('ok', 'You’re on the list — thank you!');
+ set('ok', 'You’re on the list, thank you!');
           track('newsletter_signup', {});
         }
         else set('err', data.message || 'Something went wrong. Please try again.');
@@ -355,7 +355,7 @@
 
   /* ---------- Community floating banner (site-wide) ---------- */
   (function () {
-    // Persisted dismissal — stays hidden for this visitor across pages/visits.
+ // Persisted dismissal, stays hidden for this visitor across pages/visits.
     let dismissed = null;
     try { dismissed = localStorage.getItem('vyntra_cta_dismissed'); } catch (e) {}
     if (dismissed === '1') return;
@@ -371,7 +371,7 @@
         '<picture>' +
           '<source srcset="/assets/images/vyntra_jamming_night_lucknow.webp" type="image/webp">' +
           '<img class="vyntra-cta__img" src="/assets/images/vyntra_jamming_night_lucknow.jpg" ' +
-            'alt="VYNTRA Jamming Night, Lucknow — a Saturday of live music, voices and conversations. Tap to join the community." ' +
+ 'alt="VYNTRA Jamming Night, Lucknow, a Saturday of live music, voices and conversations. Tap to join the community." ' +
             'width="1044" height="782" loading="lazy" decoding="async">' +
         '</picture>' +
         '<span class="vyntra-cta__label">Tap to join the community &rarr;</span>' +
@@ -408,5 +408,5 @@
     }, 1200);
   })();
 
-  console.log('%cNikhil Rai — Portfolio', 'font-size:13px;color:#e23a5e;font-weight:700;');
+ console.log('%cNikhil Rai, Portfolio', 'font-size:13px;color:#e23a5e;font-weight:700;');
 })();

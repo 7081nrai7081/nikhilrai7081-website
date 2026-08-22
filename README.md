@@ -1,22 +1,22 @@
 # nikhilrai7081-website
 
-Personal portfolio for **Nikhil Rai** — Growth · Partnerships · Execution.
+Personal portfolio for **Nikhil Rai**, Growth · Partnerships · Execution.
 Static HTML/CSS/JS, no build step. Live at **https://nikhilrai7081.com**.
 
 ## Structure
 
 ```
 index.html                 Home (Hero, Stats, About, Expertise, Journey, Projects, Contact)
-work-lead-generation.html  Case study — Lead Generation Systems
-work-automation.html       Case study — Business Automation
-work-seo.html              Case study — SEO & Visibility
-work-operations.html       Case study — Digital Operations
-blog.html                  Blog index (/blog) — ready to list posts
+work-lead-generation.html Case study, Lead Generation Systems
+work-automation.html Case study, Business Automation
+work-seo.html Case study, SEO & Visibility
+work-operations.html Case study, Digital Operations
+blog.html Blog index (/blog), ready to list posts
 blog-template.html         Copy-to-create article template (noindex)
 privacy.html               Privacy Policy (/privacy)
 404.html                   Styled not-found page (root-absolute asset paths)
 
-assets/css/style.css       Styles — dark/light theme, glassmorphism, @font-face
+assets/css/style.css Styles: dark/light theme, glassmorphism, @font-face
 assets/js/main.js          Theme, nav, scroll progress, reveal, contact form,
                            cookie consent, click/conversion tracking
 assets/fonts/              Self-hosted Inter (variable woff2)
@@ -37,7 +37,7 @@ Canonical tags, `og:url`, sitemap and internal links all use the clean URLs.
 | What | ID | Notes |
 |------|----|-------|
 | Google Tag Manager | `GTM-MB5JGJQL` | Snippet in `<head>` + `<noscript>` on every page |
-| Google Analytics 4 | `G-MYX7TJMGPH` | Fired **by** the GTM container — managed in GTM/GA4, not in this repo |
+| Google Analytics 4 | `G-MYX7TJMGPH` | Fired **by** the GTM container, managed in GTM/GA4, not in this repo |
 
 - **Consent Mode v2:** analytics defaults to **denied**; a cookie banner sets
   `analytics_storage: granted` only after the visitor clicks **Accept**. The
@@ -46,7 +46,7 @@ Canonical tags, `og:url`, sitemap and internal links all use the clean URLs.
   `contact_click`, `cta_click`, `cookie_consent`. Create matching Custom Event
   triggers + GA4 Event tags in GTM to forward them (and mark form submits as a
   key event/conversion in GA4).
-- The GA4 ID does not appear in this repo — to change the destination property,
+- The GA4 ID does not appear in this repo, to change the destination property,
   edit the Google tag inside GTM, not these files.
 
 ## Contact form
@@ -65,7 +65,7 @@ test from the deployed site (not curl).
 
 ## Assets & caching
 
-- **Fonts** are self-hosted (`assets/fonts/inter-variable.woff2`) via `@font-face` — no Google Fonts dependency.
+- **Fonts** are self-hosted (`assets/fonts/inter-variable.woff2`) via `@font-face`, no Google Fonts dependency.
 - **Cache-busting:** CSS/JS are referenced as `?v=N`. A pre-commit hook bumps `N`
   automatically whenever `style.css` or `main.js` changes. Activate once per clone:
 
@@ -83,7 +83,7 @@ test from the deployed site (not curl).
 ## Local preview
 
 Open `index.html` directly in a browser, **or** serve the folder (needed for the
-pages that use root-absolute `/assets/...` paths — 404, privacy, blog):
+pages that use root-absolute `/assets/...` paths: 404, privacy, blog):
 
 ```bash
 python -m http.server 8000   # then visit http://localhost:8000

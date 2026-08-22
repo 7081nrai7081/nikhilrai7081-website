@@ -6,12 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Plot Size Converter: Sq Ft, Sq Yard (Gaj), Acre, Bigha | Plot Mitra</title>
-<meta name="description" content="Convert plot sizes between square feet, square yards (gaj), square metres, acres and hectares — plus a UP bigha/biswa reference table.">
+<meta name="description" content="Convert plot sizes between square feet, square yards (gaj), square metres, acres and hectares, plus a UP bigha/biswa reference table.">
 <meta name="author" content="Nikhil Rai">
 <meta name="theme-color" content="#f8f5ec">
 
 <meta property="og:title" content="Plot Size Converter: Sq Ft, Sq Yard (Gaj), Acre, Bigha">
-<meta property="og:description" content="Convert plot sizes between square feet, square yards (gaj), square metres, acres and hectares — plus a UP bigha/biswa reference table.">
+<meta property="og:description" content="Convert plot sizes between square feet, square yards (gaj), square metres, acres and hectares, plus a UP bigha/biswa reference table.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Plot Mitra">
 <meta property="og:url" content="https://nikhilrai7081.com/plotmitra/plot-size-converter">
@@ -79,19 +79,19 @@
 
         <table class="pm-converter-table" id="pm-conv-results">
           <tbody>
-            <tr><td>Square Feet</td><td id="out-sqft">—</td></tr>
-            <tr><td>Square Yards / Gaj</td><td id="out-sqyd">—</td></tr>
-            <tr><td>Square Metres</td><td id="out-sqm">—</td></tr>
-            <tr><td>Acre</td><td id="out-acre">—</td></tr>
-            <tr><td>Hectare</td><td id="out-hectare">—</td></tr>
-            <tr><td>Bigha (Purvanchal/Lucknow-area standard)</td><td id="out-bigha">—</td></tr>
-            <tr><td>Biswa (same standard)</td><td id="out-biswa">—</td></tr>
+ <tr><td>Square Feet</td><td id="out-sqft">, </td></tr>
+ <tr><td>Square Yards / Gaj</td><td id="out-sqyd">, </td></tr>
+ <tr><td>Square Metres</td><td id="out-sqm">, </td></tr>
+ <tr><td>Acre</td><td id="out-acre">, </td></tr>
+ <tr><td>Hectare</td><td id="out-hectare">, </td></tr>
+ <tr><td>Bigha (Purvanchal/Lucknow-area standard)</td><td id="out-bigha">, </td></tr>
+ <tr><td>Biswa (same standard)</td><td id="out-biswa">, </td></tr>
           </tbody>
         </table>
       </div>
 
       <h2>About bigha and biswa in UP</h2>
-      <p>Unlike square feet, gaj, acres and hectares — which are fixed, standard units everywhere — <strong>bigha and biswa sizes vary by district in Uttar Pradesh</strong>. The figures above use the common convention for the Lucknow/Purvanchal region (1 bigha = 20 biswa = 27,225 sq ft, 1 biswa ≈ 1,361 sq ft). Some western UP districts (around Meerut, Muzaffarnagar, Bulandshahr) use a much smaller bigha — under a third of this size. We don't have confident district-level data for Kanpur specifically, so <strong>always confirm the local conversion with your tehsil/revenue office or a local surveyor before relying on it for a real transaction</strong>.</p>
+ <p>Unlike square feet, gaj, acres and hectares (which are fixed, standard units everywhere) <strong>bigha and biswa sizes vary by district in Uttar Pradesh</strong>. The figures above use the common convention for the Lucknow/Purvanchal region (1 bigha = 20 biswa = 27,225 sq ft, 1 biswa ≈ 1,361 sq ft). Some western UP districts (around Meerut, Muzaffarnagar, Bulandshahr) use a much smaller bigha, under a third of this size. We don't have confident district-level data for Kanpur specifically, so <strong>always confirm the local conversion with your tehsil/revenue office or a local surveyor before relying on it for a real transaction</strong>.</p>
 
       <h2>Fixed conversions used above</h2>
       <ul class="pm-check-list">
@@ -114,8 +114,8 @@
 
 <footer class="pm-footer">
   <div class="pm-wrap pm-footer-inner">
-    <p>Plot Mitra — a project by <a href="https://nikhilrai7081.com">Nikhil Rai</a>. · <a href="privacy.html">Privacy &amp; data use</a></p>
-    <p class="pm-footer-disclaimer">Figures are for quick reference only, especially bigha/biswa — confirm locally before relying on them for a real transaction.</p>
+ <p>Plot Mitra, a project by <a href="https://nikhilrai7081.com">Nikhil Rai</a>. · <a href="privacy.html">Privacy &amp; data use</a></p>
+ <p class="pm-footer-disclaimer">Figures are for quick reference only, especially bigha/biswa, confirm locally before relying on them for a real transaction.</p>
   </div>
 </footer>
 
@@ -127,7 +127,7 @@
   var unitSelect = document.getElementById('pm-conv-unit');
 
   function fmt(n) {
-    if (!isFinite(n)) return '—';
+ if (!isFinite(n)) return ', ';
     return n.toLocaleString('en-IN', { maximumFractionDigits: n < 10 ? 4 : 2 });
   }
 
@@ -135,7 +135,7 @@
     var val = parseFloat(valueInput.value);
     if (isNaN(val) || val < 0) {
       ['sqft', 'sqyd', 'sqm', 'acre', 'hectare', 'bigha', 'biswa'].forEach(function (u) {
-        document.getElementById('out-' + u).textContent = '—';
+ document.getElementById('out-' + u).textContent = ', ';
       });
       return;
     }

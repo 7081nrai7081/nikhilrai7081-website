@@ -1,20 +1,20 @@
-// Plot Mitra — Google Apps Script Web App template.
+// Plot Mitra, Google Apps Script Web App template.
 // Kept here for reference/version control only; the live copy is deployed
-// as "Plot Mitra Form Handler" inside the "Plot Mitra — Leads & Partners"
+// as "Plot Mitra Form Handler" inside the "Plot Mitra, Leads & Partners"
 // Google Sheet (Extensions > Apps Script), whose Web App URL is
 // FORM_ENDPOINT in plotmitra.js. If you change the logic here, paste the
 // update into that Sheet's Apps Script editor too and redeploy (Deploy >
-// Manage deployments > edit > new version) — editing this file alone does
+// Manage deployments > edit > new version), editing this file alone does
 // not affect the live endpoint.
 //
 // Routes buyer-interest submissions to a "Leads" tab and partner
 // inquiries to a "Partners" tab (created automatically on first use). If
 // per-campaign sheets are ever needed, prefer filtering this sheet by the
-// UTM columns first — only add a new sheet if that's not enough.
+// UTM columns first, only add a new sheet if that's not enough.
 //
 // Phone OTP verification (2Factor.in): doGet handles ?action=sendOtp and
 // ?action=verifyOtp (called via plain GET from the page so the JSON
-// response is actually readable — Apps Script doPost responses are opaque
+// response is actually readable, Apps Script doPost responses are opaque
 // cross-origin in this setup, see the no-cors note in plotmitra.js, but
 // doGet responses are not). doPost's submitForm() then re-checks that the
 // submitted phone has a verified session in cache before writing the row,
@@ -22,7 +22,7 @@
 //
 // Setup: sign up at https://2factor.in, grab your API key, then in this
 // Script's editor go to Project Settings > Script Properties and add
-// OTP_API_KEY = <your key>. Never paste the key directly into this file —
+// OTP_API_KEY = <your key>. Never paste the key directly into this file, 
 // it's version-controlled in a public repo.
 
 var OTP_SESSION_TTL_SECONDS = 10 * 60; // how long a verified phone stays usable for submit

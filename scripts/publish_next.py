@@ -76,7 +76,7 @@ try{if(localStorage.getItem('cookie_consent')==='granted'){gtag('consent','updat
 </script>
 <!-- End deferred third-party -->
 
-<title>@@TITLE@@ — Nikhil Rai</title>
+<title>@@TITLE@@ · Nikhil Rai</title>
 <meta name="description" content="@@DESC@@">
 <meta name="author" content="Nikhil Rai">
 <meta name="theme-color" content="#ffffff">
@@ -192,7 +192,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="author-body">
         <span class="author-eyebrow">Written by</span>
         <h3>Nikhil Rai</h3>
-        <p>I work across strategic partnerships, business development, lead generation and automation — helping teams find opportunities, build relationships and scale.</p>
+ <p>I work across strategic partnerships, business development, lead generation and automation, helping teams find opportunities, build relationships and scale.</p>
         <div class="author-links">
           <a href="/services">Work with me</a>
           <a href="https://www.linkedin.com/in/nikhilrai7081" target="_blank" rel="noopener">LinkedIn</a>
@@ -285,7 +285,7 @@ def main():
     q = json.loads(rd(qpath))
     items = q.get("queue", [])
     if not items:
-        p("queue empty — nothing to publish.")
+ p("queue empty, nothing to publish.")
         return 0
     e = items[0]
     check(e)
@@ -379,7 +379,7 @@ def main():
 
     if DRY:
         wr("_preview.html", page)
-        p("DRY RUN — no tracked files changed.")
+ p("DRY RUN, no tracked files changed.")
         p(f"would publish: {slug}  ({iso}, {e['read']})")
         p("preview written to _preview.html")
         p("--- listing card ---"); print(card)

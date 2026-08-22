@@ -479,7 +479,7 @@ function json(obj, status = 200) {
 
 const NAMED_ENTITIES = {
   amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ",
-  mdash: "—", ndash: "–", rsquo: "’", lsquo: "‘",
+ mdash: ": ", ndash: "–", rsquo: "’", lsquo: "‘",
   rdquo: "”", ldquo: "“", hellip: "…",
 };
 // HTMLRewriter hands back attribute values as raw source bytes -- it does

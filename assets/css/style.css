@@ -1,9 +1,9 @@
 /* =====================================================
-   NIKHIL RAI — PORTFOLIO
+ NIKHIL RAI, PORTFOLIO
    Premium / Apple × Linear × Founder
    ===================================================== */
 
-/* Self-hosted Inter (body) + Poppins (display) — no third-party dependency */
+/* Self-hosted Inter (body) + Poppins (display), no third-party dependency */
 @font-face {
   font-family: 'Inter';
   font-style: normal;
@@ -16,7 +16,7 @@
 @font-face { font-family: 'Poppins'; font-style: normal; font-weight: 800; font-display: swap; src: url('../fonts/poppins-800.woff2') format('woff2'); }
 
 :root {
-  /* Light agency theme (default) — warm off-white base, navy text, gold accent */
+ /* Light agency theme (default): warm off-white base, navy text, gold accent */
   --bg: #faf8f3;
   --bg-elev: #fff;
   --surface: #fff;
@@ -30,11 +30,11 @@
 
   --brand: #c9a227;     /* warm gold accent */
   --brand-2: #c9a227;
-  --accent: #a9861f;    /* deeper gold — small text / AA contrast */
+ --accent: #a9861f; /* deeper gold, small text / AA contrast */
 
   --grad: #c9a227;
   --grad-soft: rgba(201, 162, 39, 0.09);
-  /* Rich CTA fill — bright-to-deep gold, dark enough for white text to clear AA in both themes */
+ /* Rich CTA fill, bright-to-deep gold, dark enough for white text to clear AA in both themes */
   --btn-grad: linear-gradient(135deg, #d4af37 0%, #a9861f 100%);
 
   /* Deep navy feature bands */
@@ -105,7 +105,7 @@ body {
   outline-offset: 3px;
   border-radius: 8px;
 }
-/* Inputs supply their own focus ring — avoid a doubled outline */
+/* Inputs supply their own focus ring, avoid a doubled outline */
 .field input:focus-visible,
 .field textarea:focus-visible,
 .newsletter-form input:focus-visible { outline: none; }
@@ -146,7 +146,7 @@ html { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent;
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
 
-/* Skip-to-content link — visible only when focused via keyboard */
+/* Skip-to-content link, visible only when focused via keyboard */
 .skip-link {
   position: fixed;
   top: 12px;
@@ -222,7 +222,7 @@ h1, h2, h3 {
   background: var(--brand);
 }
 
-/* Highlighted phrase inside headlines — solid gold, no animation */
+/* Highlighted phrase inside headlines, solid gold, no animation */
 .gradient-text {
   color: var(--brand); /* fallback for no-background-clip */
   background: linear-gradient(120deg, #d4af37 0%, #a9861f 100%);
@@ -745,7 +745,7 @@ body.dark .gradient-text {
   border-right: 1px solid var(--border);
 }
 /* OG cards carry their own headline text, so show them whole (contain) instead of
-   cropping — a cover-crop chops the left-aligned title and looks broken. */
+ cropping, a cover-crop chops the left-aligned title and looks broken. */
 .blog-featured-media img { width: 100%; height: 100%; object-fit: contain; border-radius: 10px; }
 .blog-featured-body { padding: 40px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
 .blog-featured-flag {
@@ -865,7 +865,7 @@ html { scroll-behavior: smooth; }
   transition: opacity .4s var(--ease);
 }
 .card > * { position: relative; z-index: 1; }
-/* Diagonal light sweep on hover — premium tactile feedback */
+/* Diagonal light sweep on hover, premium tactile feedback */
 .card::after {
   content: '';
   position: absolute;
@@ -1440,7 +1440,7 @@ a.card:hover .card-more svg { transform: translateX(4px); }
   .cards { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* Primary nav collapses to the menu early — the expanded link set needs room
+/* Primary nav collapses to the menu early, the expanded link set needs room
    before it crowds the header on small laptops/tablets. */
 @media (max-width: 1080px) {
   .menu-toggle { display: flex; }
@@ -1484,7 +1484,7 @@ a.card:hover .card-more svg { transform: translateX(4px); }
 }
 
 /* =====================================================
-   LinkedIn additions — Skills, Experience meta,
+ LinkedIn additions: Skills, Experience meta,
    Earlier-experience, single Recommendation
    (extends existing components; tokens only)
    ===================================================== */
@@ -1529,7 +1529,7 @@ a.card:hover .card-more svg { transform: translateX(4px); }
   margin-inline: auto;
 }
 /* Two-column matrix: category label on the left, pills on the right,
-   separated by hairline dividers — reads as an organised toolkit. */
+ separated by hairline dividers, reads as an organised toolkit. */
 .skill-group {
   display: grid;
   grid-template-columns: 190px 1fr;
@@ -1631,7 +1631,7 @@ figure.testimonial { margin: 0; }
 /* =====================================================
    Brand decoration system, crisp gold motifs
    (dot grids, outline shapes, monogram, framed portrait,
-   tinted sections). Decorative only — aria-hidden / pseudo.
+ tinted sections). Decorative only, aria-hidden / pseudo.
    ===================================================== */
 
 /* Alternating soft-tint section background for rhythm */
@@ -1804,7 +1804,7 @@ a.card:hover .card-media img { transform: scale(1.06); }
 
 /* =====================================================
    Community floating banner (site-wide)
-   Gold-on-black brand — deliberately off the
+ Gold-on-black brand, deliberately off the
    site's crimson palette. Injected once by main.js so
    it appears on every page without per-page markup.
    ===================================================== */
@@ -1832,7 +1832,7 @@ a.card:hover .card-media img { transform: scale(1.06); }
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 3; /* matches the 1448×1086 poster — reserves space, no CLS */
+ aspect-ratio: 4 / 3; /* matches the 1448×1086 poster, reserves space, no CLS */
   object-fit: cover;
 }
 .vyntra-cta__label {
@@ -1912,7 +1912,7 @@ a.card:hover .card-media img { transform: scale(1.06); }
 }
 
 /* ===== Services page ===== */
-/* Hero: two columns — copy + an "engagement snapshot" panel that fills the
+/* Hero: two columns, copy + an "engagement snapshot" panel that fills the
    right side and answers the buyer's first questions up front. */
 .svc-hero-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 56px; align-items: center; }
 .svc-hero-copy .cs-lead { margin-bottom: 0; }

@@ -3,44 +3,44 @@ node_modules/
 .shots/
 .iconwork/
 
-# Internal planning / source briefs — not for the public site repo
+# Internal planning / source briefs, not for the public site repo
 nikhil-linkedin-profile-data.md
 website-update-brief.md
 
-# Internal SEO tracker — not for public deploy
+# Internal SEO tracker, not for public deploy
 SEO-TODO.md
 
-# Unfinished blog template (has {{placeholders}}) — keep local only
+# Unfinished blog template (has {{placeholders}}), keep local only
 blog-template.html
 
-# Internal handoff / AI-orientation docs — keep local, NOT for the public repo or site
+# Internal handoff / AI-orientation docs, keep local, NOT for the public repo or site
 # (the GitHub repo is public AND the live site serves .md files, so committing these
-#  would expose them at nikhilrai7081.com/HANDOFF.md — keep them out of the deploy)
+# would expose them at nikhilrai7081.com/HANDOFF.md, keep them out of the deploy)
 HANDOFF.md
 CLAUDE.md
 
-# Private keyword research exports (Google Keyword Planner) — never publish
+# Private keyword research exports (Google Keyword Planner), never publish
 Keyword Stats*.csv
 *keyword*.csv
 
-# Internal off-page SEO working doc — local only, not for the public repo / live site
+# Internal off-page SEO working doc, local only, not for the public repo / live site
 OFF-PAGE-SEO.md
 
-# Internal outreach pitch drafts — local only, not for the public repo / live site
+# Internal outreach pitch drafts, local only, not for the public repo / live site
 OUTREACH-PITCHES.md
 
 # Dry-run preview from scripts/publish_next.py
 _preview.html
 
-# ChatGPT review notes & GSC performance exports — internal, not for public repo
+# ChatGPT review notes & GSC performance exports, internal, not for public repo
 chatgpttodo.txt
 *.zip
 
-# Local SEO audit reports (scripts/seo_audit.py) — internal working output,
+# Local SEO audit reports (scripts/seo_audit.py), internal working output,
 # not for the public repo / live site
 _seo-reports/
 
-# Local secrets for `wrangler pages dev` (e.g. PAGESPEED_API_KEY) — never commit
+# Local secrets for `wrangler pages dev` (e.g. PAGESPEED_API_KEY), never commit
 .dev.vars
 
 # wrangler's local dev cache/state

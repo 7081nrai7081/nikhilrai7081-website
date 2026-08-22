@@ -1,14 +1,14 @@
-// Plot Mitra — lead + partner form handling.
+// Plot Mitra, lead + partner form handling.
 //
-// Submissions go to the "Plot Mitra — Leads & Partners" Google Sheet via an
+// Submissions go to the "Plot Mitra, Leads & Partners" Google Sheet via an
 // Apps Script Web App (apps-script-template.gs, deployed from that Sheet's
 // Extensions > Apps Script). It routes "lead" vs "partner" submissions to
 // separate tabs, created automatically on first use. If we ever need
 // per-campaign sheets (e.g. a paid-ads push), the UTM columns already
 // captured below (utmSource/utmCampaign/etc.) are enough to filter one
-// sheet rather than standing up a new one — only fork the sheet if that
+// sheet rather than standing up a new one, only fork the sheet if that
 // stops being sufficient.
-// If the Sheet request ever fails, both forms fall back to WhatsApp —
+// If the Sheet request ever fails, both forms fall back to WhatsApp, 
 // mailto: is unreliable on mobile since it needs a configured mail app,
 // and most visitors here are on phones.
 
@@ -34,7 +34,7 @@ var WHATSAPP_NUMBER = "919793082706"; // used for the fallback if the Sheet requ
       };
       localStorage.setItem(ATTR_KEY, JSON.stringify(attribution));
     }
-  } catch (e) { /* localStorage unavailable (private mode etc.) — attribution just won't be captured */ }
+ } catch (e) { /* localStorage unavailable (private mode etc.), attribution just won't be captured */ }
 
   function getAttribution() {
     try {
@@ -107,13 +107,13 @@ var WHATSAPP_NUMBER = "919793082706"; // used for the fallback if the Sheet requ
   }
 
   function whatsappUrl(subjectPrefix, data) {
-    var text = subjectPrefix + ' — ' + (data.name || '') + '\n\n' + summaryText(data);
+ var text = subjectPrefix + ', ' + (data.name || '') + '\n\n' + summaryText(data);
     return 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(text);
   }
 
   function mailtoUrl(subjectPrefix, data) {
     return 'mailto:7081nrai7081@gmail.com'
-      + '?subject=' + encodeURIComponent(subjectPrefix + ' — ' + (data.name || ''))
+ + '?subject=' + encodeURIComponent(subjectPrefix + ', ' + (data.name || ''))
       + '&body=' + encodeURIComponent(summaryText(data));
   }
 
@@ -121,7 +121,7 @@ var WHATSAPP_NUMBER = "919793082706"; // used for the fallback if the Sheet requ
     var wa = whatsappUrl(subjectPrefix, data);
     var mail = mailtoUrl(subjectPrefix, data);
     el.className = 'pm-form-status pm-status-ok';
-    el.innerHTML = 'Tap below to send your details directly — we’ll get them right away:'
+ el.innerHTML = 'Tap below to send your details directly, we’ll get them right away:'
       + '<span class="pm-fallback-actions">'
       + '<a class="pm-btn pm-btn-sm" href="' + wa + '" target="_blank" rel="noopener">Send via WhatsApp</a>'
       + '<a class="pm-btn pm-btn-outline pm-btn-sm" href="' + mail + '">Send via Email</a>'
@@ -154,7 +154,7 @@ var WHATSAPP_NUMBER = "919793082706"; // used for the fallback if the Sheet requ
 
     function otpFetch(params) {
       // Plain GET (not the no-cors POST used for the final submit) so the
-      // JSON response body is actually readable — see the note in
+ // JSON response body is actually readable, see the note in
       // apps-script-template.gs on why sendOtp/verifyOtp use doGet.
       return fetch(FORM_ENDPOINT + '?' + new URLSearchParams(params).toString())
         .then(function (r) { return r.json(); });
@@ -188,7 +188,7 @@ var WHATSAPP_NUMBER = "919793082706"; // used for the fallback if the Sheet requ
           verifyRow.hidden = false;
           otpInput.value = '';
           otpInput.focus();
-          setOtpStatus('Code sent — enter it below.', true);
+ setOtpStatus('Code sent, enter it below.', true);
         })
         .catch(function () { setOtpStatus('Could not send code. Check your connection.', false); })
         .finally(function () { sendBtn.disabled = false; });

@@ -58,7 +58,7 @@
   }
 
   function scoreLabelFor(score) {
-    if (score >= 90) return 'Excellent — this page is in great shape';
+ if (score >= 90) return 'Excellent, this page is in great shape';
     if (score >= 80) return 'This page is good';
     if (score >= 70) return 'This page is okay, but could be better';
     if (score >= 50) return 'This page needs work';
@@ -286,8 +286,8 @@
     keywordReportEl.appendChild(list);
 
     var note = '';
-    if (report.occurrences === 0) note = ' — not found in the visible body text at all.';
-    else if (report.density > 3) note = ' — that’s on the high side; over-repeating a keyword can read as stuffing to search engines.';
+ if (report.occurrences === 0) note = ', not found in the visible body text at all.';
+ else if (report.density > 3) note = ', that’s on the high side; over-repeating a keyword can read as stuffing to search engines.';
     var density = document.createElement('p');
     density.className = 'audit-kw-density';
     density.textContent = report.occurrences + ' occurrence(s) across ' + report.totalWords + ' words (' + report.density + '% density)' + note;
@@ -307,7 +307,7 @@
     l.className = 'audit-perf-metric-label';
     l.textContent = name;
     var v = document.createElement('span');
-    v.textContent = labText || '—';
+ v.textContent = labText || ', ';
     if (fieldEntry) {
       var badge = document.createElement('span');
       badge.className = 'audit-perf-field-badge';
@@ -332,7 +332,7 @@
     scoreEl.style.setProperty('--audit-perf-score', String(scoreVal === null ? 0 : scoreVal));
     scoreEl.style.setProperty('--audit-perf-color', perfColorFor(scoreVal));
     var scoreInner = document.createElement('span');
-    scoreInner.textContent = scoreVal === null ? '—' : String(scoreVal);
+ scoreInner.textContent = scoreVal === null ? ', ': String(scoreVal);
     scoreEl.appendChild(scoreInner);
 
     var labelEl = document.createElement('div');
@@ -381,7 +381,7 @@
   async function fetchPerformance(url) {
     if (!perfEl || !perfBodyEl) return;
     perfEl.hidden = false;
-    perfBodyEl.innerHTML = '<p class="audit-perf-loading">Running a live PageSpeed Insights check (Google’s own Lighthouse test) — this can take up to 30 seconds…</p>';
+ perfBodyEl.innerHTML = '<p class="audit-perf-loading">Running a live PageSpeed Insights check (Google’s own Lighthouse test), this can take up to 30 seconds…</p>';
     try {
       var res = await fetch('/api/pagespeed', {
         method: 'POST',
@@ -440,7 +440,7 @@
       group.className = 'audit-category';
       var list = document.createElement('ul');
       list.className = 'audit-category-list';
-      list.appendChild(buildFindingItem({ severity: 'info', message: 'No issues found by this check set. That still doesn’t cover Core Web Vitals, backlinks, or content strategy — book a call for the full picture.' }));
+ list.appendChild(buildFindingItem({ severity: 'info', message: 'No issues found by this check set. That still doesn’t cover Core Web Vitals, backlinks, or content strategy, book a call for the full picture.' }));
       group.appendChild(list);
       findingsEl.appendChild(group);
     } else {
@@ -491,14 +491,14 @@
     // (the widget lives inside this <form>, see free-seo-audit.html).
     var turnstileToken = formData['cf-turnstile-response'];
     if (!turnstileToken) {
-      setStatus('err', 'Verifying you’re human — give it a second and try again.');
+ setStatus('err', 'Verifying you’re human, give it a second and try again.');
       return;
     }
 
     var btn = form.querySelector('button[type="submit"]');
     var label = btn ? btn.innerHTML : '';
     if (btn) { btn.disabled = true; btn.textContent = 'Auditing…'; }
-    setStatus('', 'Capturing your details and running the audit — this takes a few seconds…');
+ setStatus('', 'Capturing your details and running the audit, this takes a few seconds…');
     resultsEl.hidden = true;
 
     // 1. Lead capture (best-effort -- don't block the audit on this).
@@ -542,7 +542,7 @@
           body: JSON.stringify({ url: url, turnstileToken: turnstileToken, keyword: keyword || undefined })
         });
       } catch (networkErr) {
-        setStatus('err', 'Couldn’t reach the audit service — check your connection (or a browser extension may be blocking the request) and try again.');
+ setStatus('err', 'Couldn’t reach the audit service, check your connection (or a browser extension may be blocking the request) and try again.');
         track('free_audit_network_error', { audit_url: url, error: String((networkErr && networkErr.message) || networkErr) });
         return;
       }
@@ -563,7 +563,7 @@
         if (window.turnstile) { try { window.turnstile.reset(); } catch (e) { /* widget not ready */ } }
         return;
       }
-      setStatus('ok', 'Done — here’s what I found.');
+ setStatus('ok', 'Done, here’s what I found.');
       track('free_audit_completed', { audit_url: url, audit_score: data.score });
       renderResults(data);
       // Fire-and-forget: fills in the Performance section once Google's

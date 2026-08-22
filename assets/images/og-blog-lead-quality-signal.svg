@@ -20,7 +20,7 @@
 
   <g font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="66" font-weight="800" letter-spacing="-2.5">
     <text x="80" y="356" fill="#14181f">Your Lead Problem Isn't</text>
-    <text x="80" y="432" fill="#14181f">Volume — It's <tspan fill="#c9a227">Signal</tspan></text>
+ <text x="80" y="432" fill="#14181f">Volume, It's <tspan fill="#c9a227">Signal</tspan></text>
   </g>
 
   <text x="82" y="528" font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="26" font-weight="500" fill="#454c5c">Read intent and route effort to the leads that convert</text>

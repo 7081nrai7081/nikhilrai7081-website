@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  BLOG RSS FEED — this is what powers auto-posting to LinkedIn (via Buffer + Zapier/Make).
+ BLOG RSS FEED, this is what powers auto-posting to LinkedIn (via Buffer + Zapier/Make).
   WHEN YOU PUBLISH A POST: add a new <item> at the TOP of the list below, matching the
   format of the others (title, link, guid, the post's description, and pubDate in
   RFC-822 form, e.g. "Sun, 21 Jun 2026 09:00:00 +0000"). Keep newest first.
@@ -8,7 +8,7 @@
 -->
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Nikhil Rai — Blog</title>
+    <title>Nikhil Rai · Blog</title>
     <link>https://nikhilrai7081.com/blog</link>
     <atom:link href="https://nikhilrai7081.com/feed.xml" rel="self" type="application/rss+xml"/>
     <description>Notes and insights on strategic partnerships, business development, lead generation, automation and growth.</description>
@@ -146,7 +146,7 @@
       <title>Lead Nurturing: Turning Interest Into Pipeline</title>
       <link>https://nikhilrai7081.com/blog-lead-nurturing</link>
       <guid isPermaLink="true">https://nikhilrai7081.com/blog-lead-nurturing</guid>
-      <description>Most leads don't say no — they go quiet. Lead nurturing is the system that keeps you useful until the timing is right, turning the not-yet-ready majority into pipeline.</description>
+ <description>Most leads don't say no, they go quiet. Lead nurturing is the system that keeps you useful until the timing is right, turning the not-yet-ready majority into pipeline.</description>
       <category>Lead Generation</category>
       <pubDate>Mon, 20 Jul 2026 14:00:00 +0000</pubDate>
     </item>
@@ -164,7 +164,7 @@
       <title>LinkedIn Lead Generation: A System for Social Selling</title>
       <link>https://nikhilrai7081.com/blog-linkedin-lead-generation</link>
       <guid isPermaLink="true">https://nikhilrai7081.com/blog-linkedin-lead-generation</guid>
-      <description>LinkedIn lead generation done right is social selling — earning attention and trust at scale, then converting it deliberately. A system for getting replies instead of blocks.</description>
+ <description>LinkedIn lead generation done right is social selling, earning attention and trust at scale, then converting it deliberately. A system for getting replies instead of blocks.</description>
       <category>Lead Generation</category>
       <pubDate>Wed, 15 Jul 2026 14:00:00 +0000</pubDate>
     </item>
@@ -209,7 +209,7 @@
       <title>Content Marketing Strategy for B2B: A Practical Framework</title>
       <link>https://nikhilrai7081.com/blog-content-marketing-strategy-for-b2b</link>
       <guid isPermaLink="true">https://nikhilrai7081.com/blog-content-marketing-strategy-for-b2b</guid>
-      <description>A B2B content marketing strategy isn't a blog calendar — it's a system that turns expertise into demand. How to choose topics, formats and distribution that actually generate pipeline.</description>
+ <description>A B2B content marketing strategy isn't a blog calendar, it's a system that turns expertise into demand. How to choose topics, formats and distribution that actually generate pipeline.</description>
       <category>Growth Marketing</category>
       <pubDate>Mon, 06 Jul 2026 14:00:00 +0000</pubDate>
     </item>
@@ -218,7 +218,7 @@
       <title>B2B Lead Generation Strategy: From Cold List to Predictable Pipeline</title>
       <link>https://nikhilrai7081.com/blog-b2b-lead-generation-strategy</link>
       <guid isPermaLink="true">https://nikhilrai7081.com/blog-b2b-lead-generation-strategy</guid>
-      <description>A B2B lead generation strategy is the plan that makes pipeline predictable, not the tactics — the ICP, offer, channel and qualification that make lead generation compound.</description>
+ <description>A B2B lead generation strategy is the plan that makes pipeline predictable, not the tactics: the ICP, offer, channel and qualification that make lead generation compound.</description>
       <category>Lead Generation</category>
       <pubDate>Fri, 03 Jul 2026 14:00:00 +0000</pubDate>
     </item>
@@ -236,7 +236,7 @@
       <title>Types of Strategic Partnerships (and How to Choose the Right One)</title>
       <link>https://nikhilrai7081.com/blog-types-of-strategic-partnerships</link>
       <guid isPermaLink="true">https://nikhilrai7081.com/blog-types-of-strategic-partnerships</guid>
-      <description>"Partnership" isn't one thing. Channel, technology, content, referral and co-marketing partnerships — what each is actually good for, and how to choose the right type for your goal.</description>
+ <description>"Partnership" isn't one thing. Channel, technology, content, referral and co-marketing partnerships, what each is actually good for, and how to choose the right type for your goal.</description>
       <category>Partnerships</category>
       <pubDate>Thu, 02 Jul 2026 14:00:00 +0000</pubDate>
     </item>
@@ -245,7 +245,7 @@
       <title>Signs Your Operations Are Broken (and How to Fix Them)</title>
       <link>https://nikhilrai7081.com/blog-signs-your-operations-are-broken</link>
       <guid isPermaLink="true">https://nikhilrai7081.com/blog-signs-your-operations-are-broken</guid>
-      <description>Broken operations rarely announce themselves — they show up as heroics, dropped balls and slow decisions. The signs your operations are broken, and how to fix the causes.</description>
+ <description>Broken operations rarely announce themselves, they show up as heroics, dropped balls and slow decisions. The signs your operations are broken, and how to fix the causes.</description>
       <category>Operations</category>
       <pubDate>Wed, 01 Jul 2026 14:00:00 +0000</pubDate>
     </item>
@@ -254,7 +254,7 @@
       <title>Product-Led vs Sales-Led Growth: Which Is Right for You?</title>
       <link>https://nikhilrai7081.com/blog-product-led-vs-sales-led-growth</link>
       <guid isPermaLink="true">https://nikhilrai7081.com/blog-product-led-vs-sales-led-growth</guid>
-      <description>Product-led vs sales-led growth isn't about which is trendier — it's about your price, product and buyer. How to tell which motion fits, and when to blend both.</description>
+ <description>Product-led vs sales-led growth isn't about which is trendier, it's about your price, product and buyer. How to tell which motion fits, and when to blend both.</description>
       <category>Growth</category>
       <pubDate>Wed, 01 Jul 2026 13:00:00 +0000</pubDate>
     </item>
@@ -281,7 +281,7 @@
       <title>How Much Should You Spend on Automation?</title>
       <link>https://nikhilrai7081.com/blog-how-much-to-spend-on-automation</link>
       <guid isPermaLink="true">https://nikhilrai7081.com/blog-how-much-to-spend-on-automation</guid>
-      <description>How much to spend on automation isn't a budget question — it's an ROI question. A simple framework to size automation spend by what each task really costs you.</description>
+ <description>How much to spend on automation isn't a budget question, it's an ROI question. A simple framework to size automation spend by what each task really costs you.</description>
       <category>Automation</category>
       <pubDate>Wed, 01 Jul 2026 10:00:00 +0000</pubDate>
     </item>
@@ -299,16 +299,16 @@
       <title>Referrals Don't Happen by Accident</title>
       <link>https://nikhilrai7081.com/blog-referral-engine</link>
       <guid isPermaLink="true">https://nikhilrai7081.com/blog-referral-engine</guid>
-      <description>Word of mouth is your highest-trust, lowest-cost channel — and most teams leave it to luck. How to turn referrals into a system you design, ask for and reward, instead of hoping happy customers remember you.</description>
+ <description>Word of mouth is your highest-trust, lowest-cost channel, and most teams leave it to luck. How to turn referrals into a system you design, ask for and reward, instead of hoping happy customers remember you.</description>
       <category>Growth</category>
       <pubDate>Sat, 27 Jun 2026 09:00:00 +0000</pubDate>
     </item>
 
     <item>
-      <title>You Don't Have a Growth Problem — You Have a Positioning Problem</title>
+      <title>You Don't Have a Growth Problem · You Have a Positioning Problem</title>
       <link>https://nikhilrai7081.com/blog-positioning-problem</link>
       <guid isPermaLink="true">https://nikhilrai7081.com/blog-positioning-problem</guid>
-      <description>Most "growth problems" are positioning problems in disguise. Why clarity about who you're for and what you replace beats more spend, more channels and more features — and how to fix it.</description>
+ <description>Most "growth problems" are positioning problems in disguise. Why clarity about who you're for and what you replace beats more spend, more channels and more features, and how to fix it.</description>
       <category>Positioning</category>
       <pubDate>Fri, 26 Jun 2026 09:00:00 +0000</pubDate>
     </item>
@@ -317,7 +317,7 @@
       <title>Retention Is the Growth You Already Paid For</title>
       <link>https://nikhilrai7081.com/blog-retention-is-the-growth</link>
       <guid isPermaLink="true">https://nikhilrai7081.com/blog-retention-is-the-growth</guid>
-      <description>Acquisition gets the budget, but retention compounds. Why keeping and expanding the customers you already won out-grows chasing new ones — and the activation, expansion and rescue habits that make it happen.</description>
+ <description>Acquisition gets the budget, but retention compounds. Why keeping and expanding the customers you already won out-grows chasing new ones, and the activation, expansion and rescue habits that make it happen.</description>
       <category>Growth</category>
       <pubDate>Mon, 22 Jun 2026 09:00:00 +0000</pubDate>
     </item>
@@ -326,7 +326,7 @@
       <title>Distribution Is the Product</title>
       <link>https://nikhilrai7081.com/blog-distribution-is-the-product</link>
       <guid isPermaLink="true">https://nikhilrai7081.com/blog-distribution-is-the-product</guid>
-      <description>A great product doesn't market itself. Distribution is a discipline you design — choosing one channel, earning it, and making it compound — not an afterthought you bolt on at launch.</description>
+ <description>A great product doesn't market itself. Distribution is a discipline you design (choosing one channel, earning it, and making it compound) not an afterthought you bolt on at launch.</description>
       <category>Growth</category>
       <pubDate>Sun, 21 Jun 2026 09:00:00 +0000</pubDate>
     </item>
@@ -335,13 +335,13 @@
       <title>Go-to-Market From Zero: Your First 100 Users</title>
       <link>https://nikhilrai7081.com/blog-go-to-market-from-zero</link>
       <guid isPermaLink="true">https://nikhilrai7081.com/blog-go-to-market-from-zero</guid>
-      <description>How to launch when nobody knows you exist — pick a beachhead, go where your first users already gather, do the unscalable work, and turn early momentum into growth.</description>
+ <description>How to launch when nobody knows you exist: pick a beachhead, go where your first users already gather, do the unscalable work, and turn early momentum into growth.</description>
       <category>Go-To-Market</category>
       <pubDate>Thu, 18 Jun 2026 09:00:00 +0000</pubDate>
     </item>
 
     <item>
-      <title>Your Lead Problem Isn't Volume — It's Signal</title>
+      <title>Your Lead Problem Isn't Volume · It's Signal</title>
       <link>https://nikhilrai7081.com/blog-lead-quality-signal</link>
       <guid isPermaLink="true">https://nikhilrai7081.com/blog-lead-quality-signal</guid>
       <description>Most teams that think they need more leads actually need better signal. How to read buying intent and route effort to the leads that convert.</description>
@@ -362,7 +362,7 @@
       <title>Business Development Strategy: A System, Not a Rolodex</title>
       <link>https://nikhilrai7081.com/blog-business-development</link>
       <guid isPermaLink="true">https://nikhilrai7081.com/blog-business-development</guid>
-      <description>BD isn't sales or networking — it's the disciplined work of finding and creating growth opportunities. How to run it as a repeatable system.</description>
+ <description>BD isn't sales or networking, it's the disciplined work of finding and creating growth opportunities. How to run it as a repeatable system.</description>
       <category>Business Development</category>
       <pubDate>Thu, 04 Jun 2026 08:00:00 +0000</pubDate>
     </item>
@@ -371,7 +371,7 @@
       <title>Growth Marketing Strategy Without the Hacks</title>
       <link>https://nikhilrai7081.com/blog-growth-marketing</link>
       <guid isPermaLink="true">https://nikhilrai7081.com/blog-growth-marketing</guid>
-      <description>Growth marketing isn't viral tricks — it's a disciplined system of experiments across the funnel. A framework for growth that compounds.</description>
+ <description>Growth marketing isn't viral tricks, it's a disciplined system of experiments across the funnel. A framework for growth that compounds.</description>
       <category>Growth Marketing</category>
       <pubDate>Thu, 04 Jun 2026 07:00:00 +0000</pubDate>
     </item>
@@ -398,7 +398,7 @@
       <title>Building a Lead-Gen System That Runs Without You</title>
       <link>https://nikhilrai7081.com/blog-lead-generation-system</link>
       <guid isPermaLink="true">https://nikhilrai7081.com/blog-lead-generation-system</guid>
-      <description>Turn sporadic outreach into a predictable system — the components that make pipeline repeatable instead of reliant on hustle.</description>
+ <description>Turn sporadic outreach into a predictable system, the components that make pipeline repeatable instead of reliant on hustle.</description>
       <category>Lead Generation</category>
       <pubDate>Wed, 03 Jun 2026 08:00:00 +0000</pubDate>
     </item>
